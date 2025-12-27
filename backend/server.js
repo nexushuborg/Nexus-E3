@@ -1,10 +1,14 @@
+require('dotenv').config();
+console.log('Environment variables loaded:');
+console.log('MONGO_URI:', process.env.MONGO_URI);
+
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const path = require('path');
-require('dotenv').config();
-const port = process.env.BACKEND_PORT;
+
+const port = process.env.BACKEND_PORT || 5000;
 const connectDB = require('./config/connectDB');
 
 //importing routes
