@@ -6,8 +6,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 
-import { LocationProvider } from "./contexts/LocationContext";
-
 // Pages
 import Onboarding from "./pages/Onboarding";
 import StudentRole from "./pages/StudentRole";
@@ -53,55 +51,53 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
       <AuthProvider>
-        <LocationProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                {/* Onboarding */}
-                <Route path="/" element={<Onboarding />} />
-                <Route path="/student-role" element={<StudentRole />} />
-                <Route path="/driver-role" element={<DriverRole />} />
-                
-                {/* Authentication */}
-                <Route path="/login" element={<Login />} />
-                <Route path="/student-signup" element={<StudentSignup />} />
-                <Route path="/driver-signup" element={<DriverSignup />} />
-                <Route path="/set-password" element={<SetPassword />} />
-                <Route path="/otp-verification" element={<OTPVerification />} />
-                <Route path="/success" element={<Success />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                
-                {/* Main App - Student */}
-                <Route path="/route-selection" element={<RouteSelection />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/change-password" element={<ChangePassword />} />
-                <Route path="/stoppage-details" element={<StoppageDetails />} />
-                <Route path="/driver-info" element={<DriverInfo />} />
-                <Route path="/faqs" element={<FAQs />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/support" element={<Support />} />
-                
-                {/* Main App - Driver */}
-                <Route path="/driver-home" element={<DriverHome />} />
-                <Route path="/driver-profile" element={<DriverProfile />} />
-                <Route path="/driver-bus-management" element={<DriverBusManagement />} />
-                <Route path="/driver-stop-details" element={<DriverStopDetails />} />
-                <Route path="/driver-settings" element={<DriverSettings />} />
-                
-                {/* Admin */}
-                <Route path="/admin" element={<AdminRoute element={<AdminPanel />} />} />
-                
-                {/* Catch-all */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </LocationProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              {/* Onboarding */}
+              <Route path="/" element={<Onboarding />} />
+              <Route path="/student-role" element={<StudentRole />} />
+              <Route path="/driver-role" element={<DriverRole />} />
+              
+              {/* Authentication */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/student-signup" element={<StudentSignup />} />
+              <Route path="/driver-signup" element={<DriverSignup />} />
+              <Route path="/set-password" element={<SetPassword />} />
+              <Route path="/otp-verification" element={<OTPVerification />} />
+              <Route path="/success" element={<Success />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              
+              {/* Main App - Student */}
+              <Route path="/route-selection" element={<RouteSelection />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/change-password" element={<ChangePassword />} />
+              <Route path="/stoppage-details" element={<StoppageDetails />} />
+              <Route path="/driver-info" element={<DriverInfo />} />
+              <Route path="/faqs" element={<FAQs />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/support" element={<Support />} />
+              
+              {/* Main App - Driver */}
+              <Route path="/driver-home" element={<DriverHome />} />
+              <Route path="/driver-profile" element={<DriverProfile />} />
+              <Route path="/driver-bus-management" element={<DriverBusManagement />} />
+              <Route path="/driver-stop-details" element={<DriverStopDetails />} />
+              <Route path="/driver-settings" element={<DriverSettings />} />
+              
+              {/* Admin */}
+              <Route path="/admin" element={<AdminRoute element={<AdminPanel />} />} />
+              
+              {/* Catch-all */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
       </AuthProvider>
     </ThemeProvider>
   </QueryClientProvider>

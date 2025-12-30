@@ -9,7 +9,7 @@ interface UserData {
   yearBatch?: string;
   routeNo?: string;
   timing?: string;
-  selectedRoute?: string;
+  selectedRoute?: number;
   password?: string;
   phoneNumber?: string;
   branch?: string;
@@ -18,8 +18,6 @@ interface UserData {
   profileImage?: string;
   busNumber?: string;
   licenseId?: string;
-  conductorName?: string;
-  conductorPhone?: string;
 }
 
 interface AuthContextType {
@@ -28,7 +26,6 @@ interface AuthContextType {
   pendingRole: UserRole;
   pendingEmail: string;
   pendingUserData: Partial<UserData>;
-  selectedRoute?: string;
   login: (email: string, password: string, role: UserRole) => Promise<boolean>;
   logout: () => void;
   setPendingRole: (role: UserRole) => void;
@@ -36,7 +33,7 @@ interface AuthContextType {
   setPendingUserData: (data: Partial<UserData>) => void;
   completeSignup: (data: Partial<UserData>) => void;
   updateUser: (data: Partial<UserData>) => void;
-  setSelectedRoute: (route: string) => void;
+  setSelectedRoute: (route: number) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -70,7 +67,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       yearBatch: account.yearBatch,
       routeNo: account.routeNo,
       timing: account.timing,
-      selectedRoute: account.selectedRoute,
+      selectedRoute: account.selectedRoute || 1,
       phoneNumber: account.phoneNumber,
       branch: account.branch,
       course: account.course,
@@ -78,8 +75,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       profileImage: account.profileImage,
       busNumber: account.busNumber,
       licenseId: account.licenseId,
-      conductorName: account.conductorName,
-      conductorPhone: account.conductorPhone,
     });
     return true;
   };
@@ -128,9 +123,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const setSelectedRoute = (route: string) => {
+  const setSelectedRoute = (route: number) => {
     if (user) {
-      updateUser({ ...user, selectedRoute: route });
+      setUser({ ...user, selectedRoute: route });
     }
   };
 
@@ -142,7 +137,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         pendingRole,
         pendingEmail,
         pendingUserData,
-        selectedRoute: user?.selectedRoute,
         login,
         logout,
         setPendingRole,
