@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User, Bus, MapPin, Settings, LogOut, ChevronDown, ChevronLeft } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLocation } from "@/contexts/LocationContext";
+import { Switch } from "@/components/ui/switch";
 
 interface DriverSidebarProps {
   open: boolean;
@@ -17,7 +19,8 @@ const menuItems = [
 
 const DriverSidebar = ({ open, onClose }: DriverSidebarProps) => {
   const navigate = useNavigate();
-  const { logout, user } = useAuth();
+  const { logout } = useAuth();
+  const { isTracking, startTracking, stopTracking } = useLocation();
   const [expanded, setExpanded] = useState<string | null>(null);
 
   const handleTextClick = (route: string) => {
@@ -29,6 +32,14 @@ const DriverSidebar = ({ open, onClose }: DriverSidebarProps) => {
     logout();
     onClose();
     navigate("/");
+  };
+
+  const handleDutyToggle = () => {
+    if (isTracking) {
+      stopTracking();
+    } else {
+      startTracking();
+    }
   };
 
   // Match the student `AppSidebar` UI exactly (width, colors, animation)
@@ -55,6 +66,16 @@ const DriverSidebar = ({ open, onClose }: DriverSidebarProps) => {
           </div>
 
           <nav className="space-y-2">
+            <div className="border-b border-border pb-2">
+              <div className="flex items-center justify-between py-3">
+                <div className="flex items-center gap-3 text-foreground">
+                  <div className={`w-2 h-2 rounded-full ${isTracking ? 'bg-green-500' : 'bg-red-500'}`} />
+                  <span>On Duty</span>
+                </div>
+                <Switch checked={isTracking} onCheckedChange={handleDutyToggle} />
+              </div>
+            </div>
+
             {menuItems.map((item) => (
               <div key={item.id} className="border-b border-border pb-2">
                 <div className="flex items-center justify-between py-3">

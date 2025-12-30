@@ -2,76 +2,32 @@ import { Phone, User, Bus, Clock, MapPin } from "lucide-react";
 import MobileLayout from "@/components/MobileLayout";
 import BackButton from "@/components/BackButton";
 import { useAuth } from "@/contexts/AuthContext";
-
-interface Route {
-  id: string;
-  number: string;
-  stops: string[];
-  timing: string;
-  assignedBus?: string;
-  assignedDriver?: string;
-  conductorName?: string;
-  conductorPhone?: string;
-}
+import busRoutes from "@/data/busRoutes";
 
 const DriverInfo = () => {
   const { user } = useAuth();
 
-  let driver: any = null;
-  let conductor: { name: string; phone?: string } | null = null;
+  const assignedRoute = busRoutes.find(route => route.busNumber === user?.selectedRoute);
 
-  // ==============================
-  // FETCH DRIVER & CONDUCTOR DATA
-  // ==============================
-  try {
-    const accounts = JSON.parse(
-      localStorage.getItem("campus-commute-accounts") || "[]"
-    );
-    const routes = JSON.parse(
-      localStorage.getItem("adminRoutes") || "[]"
-    );
-
-    if (user?.role === "student") {
-      driver = accounts.find(
-        (acc: any) =>
-          acc.role === "driver" &&
-          String(acc.routeNo) === String(user.routeNo)
-      );
-    }
-
-    if (user?.role === "driver") {
-      driver = user;
-    }
-
-    const route = routes.find(
-      (r: Route) => r.number === `Route ${driver?.routeNo}`
-    );
-
-    if (route?.conductorPhone) {
-      conductor = {
-        name: route.conductorName || "Conductor",
-        phone: route.conductorPhone,
-      };
-    }
-  } catch (e) {
-    driver = null;
-    conductor = null;
-  }
-
+  const driver = user;
+  const conductor = {
+    name: user?.conductorName,
+    phone: user?.conductorPhone,
+  };
+  
   // ==============================
   // CALL HANDLERS
   // ==============================
-  const driverPhone =
-    driver?.phoneNumber || driver?.phone || "+919876543210";
+  const driverPhone = driver?.phoneNumber || "";
+  const conductorPhone = conductor?.phone || "";
 
   const handleCallDriver = () => {
     window.location.href = `tel:${driverPhone}`;
   };
 
   const handleCallConductor = () => {
-    if (!conductor?.phone) return;
-    const clean = conductor.phone.replace(/\D/g, "");
-    window.location.href = `tel:+91${clean.slice(-10)}`;
+    if (!conductorPhone) return;
+    window.location.href = `tel:${conductorPhone}`;
   };
 
   // ==============================
@@ -107,33 +63,38 @@ const DriverInfo = () => {
             <InfoCard
               icon={<User className="w-5 h-5 text-primary" />}
               label="Driver Name"
-              value={driver?.fullName || "Mr. Rajesh Kumar"}
+              value={driver?.fullName || "Not available"}
             />
 
             {/* Route */}
             <InfoCard
               icon={<Bus className="w-5 h-5 text-primary" />}
               label="Route Assigned"
-              value={
-                driver?.routeNo
-                  ? `Route no.${driver.routeNo}`
-                  : "Route no.1"
-              }
+              value={assignedRoute?.routeName || "Not assigned"}
             />
 
             {/* Timing */}
             <InfoCard
               icon={<Clock className="w-5 h-5 text-primary" />}
               label="Timing"
-              value={driver?.timing || "06:00 AM"}
+              value={assignedRoute?.classTime || "N/A"}
             />
 
             {/* Bus Number */}
             <InfoCard
               icon={<Bus className="w-5 h-5 text-primary" />}
               label="Bus Number"
-              value={driver?.busNumber || "TN 01 AB 1234"}
+              value={assignedRoute?.arrivalBus || "N/A"}
             />
+
+            {/* Conductor Name */}
+            {conductor.name && (
+              <InfoCard
+                icon={<User className="w-5 h-5 text-primary" />}
+                label="Conductor Name"
+                value={conductor.name}
+              />
+            )}
 
             {/* Duty Status */}
             <div className="bg-muted rounded-2xl p-4 flex items-center justify-between">
@@ -144,7 +105,7 @@ const DriverInfo = () => {
                     Duty Status
                   </p>
                   <p className="font-medium">
-                    {driver?.dutyStatus || "On Duty"}
+                    {"On Duty"} {/* Assuming a default for now */}
                   </p>
                 </div>
               </div>
@@ -155,13 +116,17 @@ const DriverInfo = () => {
             <PrimaryButton
               onClick={handleCallDriver}
               label="Call Driver"
+              disabled={!driverPhone}
             />
 
             {/* CALL CONDUCTOR (SAME STYLE) */}
-            <PrimaryButton
-              onClick={handleCallConductor}
-              label="Call Conductor"
-            />
+            {conductor?.name && (
+              <PrimaryButton
+                onClick={handleCallConductor}
+                label={`Call ${conductor.name}`}
+                disabled={!conductorPhone}
+              />
+            )}
           </div>
         </div>
       </div>
