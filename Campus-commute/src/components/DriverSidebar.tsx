@@ -1,21 +1,25 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { User, Bus, MapPin, Settings, LogOut, ChevronDown, ChevronLeft } from "lucide-react";
+import { User, Bus, MapPin, Settings, LogOut, ChevronDown, ChevronLeft, BarChart3 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { Switch } from "@/components/ui/switch";
 
 interface DriverSidebarProps {
   open: boolean;
   onClose: () => void;
+  dutyStatus?: boolean;
+  onDutyStatusChange?: (checked: boolean) => void;
 }
 
 const menuItems = [
   { id: "profile", label: "Driver Profile", icon: User, preview: "View and edit your profile", route: "/driver-profile" },
+  { id: "dashboard", label: "Driver Dashboard", icon: BarChart3, preview: "View your dashboard", route: "/driver-dashboard" },
   { id: "bus", label: "Bus Management", icon: Bus, preview: "View admin & bus assignment details", route: "/driver-bus-management" },
   { id: "stops", label: "Stop Details", icon: MapPin, preview: "All stops & timings for your route", route: "/driver-stop-details" },
   { id: "settings", label: "Settings", icon: Settings, preview: "App preferences and security", route: "/driver-settings" },
 ];
 
-const DriverSidebar = ({ open, onClose }: DriverSidebarProps) => {
+const DriverSidebar = ({ open, onClose, dutyStatus, onDutyStatusChange }: DriverSidebarProps) => {
   const navigate = useNavigate();
   const { logout, user } = useAuth();
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -53,6 +57,26 @@ const DriverSidebar = ({ open, onClose }: DriverSidebarProps) => {
             </div>
             <div className="w-6" />
           </div>
+
+          {dutyStatus !== undefined && onDutyStatusChange && (
+            <div className="mb-6">
+              <div className="flex items-center justify-between p-4 bg-muted rounded-2xl">
+                <div className="flex items-center gap-3">
+                  <Bus className="w-5 h-5 text-primary" />
+                  <span className="text-foreground">Duty Status</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={`text-sm ${dutyStatus ? "text-green-500" : "text-muted-foreground"}`}>
+                    {dutyStatus ? "On" : "Off"}
+                  </span>
+                  <Switch
+                    checked={dutyStatus}
+                    onCheckedChange={onDutyStatusChange}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
 
           <nav className="space-y-2">
             {menuItems.map((item) => (

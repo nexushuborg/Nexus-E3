@@ -21,6 +21,7 @@ import ResetPassword from "./pages/ResetPassword";
 import RouteSelection from "./pages/RouteSelection";
 import Home from "./pages/Home";
 import DriverHome from "./pages/DriverHome";
+import DriverDashboard from "./pages/DriverDashboard";
 import Profile from "./pages/Profile";
 import DriverProfile from "./pages/DriverProfile";
 import DriverBusManagement from "./pages/DriverBusManagement";
@@ -85,6 +86,7 @@ const App = () => (
               
               {/* Main App - Driver */}
               <Route path="/driver-home" element={<DriverHome />} />
+              <Route path="/driver-dashboard" element={<DriverDashboard />} />
               <Route path="/driver-profile" element={<DriverProfile />} />
               <Route path="/driver-bus-management" element={<DriverBusManagement />} />
               <Route path="/driver-stop-details" element={<DriverStopDetails />} />
