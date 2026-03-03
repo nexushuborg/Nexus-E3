@@ -1,0 +1,627 @@
+[
+  {
+    "busNumber": "CUTTACK-1-A",
+    "busName": "CUTTACK - 1 (A)",
+    "routeName": "CUTTACK - 1 (A) Morning Route",
+    "startPoint": {
+      "name": "TRISULIA",
+      "coordinates": { "lat": 20.431078, "lng": 85.833733 }
+    },
+    "stoppages": [
+      { "name": "TRISULIA", "coordinates": { "lat": 20.431078, "lng": 85.833733 }, "sequenceOrder": 0, "arrivalTime": null },
+      { "name": "CDA NAIBANDHA TO CDA BIJUPATTNAIK PARK", "coordinates": { "lat": 20.472141, "lng": 85.839427 }, "sequenceOrder": 1, "arrivalTime": null },
+      { "name": "BIJUPATTNAIK PARK", "coordinates": { "lat": 20.482959, "lng": 85.813846 }, "sequenceOrder": 2, "arrivalTime": null },
+      { "name": "DANIBARA SQR", "coordinates": { "lat": 20.475799, "lng": 85.821243 }, "sequenceOrder": 3, "arrivalTime": null },
+      { "name": "JUSTIC SQR", "coordinates": { "lat": 20.465297, "lng": 85.859848 }, "sequenceOrder": 4, "arrivalTime": null },
+      { "name": "CDA-9 (SARASWATI SCHOOL)", "coordinates": { "lat": 20.480398, "lng": 85.828065 }, "sequenceOrder": 5, "arrivalTime": null },
+      { "name": "CDA-9 (GANESH PALACE)", "coordinates": { "lat": 20.480603, "lng": 85.824827 }, "sequenceOrder": 6, "arrivalTime": null },
+      { "name": "CDA-6 (MARCKET COMPLEX)", "coordinates": { "lat": 20.480983, "lng": 85.836009 }, "sequenceOrder": 7, "arrivalTime": null },
+      { "name": "CDA-6 (LAL CHAND)", "coordinates": { "lat": 20.480983, "lng": 85.836009 }, "sequenceOrder": 8, "arrivalTime": null },
+      { "name": "CDA-6 (IP PARK)", "coordinates": { "lat": 20.480983, "lng": 85.836009 }, "sequenceOrder": 9, "arrivalTime": null },
+      { "name": "CDA-6 (PATRA ELECTRONIC)", "coordinates": { "lat": 20.480983, "lng": 85.836009 }, "sequenceOrder": 10, "arrivalTime": null },
+      { "name": "ASWINI HOSPITAL", "coordinates": { "lat": 20.475207, "lng": 85.850136 }, "sequenceOrder": 11, "arrivalTime": null },
+      { "name": "SATICHAURA", "coordinates": { "lat": 20.480894, "lng": 85.845914 }, "sequenceOrder": 12, "arrivalTime": null },
+      { "name": "JUDICIAL", "coordinates": { "lat": 20.465297, "lng": 85.859848 }, "sequenceOrder": 13, "arrivalTime": null },
+      { "name": "HIGH COURT", "coordinates": { "lat": 20.465366, "lng": 85.859853 }, "sequenceOrder": 14, "arrivalTime": null },
+      { "name": "PURI GHAT", "coordinates": { "lat": 20.457585, "lng": 85.869691 }, "sequenceOrder": 15, "arrivalTime": null },
+      { "name": "KHAN NAGAR (TRAFFIC)", "coordinates": { "lat": 20.459373, "lng": 85.876757 }, "sequenceOrder": 16, "arrivalTime": null },
+      { "name": "BADAMBADI", "coordinates": { "lat": 20.459022, "lng": 85.882162 }, "sequenceOrder": 17, "arrivalTime": null },
+      { "name": "AD MARCKET", "coordinates": { "lat": 20.460193, "lng": 85.881514 }, "sequenceOrder": 18, "arrivalTime": null },
+      { "name": "LINK ROAD", "coordinates": { "lat": 20.455055, "lng": 85.887046 }, "sequenceOrder": 19, "arrivalTime": null },
+      { "name": "PRESS CHHAKA", "coordinates": { "lat": 20.446189, "lng": 85.896782 }, "sequenceOrder": 20, "arrivalTime": null },
+      { "name": "GOPALPUR", "coordinates": { "lat": 20.438279, "lng": 85.880917 }, "sequenceOrder": 21, "arrivalTime": null },
+      { "name": "BALIKUDA", "coordinates": { "lat": 20.428727, "lng": 85.877391 }, "sequenceOrder": 22, "arrivalTime": null },
+      { "name": "BMW SHOWROOM (S THANA)", "coordinates": { "lat": 20.41383, "lng": 85.880222 }, "sequenceOrder": 23, "arrivalTime": null },
+      { "name": "PRATAP NAGARI (DAKULEI PITHA)", "coordinates": { "lat": 20.402724, "lng": 85.880809 }, "sequenceOrder": 24, "arrivalTime": null },
+      { "name": "NAKHARA", "coordinates": { "lat": 20.557606, "lng": 85.94826 }, "sequenceOrder": 25, "arrivalTime": null },
+      { "name": "PAHALA", "coordinates": { "lat": 20.342821, "lng": 85.883963 }, "sequenceOrder": 26, "arrivalTime": null },
+      { "name": "ITER", "coordinates": { "lat": 20.352000, "lng": 85.817000 }, "sequenceOrder": 27, "arrivalTime": "07:45 AM" }
+    ],
+    "endPoint": {
+      "name": "ITER",
+      "coordinates": { "lat": 20.352000, "lng": 85.817000 }
+    },
+    "classTime": "08:00 AM TO 1:00 PM",
+    "arrivalBus": "OD 02 BE 4144",
+    "drivers": [],
+    "isActive": true,
+    "remarks": "ARRIVAL AT ITER 07:45AM, DEPARTURE FROM ITER 1:15PM"
+  },
+  {
+    "busNumber": "CUTTACK-1-C",
+    "busName": "CUTTACK - 1 (C)",
+    "routeName": "CUTTACK - 1 (C) Morning Route",
+    "startPoint": {
+      "name": "KRUSHAK BAZAR",
+      "coordinates": { "lat": 20.480894, "lng": 85.845914 }
+    },
+    "stoppages": [
+      { "name": "KRUSHAK BAZAR", "coordinates": { "lat": 20.480894, "lng": 85.845914 }, "sequenceOrder": 0, "arrivalTime": "5:50 AM" },
+      { "name": "BIDANASI", "coordinates": { "lat": 20.485609, "lng": 85.842148 }, "sequenceOrder": 1, "arrivalTime": "5:55 AM" },
+      { "name": "CHAHATA", "coordinates": { "lat": 20.490354, "lng": 85.84053 }, "sequenceOrder": 2, "arrivalTime": "6:00 AM" },
+      { "name": "DEARPARK", "coordinates": { "lat": 20.485934, "lng": 85.869861 }, "sequenceOrder": 3, "arrivalTime": "6:00 AM" },
+      { "name": "CANTENMENT THANA", "coordinates": { "lat": 20.488283, "lng": 85.863489 }, "sequenceOrder": 4, "arrivalTime": "6:00 AM" },
+      { "name": "BALIVATRA PADIA", "coordinates": { "lat": 20.485934, "lng": 85.869861 }, "sequenceOrder": 5, "arrivalTime": "6:00 AM" },
+      { "name": "MATA MATHA", "coordinates": { "lat": 20.478789, "lng": 85.882357 }, "sequenceOrder": 6, "arrivalTime": "6:05 AM" },
+      { "name": "JOBRA", "coordinates": { "lat": 20.472466, "lng": 85.896747 }, "sequenceOrder": 7, "arrivalTime": "6:05 AM" },
+      { "name": "HARAMANI MANDAP", "coordinates": { "lat": 20.467692, "lng": 85.913419 }, "sequenceOrder": 8, "arrivalTime": "6:10 AM" },
+      { "name": "MAHANADI VIHAR BUS STAND", "coordinates": { "lat": 20.467692, "lng": 85.913419 }, "sequenceOrder": 9, "arrivalTime": "6:10 AM" },
+      { "name": "MAHANADI VIHAR MANGALA MANDIR", "coordinates": { "lat": 20.467692, "lng": 85.913419 }, "sequenceOrder": 10, "arrivalTime": "6:15 AM" },
+      { "name": "SIKHARPUR", "coordinates": { "lat": 20.473655, "lng": 85.906865 }, "sequenceOrder": 11, "arrivalTime": "6:20 AM" },
+      { "name": "GANDAR PUR", "coordinates": { "lat": 20.390099, "lng": 85.853706 }, "sequenceOrder": 12, "arrivalTime": "6:25 AM" },
+      { "name": "OMP", "coordinates": { "lat": 20.456867, "lng": 85.902157 }, "sequenceOrder": 13, "arrivalTime": "6:45 AM" },
+      { "name": "PURI CANALROAD", "coordinates": { "lat": 20.315027, "lng": 85.884885 }, "sequenceOrder": 14, "arrivalTime": "6:50 AM" },
+      { "name": "HANSAPAL", "coordinates": { "lat": 20.316792, "lng": 85.87894 }, "sequenceOrder": 15, "arrivalTime": "6:55 AM" },
+      { "name": "SAPTASATI VIHAR", "coordinates": { "lat": 20.30613, "lng": 85.872354 }, "sequenceOrder": 16, "arrivalTime": "7:00 AM" },
+      { "name": "PALASUNI", "coordinates": { "lat": 20.303997, "lng": 85.866625 }, "sequenceOrder": 17, "arrivalTime": "7:05 AM" },
+      { "name": "NAYAPALLI", "coordinates": { "lat": 20.28907, "lng": 85.814708 }, "sequenceOrder": 18, "arrivalTime": "7:15 AM" },
+      { "name": "CRP", "coordinates": { "lat": 20.284453, "lng": 85.807331 }, "sequenceOrder": 19, "arrivalTime": "7:45 AM" },
+      { "name": "ITER", "coordinates": { "lat": 20.352000, "lng": 85.817000 }, "sequenceOrder": 20, "arrivalTime": "7:45 AM" }
+    ],
+    "endPoint": {
+      "name": "ITER",
+      "coordinates": { "lat": 20.352000, "lng": 85.817000 }
+    },
+    "classTime": "08:00 AM TO 1:00 PM",
+    "arrivalBus": "OD 02 BE 3744",
+    "drivers": [
+      { "name": "RAMESH CH NAYAK", "contact": "9827616117" },
+      { "name": "SARAT BHOI", "contact": "7735795836" }
+    ],
+    "isActive": true,
+    "remarks": "ARRIVAL AT ITER 07:45AM, DEPARTURE FROM ITER 1:15PM"
+  },
+  {
+    "busNumber": "CUTTACK-2-A",
+    "busName": "CUTTACK - 2 (A)",
+    "routeName": "CUTTACK - 2 (A) Afternoon Route",
+    "startPoint": {
+      "name": "TRISULIA",
+      "coordinates": { "lat": 20.431078, "lng": 85.833733 }
+    },
+    "stoppages": [
+      { "name": "TRISULIA", "coordinates": { "lat": 20.431078, "lng": 85.833733 }, "sequenceOrder": 0, "arrivalTime": null },
+      { "name": "CDA NAIBANDHA TO CDA BIJUPATTNAIK PARK", "coordinates": { "lat": 20.472141, "lng": 85.839427 }, "sequenceOrder": 1, "arrivalTime": "12:00 PM" },
+      { "name": "BIJUPATTNAIK PARK", "coordinates": { "lat": 20.482959, "lng": 85.813846 }, "sequenceOrder": 2, "arrivalTime": "12:15 PM" },
+      { "name": "SBI SQR", "coordinates": { "lat": 20.481589, "lng": 85.818183 }, "sequenceOrder": 3, "arrivalTime": "12:15 PM" },
+      { "name": "DAHIBARA SQR", "coordinates": { "lat": 20.475799, "lng": 85.821243 }, "sequenceOrder": 4, "arrivalTime": "12:15 PM" },
+      { "name": "JUSTIC SQR", "coordinates": { "lat": 20.465297, "lng": 85.859848 }, "sequenceOrder": 5, "arrivalTime": "12:15 PM" },
+      { "name": "CDA PETANALA", "coordinates": { "lat": 20.479083, "lng": 85.822758 }, "sequenceOrder": 6, "arrivalTime": "12:18 PM" },
+      { "name": "CDA - 9", "coordinates": { "lat": 20.480603, "lng": 85.824827 }, "sequenceOrder": 7, "arrivalTime": "12:20 PM" },
+      { "name": "CDA - 6", "coordinates": { "lat": 20.480983, "lng": 85.836009 }, "sequenceOrder": 8, "arrivalTime": "12:22 PM" },
+      { "name": "ASWINI HOSPITAL", "coordinates": { "lat": 20.475207, "lng": 85.850136 }, "sequenceOrder": 9, "arrivalTime": "12:25 PM" },
+      { "name": "SATICHAURA", "coordinates": { "lat": 20.480894, "lng": 85.845914 }, "sequenceOrder": 10, "arrivalTime": "12:25 PM" },
+      { "name": "JUDICIAL", "coordinates": { "lat": 20.465297, "lng": 85.859848 }, "sequenceOrder": 11, "arrivalTime": "12:27 PM" },
+      { "name": "HIGH COURT", "coordinates": { "lat": 20.465366, "lng": 85.859853 }, "sequenceOrder": 12, "arrivalTime": "12:30 PM" },
+      { "name": "PURIGHAT", "coordinates": { "lat": 20.457585, "lng": 85.869691 }, "sequenceOrder": 13, "arrivalTime": "12:32 PM" },
+      { "name": "KHAN NAGAR (TRAFFIC)", "coordinates": { "lat": 20.459373, "lng": 85.876757 }, "sequenceOrder": 14, "arrivalTime": "12:38 PM" },
+      { "name": "JHANJIR MANGALA GADA", "coordinates": { "lat": 20.459373, "lng": 85.876757 }, "sequenceOrder": 15, "arrivalTime": "12:40 PM" },
+      { "name": "BADAMBADI", "coordinates": { "lat": 20.459022, "lng": 85.882162 }, "sequenceOrder": 16, "arrivalTime": "12:45 PM" },
+      { "name": "AD MARCKET", "coordinates": { "lat": 20.460193, "lng": 85.881514 }, "sequenceOrder": 17, "arrivalTime": "12:45 PM" },
+      { "name": "LINK ROAD", "coordinates": { "lat": 20.455055, "lng": 85.887046 }, "sequenceOrder": 18, "arrivalTime": "12:50 PM" },
+      { "name": "PRESS CHHAKA", "coordinates": { "lat": 20.446189, "lng": 85.896782 }, "sequenceOrder": 19, "arrivalTime": "12:50 PM" },
+      { "name": "GOPALPUR", "coordinates": { "lat": 20.438279, "lng": 85.880917 }, "sequenceOrder": 20, "arrivalTime": "12:52 PM" },
+      { "name": "BALIKUDA", "coordinates": { "lat": 20.428727, "lng": 85.877391 }, "sequenceOrder": 21, "arrivalTime": "12:55 PM" },
+      { "name": "BMW SHOWROOM (5 THANA)", "coordinates": { "lat": 20.41383, "lng": 85.880222 }, "sequenceOrder": 22, "arrivalTime": "1:00 PM" },
+      { "name": "NAKHARA", "coordinates": { "lat": 20.557606, "lng": 85.94826 }, "sequenceOrder": 23, "arrivalTime": "1:05 PM" },
+      { "name": "PAHALA", "coordinates": { "lat": 20.342821, "lng": 85.883963 }, "sequenceOrder": 24, "arrivalTime": "1:10 PM" },
+      { "name": "ITER", "coordinates": { "lat": 20.352000, "lng": 85.817000 }, "sequenceOrder": 25, "arrivalTime": "1:45 PM" }
+    ],
+    "endPoint": {
+      "name": "ITER",
+      "coordinates": { "lat": 20.352000, "lng": 85.817000 }
+    },
+    "classTime": "02:00 PM TO 6:00 PM",
+    "arrivalBus": "OD 02 BE 3544",
+    "drivers": [
+      { "name": "SK LADEN", "contact": "6372688808" },
+      { "name": "SATYA PRAKASH", "contact": "8144040026" }
+    ],
+    "isActive": true,
+    "remarks": "ARRIVAL AT ITER 01:45PM, DEPARTURE FROM ITER 06:15PM"
+  },
+  {
+    "busNumber": "CUTTACK-2-C",
+    "busName": "CUTTACK - 2 (C)",
+    "routeName": "CUTTACK - 2 (C) Afternoon Route",
+    "startPoint": {
+      "name": "SATICHAURA(KRUSHAK BAZAR)",
+      "coordinates": { "lat": 20.480894, "lng": 85.845914 }
+    },
+    "stoppages": [
+      { "name": "SATICHAURA(KRUSHAK BAZAR)", "coordinates": { "lat": 20.480894, "lng": 85.845914 }, "sequenceOrder": 0, "arrivalTime": null },
+      { "name": "BIDANASI", "coordinates": { "lat": 20.485609, "lng": 85.842148 }, "sequenceOrder": 1, "arrivalTime": null },
+      { "name": "CHAHATA", "coordinates": { "lat": 20.490354, "lng": 85.84053 }, "sequenceOrder": 2, "arrivalTime": null },
+      { "name": "MATA MATHA", "coordinates": { "lat": 20.478789, "lng": 85.882357 }, "sequenceOrder": 3, "arrivalTime": null },
+      { "name": "JOBRA", "coordinates": { "lat": 20.472466, "lng": 85.896747 }, "sequenceOrder": 4, "arrivalTime": null },
+      { "name": "MAHANADI VIHAR", "coordinates": { "lat": 20.467692, "lng": 85.913419 }, "sequenceOrder": 5, "arrivalTime": null },
+      { "name": "SIKHARPUR", "coordinates": { "lat": 20.473655, "lng": 85.906865 }, "sequenceOrder": 6, "arrivalTime": null },
+      { "name": "GANDAR PUR", "coordinates": { "lat": 20.390099, "lng": 85.853706 }, "sequenceOrder": 7, "arrivalTime": null },
+      { "name": "NAYAPALLI", "coordinates": { "lat": 20.28907, "lng": 85.814708 }, "sequenceOrder": 8, "arrivalTime": null },
+      { "name": "ITER", "coordinates": { "lat": 20.352000, "lng": 85.817000 }, "sequenceOrder": 9, "arrivalTime": "1:45 PM" }
+    ],
+    "endPoint": {
+      "name": "ITER",
+      "coordinates": { "lat": 20.352000, "lng": 85.817000 }
+    },
+    "classTime": "02:00 PM TO 6:00 PM",
+    "arrivalBus": "OD 02 CX 3943",
+    "drivers": [],
+    "isActive": true,
+    "remarks": "ARRIVAL AT ITER 01:45PM, DEPARTURE FROM ITER 06:15PM"
+  },
+  {
+    "busNumber": "PATIA-1-A",
+    "busName": "PATIA 1 (A)",
+    "routeName": "PATIA 1 (A) Morning Route",
+    "startPoint": {
+      "name": "DASH PUR",
+      "coordinates": { "lat": 20.337346, "lng": 85.802718 }
+    },
+    "stoppages": [
+      { "name": "DASH PUR", "coordinates": { "lat": 20.337346, "lng": 85.802718 }, "sequenceOrder": 0, "arrivalTime": null },
+      { "name": "CHANDAKA", "coordinates": { "lat": 20.3314, "lng": 85.8038 }, "sequenceOrder": 1, "arrivalTime": null },
+      { "name": "SIKHARCHANDI", "coordinates": { "lat": 20.3362, "lng": 85.8174 }, "sequenceOrder": 2, "arrivalTime": null },
+      { "name": "RAGHUNATH PUR", "coordinates": { "lat": 20.3329, "lng": 85.8297 }, "sequenceOrder": 3, "arrivalTime": null },
+      { "name": "SUBHADRA APPRTMENT", "coordinates": { "lat": 20.3298, "lng": 85.8322 }, "sequenceOrder": 4, "arrivalTime": null },
+      { "name": "PATIA (BIGBAZAR)", "coordinates": { "lat": 20.3267, "lng": 85.8393 }, "sequenceOrder": 5, "arrivalTime": null },
+      { "name": "KANAN VIHAR", "coordinates": { "lat": 20.3241, "lng": 85.8449 }, "sequenceOrder": 6, "arrivalTime": null },
+      { "name": "SHREE VIHAR", "coordinates": { "lat": 20.3161, "lng": 85.8485 }, "sequenceOrder": 7, "arrivalTime": null },
+      { "name": "C S PUR, PETROL PUMP", "coordinates": { "lat": 20.3094, "lng": 85.8528 }, "sequenceOrder": 8, "arrivalTime": null },
+      { "name": "AMFED SQUARE", "coordinates": { "lat": 20.3049, "lng": 85.8544 }, "sequenceOrder": 9, "arrivalTime": null },
+      { "name": "NALCO CHHAK", "coordinates": { "lat": 20.3014, "lng": 85.856 }, "sequenceOrder": 10, "arrivalTime": null },
+      { "name": "JAYDEVVIHAR", "coordinates": { "lat": 20.2963, "lng": 85.8578 }, "sequenceOrder": 11, "arrivalTime": null },
+      { "name": "NEW AG COLONY", "coordinates": { "lat": 20.2932, "lng": 85.8614 }, "sequenceOrder": 12, "arrivalTime": null },
+      { "name": "OLD THE WORLD SQUARE", "coordinates": { "lat": 20.2899, "lng": 85.8644 }, "sequenceOrder": 13, "arrivalTime": null },
+      { "name": "SASTRI NAGAR", "coordinates": { "lat": 20.2864, "lng": 85.8669 }, "sequenceOrder": 14, "arrivalTime": null },
+      { "name": "UNIT & DAV", "coordinates": { "lat": 20.2829, "lng": 85.869 }, "sequenceOrder": 15, "arrivalTime": null },
+      { "name": "PASSPORT OFFICE", "coordinates": { "lat": 20.2799, "lng": 85.8714 }, "sequenceOrder": 16, "arrivalTime": null },
+      { "name": "STUVART SCHOOL", "coordinates": { "lat": 20.2769, "lng": 85.8739 }, "sequenceOrder": 17, "arrivalTime": null }
+    ],
+    "endPoint": {
+      "name": "STUVART SCHOOL",
+      "coordinates": { "lat": 20.2769, "lng": 85.8739 }
+    },
+    "classTime": "08:00 AM TO 1:00 PM",
+    "arrivalBus": "OD 02 CX 3983",
+    "drivers": [],
+    "isActive": true,
+    "remarks": null
+  },
+  {
+    "busNumber": "PATIA-1-B",
+    "busName": "PATIA 1 (B)",
+    "routeName": "PATIA 1 (B) Morning Route",
+    "startPoint": {
+      "name": "SALASHREE VIHAR",
+      "coordinates": { "lat": 20.337346, "lng": 85.802718 }
+    },
+    "stoppages": [
+      { "name": "SALASHREE VIHAR", "coordinates": { "lat": 20.337346, "lng": 85.802718 }, "sequenceOrder": 0, "arrivalTime": "6:25 AM" },
+      { "name": "NILADRI VIHAR", "coordinates": { "lat": 20.326241, "lng": 85.800571 }, "sequenceOrder": 1, "arrivalTime": "6:30 AM" },
+      { "name": "DAMANA", "coordinates": { "lat": 20.3128, "lng": 85.8509 }, "sequenceOrder": 2, "arrivalTime": "6:35 AM" },
+      { "name": "RAILWAY STADIUM", "coordinates": { "lat": 20.321365, "lng": 85.83058 }, "sequenceOrder": 3, "arrivalTime": "6:40 AM" },
+      { "name": "MANCHESWAR", "coordinates": { "lat": 20.296834, "lng": 85.859341 }, "sequenceOrder": 4, "arrivalTime": "6:40 AM" },
+      { "name": "SAINIK SCHOOL", "coordinates": { "lat": 20.314838, "lng": 85.834643 }, "sequenceOrder": 5, "arrivalTime": "6:45 AM" },
+      { "name": "PRESS SQUARE", "coordinates": { "lat": 20.314062, "lng": 85.827665 }, "sequenceOrder": 6, "arrivalTime": "6:50 AM" },
+      { "name": "RAILVIHAR", "coordinates": { "lat": 20.315119, "lng": 85.811825 }, "sequenceOrder": 7, "arrivalTime": "6:55 AM" },
+      { "name": "XAVIEER", "coordinates": { "lat": 20.326862, "lng": 85.830435 }, "sequenceOrder": 8, "arrivalTime": "7:00 AM" },
+      { "name": "MAYFAIR", "coordinates": { "lat": 20.29732, "lng": 85.817789 }, "sequenceOrder": 9, "arrivalTime": "7:05 AM" },
+      { "name": "BIJU PATTNAIK COLLEGE", "coordinates": { "lat": 20.29732, "lng": 85.817789 }, "sequenceOrder": 10, "arrivalTime": "7:08 AM" },
+      { "name": "EKAMRA, SAI MANDIR", "coordinates": { "lat": 20.283161, "lng": 85.793626 }, "sequenceOrder": 11, "arrivalTime": "7:10 AM" },
+      { "name": "CRPF", "coordinates": { "lat": 20.284453, "lng": 85.807331 }, "sequenceOrder": 12, "arrivalTime": "7:10 AM" },
+      { "name": "RENTAL COLONY", "coordinates": { "lat": 20.28667, "lng": 85.794952 }, "sequenceOrder": 13, "arrivalTime": "7:15 AM" },
+      { "name": "KV SCHOOL-2", "coordinates": { "lat": 20.281468, "lng": 85.797914 }, "sequenceOrder": 14, "arrivalTime": "7:15 AM" },
+      { "name": "FIRE STATION", "coordinates": { "lat": 20.279301, "lng": 85.798847 }, "sequenceOrder": 15, "arrivalTime": "7:20 AM" },
+      { "name": "BARAMUNDA", "coordinates": { "lat": 20.279301, "lng": 85.798847 }, "sequenceOrder": 16, "arrivalTime": "7:20 AM" },
+      { "name": "ITER", "coordinates": { "lat": 20.352000, "lng": 85.817000 }, "sequenceOrder": 17, "arrivalTime": "7:35 AM" }
+    ],
+    "endPoint": {
+      "name": "ITER",
+      "coordinates": { "lat": 20.352000, "lng": 85.817000 }
+    },
+    "classTime": "08:00 AM TO 1:00 PM",
+    "arrivalBus": "OD 02 CX 3989",
+    "drivers": [
+      { "name": "PRASANTA BARIK", "contact": "9938210774" },
+      { "name": "NIRANJAN NAYAK", "contact": "9337553188" }
+    ],
+    "isActive": true,
+    "remarks": "ARRIVAL AT ITER 07:45AM, DEPARTURE FROM ITER 1:15PM"
+  },
+  {
+    "busNumber": "PATIA-2-A",
+    "busName": "PATIA 2 (A)",
+    "routeName": "PATIA 2 (A) Afternoon Route",
+    "startPoint": {
+      "name": "DASH PUR",
+      "coordinates": { "lat": 20.337346, "lng": 85.802718 }
+    },
+    "stoppages": [
+      { "name": "DASH PUR", "coordinates": { "lat": 20.337346, "lng": 85.802718 }, "sequenceOrder": 0, "arrivalTime": "12:15 PM" },
+      { "name": "CHANDAKA", "coordinates": { "lat": 20.3314, "lng": 85.8038 }, "sequenceOrder": 1, "arrivalTime": "12:20 PM" },
+      { "name": "SIKHARCHANDI", "coordinates": { "lat": 20.3362, "lng": 85.8174 }, "sequenceOrder": 2, "arrivalTime": "12:35 PM" },
+      { "name": "KIIT", "coordinates": { "lat": 20.3557, "lng": 85.8198 }, "sequenceOrder": 3, "arrivalTime": "12:35 PM" },
+      { "name": "RAGHUNATH PUR", "coordinates": { "lat": 20.3329, "lng": 85.8297 }, "sequenceOrder": 4, "arrivalTime": "12:45 PM" },
+      { "name": "SUBHADRA APPRTMENT", "coordinates": { "lat": 20.3298, "lng": 85.8322 }, "sequenceOrder": 5, "arrivalTime": "12:50 PM" },
+      { "name": "PATIA (BIGBAZAR)", "coordinates": { "lat": 20.3267, "lng": 85.8393 }, "sequenceOrder": 6, "arrivalTime": "12:55 PM" },
+      { "name": "KANAN VIHAR", "coordinates": { "lat": 20.3241, "lng": 85.8449 }, "sequenceOrder": 7, "arrivalTime": "12:55 PM" },
+      { "name": "PATIA", "coordinates": { "lat": 20.3204, "lng": 85.8479 }, "sequenceOrder": 8, "arrivalTime": "12:55 PM" },
+      { "name": "SHREE VIHAR", "coordinates": { "lat": 20.3161, "lng": 85.8485 }, "sequenceOrder": 9, "arrivalTime": "12:55 PM" },
+      { "name": "DAMANA", "coordinates": { "lat": 20.3128, "lng": 85.8509 }, "sequenceOrder": 10, "arrivalTime": "1:00 PM" },
+      { "name": "C S PUR, PETROL PUMP", "coordinates": { "lat": 20.3094, "lng": 85.8528 }, "sequenceOrder": 11, "arrivalTime": "1:00 PM" },
+      { "name": "OMFED SQUARE", "coordinates": { "lat": 20.3049, "lng": 85.8544 }, "sequenceOrder": 12, "arrivalTime": "1:00 PM" },
+      { "name": "NALCO CHHAK", "coordinates": { "lat": 20.3014, "lng": 85.856 }, "sequenceOrder": 13, "arrivalTime": "1:00 PM" },
+      { "name": "PAL HIGHT", "coordinates": { "lat": 20.3014, "lng": 85.856 }, "sequenceOrder": 14, "arrivalTime": "1:05 PM" },
+      { "name": "JAYDEVVIHAR", "coordinates": { "lat": 20.2963, "lng": 85.8578 }, "sequenceOrder": 15, "arrivalTime": "1:05 PM" },
+      { "name": "NEW AG COLONY", "coordinates": { "lat": 20.2932, "lng": 85.8614 }, "sequenceOrder": 16, "arrivalTime": "1:05 PM" },
+      { "name": "OLD THE WORLD SQUARE", "coordinates": { "lat": 20.2899, "lng": 85.8644 }, "sequenceOrder": 17, "arrivalTime": "1:05 PM" },
+      { "name": "SASTRI NAGAR", "coordinates": { "lat": 20.2864, "lng": 85.8669 }, "sequenceOrder": 18, "arrivalTime": "1:05 PM" },
+      { "name": "UNIT 8 DAV", "coordinates": { "lat": 20.2829, "lng": 85.869 }, "sequenceOrder": 19, "arrivalTime": "1:15 PM" },
+      { "name": "PASSPORT OFFICE", "coordinates": { "lat": 20.2799, "lng": 85.8714 }, "sequenceOrder": 20, "arrivalTime": "1:15 PM" },
+      { "name": "STUWART SCHOOL", "coordinates": { "lat": 20.2769, "lng": 85.8739 }, "sequenceOrder": 21, "arrivalTime": "1:20 PM" },
+      { "name": "DELTA", "coordinates": { "lat": 20.2738, "lng": 85.8764 }, "sequenceOrder": 22, "arrivalTime": "1:20 PM" },
+      { "name": "Soubhagya Nagar", "coordinates": { "lat": 20.2738, "lng": 85.8764 }, "sequenceOrder": 23, "arrivalTime": "1:25 PM" },
+      { "name": "ITER", "coordinates": { "lat": 20.352000, "lng": 85.817000 }, "sequenceOrder": 24, "arrivalTime": "1:35 PM" }
+    ],
+    "endPoint": {
+      "name": "ITER",
+      "coordinates": { "lat": 20.352000, "lng": 85.817000 }
+    },
+    "classTime": "02:00 PM TO 6:00 PM",
+    "arrivalBus": "OD 02 CX 4065",
+    "drivers": [
+      { "name": "PRASANTA KU.DHALA", "contact": "9337275870" },
+      { "name": "KANHA NAYAK", "contact": "9827056513" }
+    ],
+    "isActive": true,
+    "remarks": "ARRIVAL AT ITER 01:45PM, DEPARTURE FROM ITER 06:15PM"
+  },
+  {
+    "busNumber": "PATIA-2-B",
+    "busName": "PATIA 2 (B)",
+    "routeName": "PATIA 2 (B) Afternoon Route",
+    "startPoint": {
+      "name": "SALASHREE VIHAR",
+      "coordinates": { "lat": 20.337346, "lng": 85.802718 }
+    },
+    "stoppages": [
+      { "name": "SALASHREE VIHAR", "coordinates": { "lat": 20.337346, "lng": 85.802718 }, "sequenceOrder": 0, "arrivalTime": null },
+      { "name": "NILADRI VIHAR", "coordinates": { "lat": 20.326241, "lng": 85.800571 }, "sequenceOrder": 1, "arrivalTime": null },
+      { "name": "DAMANA", "coordinates": { "lat": 20.3128, "lng": 85.8509 }, "sequenceOrder": 2, "arrivalTime": null },
+      { "name": "RAILWAY STADIUM", "coordinates": { "lat": 20.321365, "lng": 85.83058 }, "sequenceOrder": 3, "arrivalTime": null },
+      { "name": "MANCHESWAR", "coordinates": { "lat": 20.296834, "lng": 85.859341 }, "sequenceOrder": 4, "arrivalTime": null },
+      { "name": "SAINIK SCHOOL", "coordinates": { "lat": 20.314838, "lng": 85.834643 }, "sequenceOrder": 5, "arrivalTime": null },
+      { "name": "PRESS SQUARE", "coordinates": { "lat": 20.314062, "lng": 85.827665 }, "sequenceOrder": 6, "arrivalTime": null },
+      { "name": "RAILVIHAR", "coordinates": { "lat": 20.315119, "lng": 85.811825 }, "sequenceOrder": 7, "arrivalTime": null },
+      { "name": "KV SCHOOL-2", "coordinates": { "lat": 20.281468, "lng": 85.797914 }, "sequenceOrder": 8, "arrivalTime": null },
+      { "name": "FIRE STATION", "coordinates": { "lat": 20.279301, "lng": 85.798847 }, "sequenceOrder": 9, "arrivalTime": null },
+      { "name": "ITER", "coordinates": { "lat": 20.352000, "lng": 85.817000 }, "sequenceOrder": 10, "arrivalTime": null }
+    ],
+    "endPoint": {
+      "name": "ITER",
+      "coordinates": { "lat": 20.352000, "lng": 85.817000 }
+    },
+    "classTime": "02:00 PM TO 6:00 PM",
+    "arrivalBus": "",
+    "drivers": [
+      { "name": "STARAM GOUDA", "contact": "7077369886" }
+    ],
+    "isActive": true,
+    "remarks": null
+  },
+  {
+    "busNumber": "UTARA-1-A",
+    "busName": "UTARA 1 (A)",
+    "routeName": "UTARA 1 (A) Morning Route",
+    "startPoint": {
+      "name": "GUDIA POKHARI",
+      "coordinates": { "lat": 20.166697, "lng": 85.856354 }
+    },
+    "stoppages": [
+      { "name": "GUDIA POKHARI", "coordinates": { "lat": 20.166697, "lng": 85.856354 }, "sequenceOrder": 0, "arrivalTime": "6:10 AM" },
+      { "name": "UTTARA", "coordinates": { "lat": 20.196864, "lng": 85.859598 }, "sequenceOrder": 1, "arrivalTime": "6:15 AM" },
+      { "name": "DHAULI CHHAKA", "coordinates": { "lat": 20.196864, "lng": 85.859598 }, "sequenceOrder": 2, "arrivalTime": "6:15 AM" },
+      { "name": "LINGIPUR", "coordinates": { "lat": 20.216705, "lng": 85.851481 }, "sequenceOrder": 3, "arrivalTime": "6:20 AM" },
+      { "name": "NUAGAON", "coordinates": { "lat": 20.223239, "lng": 85.844538 }, "sequenceOrder": 4, "arrivalTime": "6:25 AM" },
+      { "name": "SAMANTARA PUR", "coordinates": { "lat": 20.232857, "lng": 85.841098 }, "sequenceOrder": 5, "arrivalTime": "6:25 AM" },
+      { "name": "GARAGE CHHAK", "coordinates": { "lat": 20.236914, "lng": 85.841033 }, "sequenceOrder": 6, "arrivalTime": "6:25 AM" },
+      { "name": "RABI TALKIES", "coordinates": { "lat": 20.244635, "lng": 85.84096 }, "sequenceOrder": 7, "arrivalTime": "6:30 AM" },
+      { "name": "RAJA RANI", "coordinates": { "lat": 20.244804, "lng": 85.842916 }, "sequenceOrder": 8, "arrivalTime": "6:30 AM" },
+      { "name": "CHILLI POKHARI", "coordinates": { "lat": 20.244613, "lng": 85.84636 }, "sequenceOrder": 9, "arrivalTime": "6:30 AM" },
+      { "name": "RADHIKA TOWER", "coordinates": { "lat": 20.244264, "lng": 85.848526 }, "sequenceOrder": 10, "arrivalTime": "6:30 AM" },
+      { "name": "BRAHMESWAR", "coordinates": { "lat": 20.243846, "lng": 85.852279 }, "sequenceOrder": 11, "arrivalTime": "6:35 AM" },
+      { "name": "TANKAPANI BRIDGE", "coordinates": { "lat": 20.239056, "lng": 85.87707 }, "sequenceOrder": 12, "arrivalTime": "6:40 AM" },
+      { "name": "BADAGADA", "coordinates": { "lat": 20.250311, "lng": 85.848892 }, "sequenceOrder": 13, "arrivalTime": null },
+      { "name": "BIEM SCHOOL", "coordinates": { "lat": 20.256315, "lng": 85.84436 }, "sequenceOrder": 14, "arrivalTime": null },
+      { "name": "KALPANA", "coordinates": { "lat": 20.258484, "lng": 85.840826 }, "sequenceOrder": 15, "arrivalTime": null },
+      { "name": "OLD STATION", "coordinates": { "lat": 20.263425, "lng": 85.845405 }, "sequenceOrder": 16, "arrivalTime": null },
+      { "name": "RABITALKIES", "coordinates": { "lat": 20.244804, "lng": 85.842916 }, "sequenceOrder": 17, "arrivalTime": null },
+      { "name": "VIVEKANANDA MARG", "coordinates": { "lat": 20.249082, "lng": 85.836221 }, "sequenceOrder": 18, "arrivalTime": null },
+      { "name": "MAUSIMA", "coordinates": { "lat": 20.253015, "lng": 85.836292 }, "sequenceOrder": 19, "arrivalTime": null },
+      { "name": "SISHUBHABAN", "coordinates": { "lat": 20.254968, "lng": 85.831738 }, "sequenceOrder": 20, "arrivalTime": null },
+      { "name": "NEW FOREST PARK", "coordinates": { "lat": 20.255409, "lng": 85.826591 }, "sequenceOrder": 21, "arrivalTime": null },
+      { "name": "PALASPALI (NAVIN NIVAS)", "coordinates": { "lat": 20.255409, "lng": 85.826591 }, "sequenceOrder": 22, "arrivalTime": null },
+      { "name": "BHIM TANGI ROAD", "coordinates": { "lat": 20.237559, "lng": 85.821882 }, "sequenceOrder": 23, "arrivalTime": null },
+      { "name": "LINGARAJ STATION SQR", "coordinates": { "lat": 20.237559, "lng": 85.821882 }, "sequenceOrder": 24, "arrivalTime": null },
+      { "name": "POKHARIPUT SQR", "coordinates": { "lat": 20.237559, "lng": 85.821882 }, "sequenceOrder": 25, "arrivalTime": null },
+      { "name": "ITER", "coordinates": { "lat": 20.352000, "lng": 85.817000 }, "sequenceOrder": 26, "arrivalTime": null }
+    ],
+    "endPoint": {
+      "name": "ITER",
+      "coordinates": { "lat": 20.352000, "lng": 85.817000 }
+    },
+    "classTime": "08:00 AM TO 1:00 PM",
+    "arrivalBus": "OR 02 BZ 7144",
+    "drivers": [
+      { "name": "BENUDHAR MARTHA", "contact": "9438847419" },
+      { "name": "PRASANNA SETHY", "contact": "9438661579" }
+    ],
+    "isActive": true,
+    "remarks": "ARRIVAL AT ITER 07:45AM, DEPARTURE FROM ITER 1:15PM"
+  },
+  {
+    "busNumber": "UTARA-2-A",
+    "busName": "UTARA 2 (A)",
+    "routeName": "UTARA 2 (A) Afternoon Route",
+    "startPoint": {
+      "name": "GUDIA POKHARI",
+      "coordinates": { "lat": 20.166697, "lng": 85.856354 }
+    },
+    "stoppages": [
+      { "name": "GUDIA POKHARI", "coordinates": { "lat": 20.166697, "lng": 85.856354 }, "sequenceOrder": 0, "arrivalTime": "12:20 PM" },
+      { "name": "UTTARA", "coordinates": { "lat": 20.196864, "lng": 85.859598 }, "sequenceOrder": 1, "arrivalTime": "12:25 PM" },
+      { "name": "DHAULI CHHAKA", "coordinates": { "lat": 20.196864, "lng": 85.859598 }, "sequenceOrder": 2, "arrivalTime": "12:25 PM" },
+      { "name": "LINGIPUR", "coordinates": { "lat": 20.216705, "lng": 85.851481 }, "sequenceOrder": 3, "arrivalTime": "12:30 PM" },
+      { "name": "NUAGAON", "coordinates": { "lat": 20.223239, "lng": 85.844538 }, "sequenceOrder": 4, "arrivalTime": "12:30 PM" },
+      { "name": "SAMANTARA PUR", "coordinates": { "lat": 20.232857, "lng": 85.841098 }, "sequenceOrder": 5, "arrivalTime": "12:35 PM" },
+      { "name": "GARAGE CHHAK", "coordinates": { "lat": 20.236914, "lng": 85.841033 }, "sequenceOrder": 6, "arrivalTime": "12:35 PM" },
+      { "name": "RABI TALKIES", "coordinates": { "lat": 20.244635, "lng": 85.84096 }, "sequenceOrder": 7, "arrivalTime": "12:40 PM" },
+      { "name": "RAJA RANI", "coordinates": { "lat": 20.244804, "lng": 85.842916 }, "sequenceOrder": 8, "arrivalTime": "12:40 PM" },
+      { "name": "CHILLI POKHARI", "coordinates": { "lat": 20.244613, "lng": 85.84636 }, "sequenceOrder": 9, "arrivalTime": "12:40 PM" },
+      { "name": "RADHIKA TOWER", "coordinates": { "lat": 20.244264, "lng": 85.848526 }, "sequenceOrder": 10, "arrivalTime": "12:40 PM" },
+      { "name": "BRAHMESWAR", "coordinates": { "lat": 20.243846, "lng": 85.852279 }, "sequenceOrder": 11, "arrivalTime": "12:45 PM" },
+      { "name": "TANKAPANI BRIDGE", "coordinates": { "lat": 20.239056, "lng": 85.87707 }, "sequenceOrder": 12, "arrivalTime": "12:50 PM" },
+      { "name": "BADAGADA", "coordinates": { "lat": 20.250311, "lng": 85.848892 }, "sequenceOrder": 13, "arrivalTime": "12:55 PM" },
+      { "name": "BIEM SCHOOL", "coordinates": { "lat": 20.256315, "lng": 85.84436 }, "sequenceOrder": 14, "arrivalTime": "1:00 PM" },
+      { "name": "KALPANA", "coordinates": { "lat": 20.258484, "lng": 85.840826 }, "sequenceOrder": 15, "arrivalTime": "1:00 PM" },
+      { "name": "OLD STATION", "coordinates": { "lat": 20.263425, "lng": 85.845405 }, "sequenceOrder": 16, "arrivalTime": "1:05 PM" },
+      { "name": "RABITALKIES", "coordinates": { "lat": 20.244804, "lng": 85.842916 }, "sequenceOrder": 17, "arrivalTime": "1:10 PM" },
+      { "name": "VIVEKANANDA MARG", "coordinates": { "lat": 20.249082, "lng": 85.836221 }, "sequenceOrder": 18, "arrivalTime": "1:10 PM" },
+      { "name": "MAUSIMA", "coordinates": { "lat": 20.253015, "lng": 85.836292 }, "sequenceOrder": 19, "arrivalTime": "1:15 PM" },
+      { "name": "SISHUBHABAN", "coordinates": { "lat": 20.254968, "lng": 85.831738 }, "sequenceOrder": 20, "arrivalTime": "1:15 AM" },
+      { "name": "NEW FOREST PARK", "coordinates": { "lat": 20.255409, "lng": 85.826591 }, "sequenceOrder": 21, "arrivalTime": "1:15 PM" },
+      { "name": "PALASPALI (NAVIN NIVAS)", "coordinates": { "lat": 20.255409, "lng": 85.826591 }, "sequenceOrder": 22, "arrivalTime": "1:20 PM" },
+      { "name": "BHIM TANGI ROAD", "coordinates": { "lat": 20.237559, "lng": 85.821882 }, "sequenceOrder": 23, "arrivalTime": "1:25 PM" },
+      { "name": "LINGARAJ STATION SQR", "coordinates": { "lat": 20.237559, "lng": 85.821882 }, "sequenceOrder": 24, "arrivalTime": "1:25 PM" },
+      { "name": "POKHARIPUT SQR", "coordinates": { "lat": 20.237559, "lng": 85.821882 }, "sequenceOrder": 25, "arrivalTime": "1:30 PM" },
+      { "name": "ITER", "coordinates": { "lat": 20.352000, "lng": 85.817000 }, "sequenceOrder": 26, "arrivalTime": "1:40 PM" }
+    ],
+    "endPoint": {
+      "name": "ITER",
+      "coordinates": { "lat": 20.352000, "lng": 85.817000 }
+    },
+    "classTime": "02:00 PM TO 6:00 PM",
+    "arrivalBus": "OD 33 D 4644",
+    "drivers": [
+      { "name": "RANJIT PRADHAN", "contact": "8455095868" },
+      { "name": "SUBRAT STH1", "contact": "8117844073" }
+    ],
+    "isActive": true,
+    "remarks": "ARRIVAL AT ITER 01:45PM, DEPARTURE FROM ITER 06:15PM"
+  },
+  {
+    "busNumber": "KESURA-1-A",
+    "busName": "KESURA 1 (A)",
+    "routeName": "KESURA 1 (A) Morning Route",
+    "startPoint": {
+      "name": "VSS NAGAR (KALYANI MANDAP)",
+      "coordinates": { "lat": 20.305001, "lng": 85.848423 }
+    },
+    "stoppages": [
+      { "name": "VSS NAGAR (KALYANI MANDAP)", "coordinates": { "lat": 20.305001, "lng": 85.848423 }, "sequenceOrder": 0, "arrivalTime": "5:55 AM" },
+      { "name": "VSS NAGAR", "coordinates": { "lat": 20.303025, "lng": 85.848698 }, "sequenceOrder": 1, "arrivalTime": "6:00 AM" },
+      { "name": "CHAKEISIANI", "coordinates": { "lat": 20.310312, "lng": 85.857325 }, "sequenceOrder": 2, "arrivalTime": "6:05 AM" },
+      { "name": "RASULGARH", "coordinates": { "lat": 20.294485, "lng": 85.857279 }, "sequenceOrder": 3, "arrivalTime": "6:10 AM" },
+      { "name": "GGP CHOWK", "coordinates": { "lat": 20.294228, "lng": 85.863422 }, "sequenceOrder": 4, "arrivalTime": "6:15 AM" },
+      { "name": "PANDRA", "coordinates": { "lat": 20.310294, "lng": 85.873839 }, "sequenceOrder": 5, "arrivalTime": "6:15 AM" },
+      { "name": "KESURA, MANGARAJ POINT", "coordinates": { "lat": 20.277307, "lng": 85.872376 }, "sequenceOrder": 6, "arrivalTime": "6:15 AM" },
+      { "name": "JAGANNATH NAGAR", "coordinates": { "lat": 20.301025, "lng": 85.83327 }, "sequenceOrder": 7, "arrivalTime": "6:20 AM" },
+      { "name": "JHARAPARA (GANESH PANDAP)", "coordinates": { "lat": 20.277053, "lng": 85.859963 }, "sequenceOrder": 8, "arrivalTime": "6:22 AM" },
+      { "name": "JHARAPARA", "coordinates": { "lat": 20.274033, "lng": 85.857892 }, "sequenceOrder": 9, "arrivalTime": "6:30 AM" },
+      { "name": "LAXMI SAGAR", "coordinates": { "lat": 20.269071, "lng": 85.849046 }, "sequenceOrder": 10, "arrivalTime": "6:35 AM" },
+      { "name": "CUTTACK ROAD", "coordinates": { "lat": 20.269071, "lng": 85.849046 }, "sequenceOrder": 11, "arrivalTime": "6:35 AM" },
+      { "name": "BOMIKHAL", "coordinates": { "lat": 20.285761, "lng": 85.857681 }, "sequenceOrder": 12, "arrivalTime": "6:40 AM" },
+      { "name": "VANIVIHAR", "coordinates": { "lat": 20.296173, "lng": 85.842683 }, "sequenceOrder": 13, "arrivalTime": "6:45 AM" },
+      { "name": "RUPALI SOR", "coordinates": { "lat": 20.289406, "lng": 85.842906 }, "sequenceOrder": 14, "arrivalTime": "6:50 AM" },
+      { "name": "SAHEED NAGAR", "coordinates": { "lat": 20.285959, "lng": 85.846288 }, "sequenceOrder": 15, "arrivalTime": "6:50 AM" },
+      { "name": "NICCO PARK", "coordinates": { "lat": 20.285959, "lng": 85.846288 }, "sequenceOrder": 16, "arrivalTime": "6:55 AM" },
+      { "name": "KALIMADIR", "coordinates": { "lat": 20.282911, "lng": 85.843816 }, "sequenceOrder": 17, "arrivalTime": "6:55 AM" },
+      { "name": "RAM MANDIR", "coordinates": { "lat": 20.277962, "lng": 85.843548 }, "sequenceOrder": 18, "arrivalTime": "6:55 AM" },
+      { "name": "KESHARI TALKIES", "coordinates": { "lat": 20.277962, "lng": 85.843548 }, "sequenceOrder": 19, "arrivalTime": "7:00 AM" },
+      { "name": "MASTER CANTEEN", "coordinates": { "lat": 20.268885, "lng": 85.841342 }, "sequenceOrder": 20, "arrivalTime": "7:05 AM" },
+      { "name": "RAJ MAHAL SQUARE", "coordinates": { "lat": 20.268885, "lng": 85.841342 }, "sequenceOrder": 21, "arrivalTime": "7:05 AM" },
+      { "name": "GANGA NAGAR", "coordinates": { "lat": 20.260206, "lng": 85.824804 }, "sequenceOrder": 22, "arrivalTime": "7:10 AM" },
+      { "name": "GOVERNOR HOUSE", "coordinates": { "lat": 20.260206, "lng": 85.824804 }, "sequenceOrder": 23, "arrivalTime": "7:15 AM" },
+      { "name": "GOPABANDHU SQUARE", "coordinates": { "lat": 20.269723, "lng": 85.812925 }, "sequenceOrder": 24, "arrivalTime": "7:20 AM" },
+      { "name": "ITER", "coordinates": { "lat": 20.352000, "lng": 85.817000 }, "sequenceOrder": 25, "arrivalTime": "7:35 AM" }
+    ],
+    "endPoint": {
+      "name": "ITER",
+      "coordinates": { "lat": 20.352000, "lng": 85.817000 }
+    },
+    "classTime": "08:00 AM TO 1:00 PM",
+    "arrivalBus": "OD 33 D 5644",
+    "drivers": [
+      { "name": "KANHU KISHORE SAHOO", "contact": "9556067571" },
+      { "name": "RAKESH PANDA", "contact": "8260347341" }
+    ],
+    "isActive": true,
+    "remarks": "ARRIVAL AT ITER 07:45AM, DEPARTURE FROM ITER 1:15PM"
+  },
+  {
+    "busNumber": "KESURA-2-A",
+    "busName": "KESURA 2 (A)",
+    "routeName": "KESURA 2 (A) Afternoon Route",
+    "startPoint": {
+      "name": "VSS NAGAR (KALYANI MANDAP)",
+      "coordinates": { "lat": 20.305001, "lng": 85.848423 }
+    },
+    "stoppages": [
+      { "name": "VSS NAGAR (KALYANI MANDAP)", "coordinates": { "lat": 20.305001, "lng": 85.848423 }, "sequenceOrder": 0, "arrivalTime": "11:50 AM" },
+      { "name": "VSS NAGAR", "coordinates": { "lat": 20.303025, "lng": 85.848698 }, "sequenceOrder": 1, "arrivalTime": "11:55 AM" },
+      { "name": "CHAKEISIANI", "coordinates": { "lat": 20.310312, "lng": 85.857325 }, "sequenceOrder": 2, "arrivalTime": "11:55 AM" },
+      { "name": "RASULGARI", "coordinates": { "lat": 20.294485, "lng": 85.857279 }, "sequenceOrder": 3, "arrivalTime": "12:00 PM" },
+      { "name": "GGP CHOWK", "coordinates": { "lat": 20.294228, "lng": 85.863422 }, "sequenceOrder": 4, "arrivalTime": "12:00 PM" },
+      { "name": "PANDRA", "coordinates": { "lat": 20.310294, "lng": 85.873839 }, "sequenceOrder": 5, "arrivalTime": "12:10 PM" },
+      { "name": "KESURA, MANGARAJ POINT", "coordinates": { "lat": 20.277307, "lng": 85.872376 }, "sequenceOrder": 6, "arrivalTime": "12:15 PM" },
+      { "name": "JAGANNATH NAGAR", "coordinates": { "lat": 20.301025, "lng": 85.83327 }, "sequenceOrder": 7, "arrivalTime": "12:15 PM" },
+      { "name": "I HARAPARA (GANESH PANDAP)", "coordinates": { "lat": 20.277053, "lng": 85.859963 }, "sequenceOrder": 8, "arrivalTime": "12:20 PM" },
+      { "name": "I HARAPARA", "coordinates": { "lat": 20.274033, "lng": 85.857892 }, "sequenceOrder": 9, "arrivalTime": "12:25 PM" },
+      { "name": "LAXMI SAGAR", "coordinates": { "lat": 20.269071, "lng": 85.849046 }, "sequenceOrder": 10, "arrivalTime": "12:30 PM" },
+      { "name": "CUTTACK ROAD", "coordinates": { "lat": 20.269071, "lng": 85.849046 }, "sequenceOrder": 11, "arrivalTime": "12:30 PM" },
+      { "name": "BOMIKHAL", "coordinates": { "lat": 20.285761, "lng": 85.857681 }, "sequenceOrder": 12, "arrivalTime": "12:35 PM" },
+      { "name": "VANIVIHAR", "coordinates": { "lat": 20.296173, "lng": 85.842683 }, "sequenceOrder": 13, "arrivalTime": "12:40 PM" },
+      { "name": "RUPALI SQR", "coordinates": { "lat": 20.289406, "lng": 85.842906 }, "sequenceOrder": 14, "arrivalTime": "12:40 PM" },
+      { "name": "SAHEED NAGAR", "coordinates": { "lat": 20.285959, "lng": 85.846288 }, "sequenceOrder": 15, "arrivalTime": "12:40 PM" },
+      { "name": "NICCO PARK", "coordinates": { "lat": 20.285959, "lng": 85.846288 }, "sequenceOrder": 16, "arrivalTime": "12:45 PM" },
+      { "name": "UNIT-9", "coordinates": { "lat": 20.2829, "lng": 85.869 }, "sequenceOrder": 17, "arrivalTime": "12:45 PM" },
+      { "name": "KALIMADIR", "coordinates": { "lat": 20.282911, "lng": 85.843816 }, "sequenceOrder": 18, "arrivalTime": "12:50 PM" },
+      { "name": "RAM MANDIR", "coordinates": { "lat": 20.277962, "lng": 85.843548 }, "sequenceOrder": 19, "arrivalTime": "12:55 PM" },
+      { "name": "KESHARI TALKIES", "coordinates": { "lat": 20.277962, "lng": 85.843548 }, "sequenceOrder": 20, "arrivalTime": "12:55 PM" },
+      { "name": "MASTER CANTEEN", "coordinates": { "lat": 20.268885, "lng": 85.841342 }, "sequenceOrder": 21, "arrivalTime": "1:00 PM" },
+      { "name": "RAJ MAHAL SQUARE", "coordinates": { "lat": 20.268885, "lng": 85.841342 }, "sequenceOrder": 22, "arrivalTime": "1:05 PM" },
+      { "name": "GANGA NAGAR", "coordinates": { "lat": 20.260206, "lng": 85.824804 }, "sequenceOrder": 23, "arrivalTime": "1:05 PM" },
+      { "name": "GOVERNOR HOUSE", "coordinates": { "lat": 20.260206, "lng": 85.824804 }, "sequenceOrder": 24, "arrivalTime": "1:15 PM" },
+      { "name": "GOPABANDHU SQUARE", "coordinates": { "lat": 20.269723, "lng": 85.812925 }, "sequenceOrder": 25, "arrivalTime": "1:15 PM" },
+      { "name": "ITER", "coordinates": { "lat": 20.352000, "lng": 85.817000 }, "sequenceOrder": 26, "arrivalTime": "1:45 PM" }
+    ],
+    "endPoint": {
+      "name": "ITER",
+      "coordinates": { "lat": 20.352000, "lng": 85.817000 }
+    },
+    "classTime": "02:00 PM TO 6:00 PM",
+    "arrivalBus": "OR02BZ7044",
+    "drivers": [
+      { "name": "SHYAM SUNDAR", "contact": "7751089682" },
+      { "name": "SUMANTA BHOI", "contact": "7327019728" }
+    ],
+    "isActive": true,
+    "remarks": "ARRIVAL AT ITER 01:45PM, DEPARTURE FROM ITER 06:15PM"
+  },
+  {
+    "busNumber": "KHORDHA-1-A",
+    "busName": "KHORDHA 1 (A)",
+    "routeName": "KHORDHA 1 (A) Morning Route",
+    "startPoint": {
+      "name": "CHANDI SQUARE",
+      "coordinates": { "lat": 20.1869, "lng": 85.6189 }
+    },
+    "stoppages": [
+      { "name": "CHANDI SQUARE", "coordinates": { "lat": 20.1869, "lng": 85.6189 }, "sequenceOrder": 0, "arrivalTime": "5:40 AM" },
+      { "name": "KHORDHA OLD BUS STAND", "coordinates": { "lat": 20.1824, "lng": 85.6198 }, "sequenceOrder": 1, "arrivalTime": "5:45 AM" },
+      { "name": "KHORDHA NEW BUS STAND", "coordinates": { "lat": 20.1786, "lng": 85.6176 }, "sequenceOrder": 2, "arrivalTime": "5:50 AM" },
+      { "name": "COLECTER SQUARE", "coordinates": { "lat": 20.1752, "lng": 85.6134 }, "sequenceOrder": 3, "arrivalTime": "5:50 AM" },
+      { "name": "BARUNEI INDUSTRIAL", "coordinates": { "lat": 20.1709, "lng": 85.6108 }, "sequenceOrder": 4, "arrivalTime": "6:00 AM" },
+      { "name": "KHORDHA BY-PASS", "coordinates": { "lat": 20.1709, "lng": 85.6108 }, "sequenceOrder": 5, "arrivalTime": "6:00 AM" },
+      { "name": "BADATOTA (JATANI ROAD)", "coordinates": { "lat": 20.1658, "lng": 85.6039 }, "sequenceOrder": 6, "arrivalTime": "6:05 AM" },
+      { "name": "NISER SQR", "coordinates": { "lat": 20.1496, "lng": 85.6764 }, "sequenceOrder": 7, "arrivalTime": "6:10 AM" },
+      { "name": "HARI BAHINA SQR", "coordinates": { "lat": 20.1446, "lng": 85.6715 }, "sequenceOrder": 8, "arrivalTime": "6:15 AM" },
+      { "name": "SITARAM SQR", "coordinates": { "lat": 20.1419, "lng": 85.6684 }, "sequenceOrder": 9, "arrivalTime": "6:20 AM" },
+      { "name": "JATANI MEDICAL", "coordinates": { "lat": 20.1366, "lng": 85.6629 }, "sequenceOrder": 10, "arrivalTime": "6:25 AM" },
+      { "name": "CENTURIAN", "coordinates": { "lat": 20.1326, "lng": 85.6602 }, "sequenceOrder": 11, "arrivalTime": "6:25 AM" },
+      { "name": "JATANI GATE", "coordinates": { "lat": 20.1276, "lng": 85.6571 }, "sequenceOrder": 12, "arrivalTime": "6:35 AM" },
+      { "name": "GOHIRA", "coordinates": { "lat": 20.1219, "lng": 85.6528 }, "sequenceOrder": 13, "arrivalTime": "6:40 AM" },
+      { "name": "TAMANDO", "coordinates": { "lat": 20.1152, "lng": 85.6503 }, "sequenceOrder": 14, "arrivalTime": "6:40 AM" },
+      { "name": "KALINGA VIHAR", "coordinates": { "lat": 20.1086, "lng": 85.6482 }, "sequenceOrder": 15, "arrivalTime": "6:45 AM" },
+      { "name": "PATRAPADA", "coordinates": { "lat": 20.1086, "lng": 85.6482 }, "sequenceOrder": 16, "arrivalTime": "6:45 AM" },
+      { "name": "AIGINIA", "coordinates": { "lat": 20.1018, "lng": 85.6461 }, "sequenceOrder": 17, "arrivalTime": "6:50 AM" },
+      { "name": "AMRI (MANIPAL HOSPITAL)", "coordinates": { "lat": 20.0931, "lng": 85.6419 }, "sequenceOrder": 18, "arrivalTime": "7:00 AM" },
+      { "name": "KALINGA NAGAR", "coordinates": { "lat": 20.0974, "lng": 85.6438 }, "sequenceOrder": 19, "arrivalTime": "7:05 AM" },
+      { "name": "NUAGAON CHHAK", "coordinates": { "lat": 20.0887, "lng": 85.6393 }, "sequenceOrder": 20, "arrivalTime": "7:10 AM" },
+      { "name": "GOTHAPATANA", "coordinates": { "lat": 20.0831, "lng": 85.6361 }, "sequenceOrder": 21, "arrivalTime": "7:15 AM" },
+      { "name": "SUM HOSPITAL", "coordinates": { "lat": 20.0769, "lng": 85.6322 }, "sequenceOrder": 22, "arrivalTime": "7:35 AM" },
+      { "name": "ITER", "coordinates": { "lat": 20.352000, "lng": 85.817000 }, "sequenceOrder": 23, "arrivalTime": null }
+    ],
+    "endPoint": {
+      "name": "ITER",
+      "coordinates": { "lat": 20.352000, "lng": 85.817000 }
+    },
+    "classTime": "08:00 AM TO 1:00 PM",
+    "arrivalBus": "OD 02 CG 7175",
+    "drivers": [
+      { "name": "OMM PRAKASH PAIKRAY", "contact": "9348000482" },
+      { "name": "RAJENDRA", "contact": "8260703994" }
+    ],
+    "isActive": true,
+    "remarks": "ARRIVAL AT ITER 07:45AM, DEPARTURE FROM ITER 1:15PM"
+  },
+  {
+    "busNumber": "KHORDHA-2-A",
+    "busName": "KHORDHA 2 (A)",
+    "routeName": "KHORDHA 2 (A) Afternoon Route",
+    "startPoint": {
+      "name": "CHANDI SQUARE",
+      "coordinates": { "lat": 20.1869, "lng": 85.6189 }
+    },
+    "stoppages": [
+      { "name": "CHANDI SQUARE", "coordinates": { "lat": 20.1869, "lng": 85.6189 }, "sequenceOrder": 0, "arrivalTime": "11:50 AM" },
+      { "name": "KHORDHA OLD BUS STAND", "coordinates": { "lat": 20.1824, "lng": 85.6198 }, "sequenceOrder": 1, "arrivalTime": "11:50 AM" },
+      { "name": "KHORDHA NEW BUS STAND", "coordinates": { "lat": 20.1786, "lng": 85.6176 }, "sequenceOrder": 2, "arrivalTime": "11:55 AM" },
+      { "name": "COLECTER SQUARE", "coordinates": { "lat": 20.1752, "lng": 85.6134 }, "sequenceOrder": 3, "arrivalTime": "12:00 PM" },
+      { "name": "BARIJNEI INDUSTRIAL", "coordinates": { "lat": 20.1709, "lng": 85.6108 }, "sequenceOrder": 4, "arrivalTime": "12:05 PM" },
+      { "name": "KHORDHA BY-PASS", "coordinates": { "lat": 20.1709, "lng": 85.6108 }, "sequenceOrder": 5, "arrivalTime": "12:05 PM" },
+      { "name": "BADATOTA (JATANI ROAD)", "coordinates": { "lat": 20.1658, "lng": 85.6039 }, "sequenceOrder": 6, "arrivalTime": "12:10 PM" },
+      { "name": "NISER SQR", "coordinates": { "lat": 20.1496, "lng": 85.6764 }, "sequenceOrder": 7, "arrivalTime": "12:15 PM" },
+      { "name": "HARI BAHINA SQR", "coordinates": { "lat": 20.1446, "lng": 85.6715 }, "sequenceOrder": 8, "arrivalTime": "12:15 PM" },
+      { "name": "SITARAM SQR", "coordinates": { "lat": 20.1419, "lng": 85.6684 }, "sequenceOrder": 9, "arrivalTime": "12:20 PM" },
+      { "name": "JATANI MEDICAL", "coordinates": { "lat": 20.1366, "lng": 85.6629 }, "sequenceOrder": 10, "arrivalTime": "12:25 PM" },
+      { "name": "CENTURIAN", "coordinates": { "lat": 20.1326, "lng": 85.6602 }, "sequenceOrder": 11, "arrivalTime": "12:25 PM" },
+      { "name": "JATANI GATE", "coordinates": { "lat": 20.1276, "lng": 85.6571 }, "sequenceOrder": 12, "arrivalTime": "12:30 PM" },
+      { "name": "GOHIRA", "coordinates": { "lat": 20.1219, "lng": 85.6528 }, "sequenceOrder": 13, "arrivalTime": "12:35 PM" },
+      { "name": "TAMANDO", "coordinates": { "lat": 20.1152, "lng": 85.6503 }, "sequenceOrder": 14, "arrivalTime": "12:40 PM" },
+      { "name": "KALINGA VIHAR", "coordinates": { "lat": 20.1086, "lng": 85.6482 }, "sequenceOrder": 15, "arrivalTime": "12:40 PM" },
+      { "name": "PATRAPADA", "coordinates": { "lat": 20.1086, "lng": 85.6482 }, "sequenceOrder": 16, "arrivalTime": "12:45 PM" },
+      { "name": "AIGINIA", "coordinates": { "lat": 20.1018, "lng": 85.6461 }, "sequenceOrder": 17, "arrivalTime": "12:45 PM" },
+      { "name": "AMRI (MANIPAL HOSPITAL)", "coordinates": { "lat": 20.0931, "lng": 85.6419 }, "sequenceOrder": 18, "arrivalTime": "12:50 PM" },
+      { "name": "KALINGA NAGAR", "coordinates": { "lat": 20.0974, "lng": 85.6438 }, "sequenceOrder": 19, "arrivalTime": "1:00 PM" },
+      { "name": "IGKC HOSPITAL", "coordinates": { "lat": 20.0931, "lng": 85.6419 }, "sequenceOrder": 20, "arrivalTime": "1:05 PM" },
+      { "name": "NUAGAON CHHAK", "coordinates": { "lat": 20.0887, "lng": 85.6393 }, "sequenceOrder": 21, "arrivalTime": "1:05 PM" },
+      { "name": "GOTHAPATANA", "coordinates": { "lat": 20.0831, "lng": 85.6361 }, "sequenceOrder": 22, "arrivalTime": "1:10 PM" },
+      { "name": "SUM HOSPITAL", "coordinates": { "lat": 20.0769, "lng": 85.6322 }, "sequenceOrder": 23, "arrivalTime": "1:20 PM" },
+      { "name": "ITER", "coordinates": { "lat": 20.352000, "lng": 85.817000 }, "sequenceOrder": 24, "arrivalTime": "1:45 PM" }
+    ],
+    "endPoint": {
+      "name": "ITER",
+      "coordinates": { "lat": 20.352000, "lng": 85.817000 }
+    },
+    "classTime": "02:00 PM TO 6:00 PM",
+    "arrivalBus": "",
+    "drivers": [
+      { "name": "ANANDA NAYAK", "contact": "7064108071" },
+      { "name": "SOMANATH BHOI", "contact": "6370145166" }
+    ],
+    "isActive": true,
+    "remarks": "ARRIVAL AT ITER 01:45PM, DEPARTURE FROM ITER 06:15PM"
+  }
+]

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { io, Socket } from "socket.io-client";
 import { Menu, MapPin, User, Bus, Clock, Phone } from "lucide-react";
 import MobileLayout from "@/components/MobileLayout";
 import { Switch } from "@/components/ui/switch";
@@ -11,17 +12,52 @@ const DriverHome = () => {
   const [dutyStatus, setDutyStatus] = useState(true);
   const [locationSharing, setLocationSharing] = useState(true);
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [socket, setSocket] = useState<Socket | null>(null);
+  
+  // Initialize socket connection
+  useEffect(() => {
+    const newSocket = io(import.meta.env.VITE_BACKEND_URL || "http://localhost:8000");
+    setSocket(newSocket);
+    
+    // Cleanup
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
+  
+  // Join bus room when user route changes
+  useEffect(() => {
+    if (socket && user?.routeNo) {
+      const busId = String(user.routeNo);
+      socket.emit("join-bus", { busId });
+    }
+  }, [socket, user?.routeNo]);
 
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (navigator.geolocation && locationSharing && dutyStatus) {
       const id = navigator.geolocation.watchPosition(
-        (pos) => setCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-        () => {},
-        { enableHighAccuracy: true }
+        (pos) => {
+          const newCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+          setCoords(newCoords);
+          
+          // Send location to backend if socket is connected and user is on duty
+          if (socket && user?.routeNo) {
+            socket.emit("driver-send-location", {
+              busId: user.routeNo,
+              lat: newCoords.lat,
+              lng: newCoords.lng
+            });
+          }
+        },
+        (error) => {
+          console.error('Geolocation error:', error);
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
       );
+      
       return () => navigator.geolocation.clearWatch(id);
     }
-  }, []);
+  }, [socket, locationSharing, dutyStatus, user?.routeNo]);
 
   return (
     <MobileLayout>
