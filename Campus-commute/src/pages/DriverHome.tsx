@@ -42,59 +42,78 @@ const DriverHome = () => {
 
   return (
     <MobileLayout>
-      <div className="relative min-h-screen bg-background">
-        {/* Top Bar */}
-        <div className="px-6 pt-12 pb-4 relative z-50 pointer-events-auto">
-          <div className="flex items-center justify-between">
-            <button
-              type="button"
-              aria-label="Open menu"
-              onClick={() => setSidebarOpen((s) => !s)}
-              className="p-2 -ml-2 z-50 active:scale-95 transition-transform touch-manipulation"
-            >
-              <Menu className="w-6 h-6 text-foreground" />
-            </button>
-            
-            <h1 className="text-lg font-semibold text-foreground">Driver Home</h1>
+  <div className="flex flex-col min-h-screen bg-background">
 
-            <div className="w-10" />
-          </div>
-        </div>
-
-        {/* Map */}
-        <MapContainer 
-          center={[13.0827, 80.2707]} 
-          zoom={13} 
-          style={{ height: 'calc(100vh - 80px)', width: '100%' }}
+    {/* Top Bar */}
+    <div className="px-6  pb-4 z-50 bg-background">
+      <div className="flex items-center justify-between">
+        <button
+          type="button"
+          aria-label="Open menu"
+          onClick={() => setSidebarOpen((s) => !s)}
+          className="p-2 z-50 active:scale-95 transition-transform touch-manipulation"
         >
-          <MapController coords={coords} />
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {coords && (
-            <Marker position={[coords.lat, coords.lng]}>
-              <Popup>Your current location</Popup>
-            </Marker>
-          )}
-        </MapContainer>
+          <Menu className="w-6 h-6 text-foreground" />
+        </button>
 
-        {/* Location Sharing Button */}
-        <div className="fixed bottom-0 left-0 right-0 z-[1001]" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
-          <div className="flex justify-center p-4">
-            <button 
-              onClick={() => setLocationSharing(!locationSharing)} 
-              className={`${locationSharing ? 'bg-red-500' : 'bg-green-500'} text-white py-3 px-8 rounded-lg font-medium shadow-lg min-w-[200px]`}
-            >
-              {locationSharing ? 'Stop' : 'Start'}
-            </button>
-          </div>
-        </div>
+        <h1 className="text-lg font-semibold text-foreground">
+          Driver Home
+        </h1>
 
-        {/* Sidebar */}
-        <DriverSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} dutyStatus={dutyStatus} onDutyStatusChange={setDutyStatus} />
+        <div className="w-10" />
       </div>
-    </MobileLayout>
+    </div>
+
+    {/* Map Section */}
+    <div className="flex-1 relative">
+      <MapContainer
+        center={[13.0827, 80.2707]}
+        zoom={13}
+        className="absolute inset-0 w-full h-full z-0"
+      >
+        <MapController coords={coords} />
+
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+
+        {coords && (
+          <Marker position={[coords.lat, coords.lng]}>
+            <Popup>Your current location</Popup>
+          </Marker>
+        )}
+      </MapContainer>
+    </div>
+
+    {/* Location Sharing Button */}
+    <div
+      className="fixed bottom-0 left-0 right-0 z-[1001]"
+      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+    >
+      <div className="flex justify-center p-4">
+        <button
+          onClick={() => setLocationSharing(!locationSharing)}
+          className={`${
+            locationSharing ? "bg-red-500" : "bg-green-500"
+          } text-white py-3 px-8 rounded-lg font-medium shadow-lg min-w-[200px]`}
+        >
+          {locationSharing ? "Stop" : "Start"}
+        </button>
+      </div>
+    </div>
+
+    {/* Sidebar */}
+    <DriverSidebar
+      open={sidebarOpen}
+      onClose={() => setSidebarOpen(false)}
+      dutyStatus={dutyStatus}
+      onDutyStatusChange={setDutyStatus}
+    />
+
+  </div>
+</MobileLayout>
+
   );
 };
 
