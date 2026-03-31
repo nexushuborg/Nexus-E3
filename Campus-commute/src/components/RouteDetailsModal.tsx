@@ -2,6 +2,15 @@ import React from "react";
 import { X, MapPin, Clock, Bus, User, Phone } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
+interface StopWithETA {
+  name: string;
+  time: string;
+  minutes?: number;
+  km?: string;
+  sequenceOrder?: number;
+  arrivalTime?: string;
+}
+
 interface RouteDetailsModalProps {
   open: boolean;
   onClose: () => void;
@@ -13,6 +22,7 @@ interface RouteDetailsModalProps {
   assignedDriver?: string;
   conductorName?: string;
   conductorPhone?: string;
+  stopETAs?: StopWithETA[];
 }
 
 const RouteDetailsModal: React.FC<RouteDetailsModalProps> = ({
@@ -26,6 +36,7 @@ const RouteDetailsModal: React.FC<RouteDetailsModalProps> = ({
   assignedDriver,
   conductorName,
   conductorPhone,
+  stopETAs,
 }) => {
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -50,17 +61,32 @@ const RouteDetailsModal: React.FC<RouteDetailsModalProps> = ({
               Route Stops
             </h3>
             <div className="space-y-2">
-              {stops.map((stop, index) => (
-                <div
-                  key={`${stop}-${index}`}
-                  className="flex items-center gap-3 text-sm"
-                >
-                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-xs font-semibold text-primary">
-                    {index + 1}
+              {(stopETAs && stopETAs.length > 0 ? stopETAs : stops.map(stop => ({ name: stop, time: "--:--" } as StopWithETA))).map((stopData, index) => {
+                const stopName = stopData.name;
+                const stopTime = stopData.time;
+                const stopMinutes = stopData.minutes;
+                const stopKm = stopData.km;
+                
+                return (
+                  <div
+                    key={`${stopName}-${index}`}
+                    className="flex items-center gap-3 text-sm"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-xs font-semibold text-primary">
+                      {index + 1}
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-foreground">{stopName}</div>
+                      {(stopMinutes !== undefined || stopTime !== "--:--") && (
+                        <div className="text-xs text-muted-foreground">
+                          {stopTime !== "--:--" && `${stopTime} `}
+                          {stopMinutes !== undefined && `• ETA: ${stopMinutes}min ${stopKm ? `(${stopKm}km)` : ''}`}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <span className="text-foreground">{stop}</span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

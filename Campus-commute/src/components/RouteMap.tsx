@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -8,11 +8,18 @@ interface Stop {
   lng: number;
   status: "passed" | "current" | "upcoming";
   time: string;
+  sequenceOrder?: number;
+  arrivalTime?: string;
+  minutes?: number;
+  km?: string;
 }
 
 interface RouteMapProps {
   stops: Stop[];
   routeNumber?: string;
+  busLocation?: { lat: number; lng: number };
+  showLiveTracking?: boolean;
+  currentStopIndex?: number;
 }
 
 // Fix leaflet default icon issue
@@ -36,7 +43,7 @@ const bearing = (lat1: number, lon1: number, lat2: number, lon2: number) => {
   return (toDeg(Math.atan2(y, x)) + 360) % 360;
 };
 
-const RouteMap: React.FC<RouteMapProps> = ({ stops, routeNumber = "Route" }) => {
+const RouteMap: React.FC<RouteMapProps> = ({ stops, routeNumber = "Route", busLocation, showLiveTracking, currentStopIndex }) => {
   const mapRef = useRef<L.Map | null>(null);
   const userMarkerRef = useRef<L.Marker | null>(null);
   const busMarkerRef = useRef<L.Marker | null>(null);
@@ -44,6 +51,18 @@ const RouteMap: React.FC<RouteMapProps> = ({ stops, routeNumber = "Route" }) => 
   const remainingLineRef = useRef<L.Polyline | null>(null);
   const watchIdRef = useRef<number | null>(null);
   const animationRef = useRef<number | null>(null);
+  
+  // Store props in refs to access them in useEffect
+  const busLocationRef = useRef(busLocation);
+  const showLiveTrackingRef = useRef(showLiveTracking);
+  const currentStopIndexRef = useRef(currentStopIndex);
+  
+  // Update refs when props change
+  useEffect(() => {
+    busLocationRef.current = busLocation;
+    showLiveTrackingRef.current = showLiveTracking;
+    currentStopIndexRef.current = currentStopIndex;
+  }, [busLocation, showLiveTracking, currentStopIndex]);
 
   // Initialize map once
   useEffect(() => {
@@ -150,13 +169,13 @@ const RouteMap: React.FC<RouteMapProps> = ({ stops, routeNumber = "Route" }) => 
         icon: L.divIcon({ html: el.outerHTML, className: "", iconSize: [36, 36], iconAnchor: [18, 18] }),
       })
         .addTo(map)
-        .bindPopup(`<strong>${stop.name}</strong><br/>Time: ${stop.time}`);
+        .bindPopup(`<strong>${stop.name}</strong><br/>Time: ${stop.time}${stop.minutes ? `<br/>ETA: ${stop.minutes} min${stop.km ? ` (${stop.km} km)` : ''}` : ''}`);
     });
 
     // Draw full route dashed for remaining and solid for completed
     const fullLine = L.polyline(coords, { color: "#3b82f6", weight: 3, opacity: 0.25, dashArray: "6,6" }).addTo(map);
 
-    // Bus marker simulation
+    // Bus marker
     let busPosIndex = 0;
     let busT = 0; // interpolation between stops[busPosIndex] -> stops[busPosIndex+1]
 
@@ -173,10 +192,36 @@ const RouteMap: React.FC<RouteMapProps> = ({ stops, routeNumber = "Route" }) => 
     busEl.style.transformOrigin = "center";
     busEl.innerText = "BUS";
 
-    const busMarker = L.marker(coords[0], {
+    // Use live bus location if available
+    const initialBusPosition = busLocation || coords[0];
+    const busMarker = L.marker(initialBusPosition, {
       icon: L.divIcon({ html: busEl.outerHTML, className: "", iconSize: [40, 24], iconAnchor: [20, 12] }),
     }).addTo(map);
     busMarkerRef.current = busMarker;
+
+    // If live tracking is enabled, use the provided bus location
+    if (showLiveTrackingRef.current && busLocationRef.current) {
+      busMarker.setLatLng([busLocationRef.current.lat, busLocationRef.current.lng]);
+      
+      // Update polyline to show completed route up to current position
+      const completedCoords = [coords[0]]; // Start from first stop
+      if (currentStopIndexRef.current !== undefined && currentStopIndexRef.current > 0) {
+        completedCoords.push(...coords.slice(1, currentStopIndexRef.current + 1));
+      }
+      
+      // We need to defer this update since completedLineRef is populated after this code
+      setTimeout(() => {
+        if (completedLineRef.current) {
+          completedLineRef.current.setLatLngs(completedCoords as any);
+        }
+        
+        if (remainingLineRef.current) {
+          // Remaining route from current position to end
+          const remainingCoords = [busLocationRef.current, ...coords.slice(currentStopIndexRef.current !== undefined ? currentStopIndexRef.current + 1 : 1)];
+          remainingLineRef.current.setLatLngs(remainingCoords as any);
+        }
+      }, 0);
+    }
 
     // Completed and remaining polylines
     const completedLine = L.polyline([coords[0]], { color: "#1f2937", weight: 4, opacity: 0.9 }).addTo(map);
@@ -190,37 +235,38 @@ const RouteMap: React.FC<RouteMapProps> = ({ stops, routeNumber = "Route" }) => 
     // Animation loop
     let lastTime = performance.now();
     const speed = 0.00005; // tune as needed
-
+    
     const animate = (now: number) => {
       const dt = now - lastTime;
       lastTime = now;
-
-      if (stops.length > 1) {
+    
+      // Only animate if live tracking is disabled
+      if (!showLiveTrackingRef.current && stops.length > 1) {
         busT += dt * speed;
         while (busT >= 1 && busPosIndex < stops.length - 2) {
           busT -= 1;
-          busPosIndex++;
+          busPosIndex++; 
         }
         const a = stops[busPosIndex];
         const b = stops[Math.min(busPosIndex + 1, stops.length - 1)];
         const lat = lerp(a.lat, b.lat, clamp(busT));
         const lng = lerp(a.lng, b.lng, clamp(busT));
         busMarker.setLatLng([lat, lng]);
-
+    
         // rotate based on bearing
         const head = bearing(a.lat, a.lng, b.lat, b.lng);
         const el = (busMarker.getElement() as HTMLElement | null);
         if (el) el.style.transform = `rotate(${head}deg)`;
-
+    
         // update polylines
         const completedCoords = coords.slice(0, busPosIndex + 1).concat([[lat, lng]] as any);
         completedLine.setLatLngs(completedCoords as any);
         remainingLine.setLatLngs([[lat, lng]].concat(coords.slice(busPosIndex + 1) as any));
       }
-
+    
       animationRef.current = requestAnimationFrame(animate);
     };
-
+    
     animationRef.current = requestAnimationFrame(animate);
 
     // User geolocation
