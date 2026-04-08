@@ -58,8 +58,7 @@ const RoutingControl = ({ stops, setIsRouteBusy }: { stops: any[], setIsRouteBus
       },
       altLineOptions: {
         styles: [{ color: '#9ca3af', opacity: 0.8, weight: 5 }]
-      },
-      createMarker: () => null // Prevent default marker creation since we have ours
+      }
     }).addTo(map);
 
     control.on('routesfound', function(e: any) {
