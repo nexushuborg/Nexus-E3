@@ -173,7 +173,7 @@ const RouteMap: React.FC<any> = () => {
     <div className="w-full h-full min-h-[50vh] relative z-0">
       
       {/* Traffic Pill Overlays */}
-      <div className="absolute top-[180px] md:top-8 left-1/2 -translate-x-1/2 z-[1000] pointer-events-none transition-all duration-500">
+      <div className="absolute top-[100px] left-1/2 -translate-x-1/2 z-[1000] pointer-events-none transition-all duration-500">
         {isRouteBusy ? (
           <div className="bg-amber-500/95 backdrop-blur text-white px-5 py-2.5 rounded-full text-xs md:text-sm shadow-xl flex items-center font-bold tracking-widest border-2 border-amber-400">
             HEAVY TRAFFIC - SHOWING ALTERNATIVES

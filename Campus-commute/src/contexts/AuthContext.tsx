@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 export type UserRole = "student" | "driver" | "admin" | null;
 
@@ -41,8 +41,23 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<UserData | null>(null);
+  const [user, setUser] = useState<UserData | null>(() => {
+    try {
+      const stored = localStorage.getItem("campus-commute-session");
+      return stored ? JSON.parse(stored) : null;
+    } catch { return null; }
+  });
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!user);
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("campus-commute-session", JSON.stringify(user));
+      setIsAuthenticated(true);
+    } else {
+      localStorage.removeItem("campus-commute-session");
+      setIsAuthenticated(false);
+    }
+  }, [user]);
   const [pendingRole, setPendingRole] = useState<UserRole>(null);
   const [pendingEmail, setPendingEmail] = useState("");
   const [pendingUserData, setPendingUserData] = useState<Partial<UserData>>({});
