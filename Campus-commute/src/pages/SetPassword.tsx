@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import MobileLayout from "@/components/MobileLayout";
+import AuthCard from "@/components/AuthCard";
 import FormInput from "@/components/FormInput";
 import GradientButton from "@/components/GradientButton";
 import BackButton from "@/components/BackButton";
@@ -78,52 +79,56 @@ const SetPassword = () => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col min-h-screen px-8 py-6">
-        <BackButton />
-        
-        <div className="flex-1 pt-8">
-          <h1 className="text-3xl font-bold text-foreground text-center mb-2">
-            Set Password
-          </h1>
-          <p className="text-muted-foreground text-center mb-12">
-            Welcome !
-          </p>
-
-          <div className="space-y-6">
-            <div>
-              <label className="block text-sm text-muted-foreground mb-2">New Password</label>
-              <FormInput
-                type="password"
-                placeholder="••••••••••"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                showPasswordToggle
-                showLockIcon
-                error={errors.newPassword}
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm text-muted-foreground mb-2">Confirm Password</label>
-              <FormInput
-                type="password"
-                placeholder="••••••••••"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                showPasswordToggle
-                showLockIcon
-                error={errors.confirmPassword}
-              />
-            </div>
+      <AuthCard>
+        <div className="flex flex-col min-h-[calc(100vh-5rem)]">
+          <div className="flex items-center justify-between mb-6">
+            <BackButton />
           </div>
 
-          <div className="mt-12">
-            <GradientButton onClick={handleSignUp}>
-              Sign Up
-            </GradientButton>
+          <div className="flex-1 pt-2">
+            <h1 className="text-3xl font-bold text-foreground text-center mb-2">
+              Set Password
+            </h1>
+            <p className="text-muted-foreground text-center mb-10">
+              Welcome!
+            </p>
+
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm text-muted-foreground mb-2">New Password</label>
+                <FormInput
+                  type="password"
+                  placeholder="••••••••••"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  showPasswordToggle
+                  showLockIcon
+                  error={errors.newPassword}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm text-muted-foreground mb-2">Confirm Password</label>
+                <FormInput
+                  type="password"
+                  placeholder="••••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  showPasswordToggle
+                  showLockIcon
+                  error={errors.confirmPassword}
+                />
+              </div>
+            </div>
+
+            <div className="mt-12">
+              <GradientButton onClick={handleSignUp}>
+                Sign Up
+              </GradientButton>
+            </div>
           </div>
         </div>
-      </div>
+      </AuthCard>
     </MobileLayout>
   );
 };

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MobileLayout from "@/components/MobileLayout";
+import AuthCard from "@/components/AuthCard";
 import GradientButton from "@/components/GradientButton";
 import BackButton from "@/components/BackButton";
 import FormInput from "@/components/FormInput";
@@ -107,95 +108,99 @@ const OTPVerification = () => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col min-h-screen px-8 py-6">
-        <BackButton />
-        
-        <div className="flex-1 pt-8">
-          {!showChangeEmail ? (
-            <>
-              <h1 className="text-2xl font-bold text-foreground text-center mb-4">
-                Verification Code
-              </h1>
-              <p className="text-muted-foreground text-center mb-8">
-                We have sent the verification code<br />to your Email address
-              </p>
+      <AuthCard>
+        <div className="flex flex-col min-h-[calc(100vh-5rem)]">
+          <div className="flex items-center justify-between mb-6">
+            <BackButton />
+          </div>
 
-              <div className="flex justify-center gap-4 mb-8">
-                {otp.map((digit, index) => (
-                  <input
-                    key={index}
-                    ref={(el) => (inputRefs.current[index] = el)}
-                    type="text"
-                    inputMode="numeric"
-                    maxLength={1}
-                    value={digit}
-                    onChange={(e) => handleChange(index, e.target.value)}
-                    onKeyDown={(e) => handleKeyDown(index, e)}
-                    className="w-16 h-16 text-center text-2xl font-semibold bg-background border-2 border-muted rounded-2xl focus:border-primary focus:outline-none transition-colors"
-                  />
-                ))}
-              </div>
+          <div className="flex-1 pt-2">
+            {!showChangeEmail ? (
+              <>
+                <h1 className="text-2xl font-bold text-foreground text-center mb-4">
+                  Verification Code
+                </h1>
+                <p className="text-muted-foreground text-center mb-8">
+                  We have sent the verification code<br />to your Email address
+                </p>
 
-              <GradientButton onClick={handleVerify}>
-                Verify
-              </GradientButton>
+                <div className="flex justify-center gap-4 mb-8">
+                  {otp.map((digit, index) => (
+                    <input
+                      key={index}
+                      ref={(el) => (inputRefs.current[index] = el)}
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={1}
+                      value={digit}
+                      onChange={(e) => handleChange(index, e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(index, e)}
+                      className="w-16 h-16 text-center text-2xl font-semibold bg-background border-2 border-muted rounded-2xl focus:border-primary focus:outline-none transition-colors"
+                    />
+                  ))}
+                </div>
 
-              <p className="text-center text-muted-foreground mt-6">
-                Didn't receive code?{" "}
-                <button 
-                  onClick={handleResend}
-                  className="text-foreground font-medium hover:underline"
-                  disabled={resendCount <= 0}
-                >
-                  Resend({resendCount} left)
-                </button>
-              </p>
-            </>
-          ) : (
-            <>
-              <h1 className="text-2xl font-bold text-foreground text-center mb-4">
-                Change Email Address
-              </h1>
-              <p className="text-muted-foreground text-center mb-8">
-                Enter your new email address
-              </p>
-
-              <div className="mb-6">
-                <FormInput
-                  placeholder="Enter new email address"
-                  type="email"
-                  value={newEmail}
-                  onChange={(e) => setNewEmail(e.target.value)}
-                />
-              </div>
-
-              <div className="space-y-4">
-                <GradientButton onClick={handleUpdateEmail}>
-                  Update Email
+                <GradientButton onClick={handleVerify}>
+                  Verify
                 </GradientButton>
-                <button
-                  onClick={() => {
-                    setShowChangeEmail(false);
-                    setNewEmail("");
-                  }}
-                  className="w-full py-3 px-4 border-2 border-foreground/20 rounded-full text-foreground font-medium hover:bg-muted transition-colors"
-                >
-                  Cancel
-                </button>
-              </div>
-            </>
+
+                <p className="text-center text-muted-foreground mt-6">
+                  Didn't receive code?{" "}
+                  <button 
+                    onClick={handleResend}
+                    className="text-foreground font-medium hover:underline"
+                    disabled={resendCount <= 0}
+                  >
+                    Resend({resendCount} left)
+                  </button>
+                </p>
+              </>
+            ) : (
+              <>
+                <h1 className="text-2xl font-bold text-foreground text-center mb-4">
+                  Change Email Address
+                </h1>
+                <p className="text-muted-foreground text-center mb-8">
+                  Enter your new email address
+                </p>
+
+                <div className="mb-6">
+                  <FormInput
+                    placeholder="Enter new email address"
+                    type="email"
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <GradientButton onClick={handleUpdateEmail}>
+                    Update Email
+                  </GradientButton>
+                  <button
+                    onClick={() => {
+                      setShowChangeEmail(false);
+                      setNewEmail("");
+                    }}
+                    className="w-full py-3 px-4 border-2 border-foreground/20 rounded-full text-foreground font-medium hover:bg-muted transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+
+          {!showChangeEmail && (
+            <button 
+              onClick={handleChangeEmail}
+              className="text-center text-muted-foreground hover:text-foreground transition-colors mt-8"
+            >
+              Change email address
+            </button>
           )}
         </div>
-
-        {!showChangeEmail && (
-          <button 
-            onClick={handleChangeEmail}
-            className="text-center text-muted-foreground hover:text-foreground transition-colors mb-8"
-          >
-            Change email address
-          </button>
-        )}
-      </div>
+      </AuthCard>
     </MobileLayout>
   );
 };

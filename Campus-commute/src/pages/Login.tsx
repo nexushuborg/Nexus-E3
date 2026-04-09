@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { z } from "zod";
-import { Apple, Mail } from "lucide-react";
+import { Apple } from "lucide-react";
 import MobileLayout from "@/components/MobileLayout";
+import AuthCard from "@/components/AuthCard";
 import FormInput from "@/components/FormInput";
 import GradientButton from "@/components/GradientButton";
 import { useAuth } from "@/contexts/AuthContext";
@@ -115,70 +116,71 @@ const Login = () => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col min-h-screen px-8 py-12">
-        <div className="flex-1">
-          <h1 className="text-3xl font-bold text-foreground text-center mt-8 mb-2">
-            Log In
-          </h1>
-          <p className="text-muted-foreground text-center mb-10">
-            Please provide the details below to log in
-          </p>
+      <AuthCard>
+        <div className="flex flex-col min-h-[calc(100vh-5rem)]">
+          <div className="flex-1">
+            <h1 className="text-3xl font-bold text-foreground text-center mt-8 mb-2">
+              Log In
+            </h1>
+            <p className="text-muted-foreground text-center mb-10">
+              Please provide the details below to log in
+            </p>
 
-          <div className="space-y-4 mb-6">
-            <FormInput
-              placeholder="Enter your Email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={errors.email}
-            />
-            <FormInput
-              placeholder="Enter Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              showPasswordToggle
-              error={errors.password}
-            />
-          </div>
+            <div className="space-y-4 mb-6">
+              <FormInput
+                placeholder="Enter your Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                error={errors.email}
+              />
+              <FormInput
+                placeholder="Enter Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                showPasswordToggle
+                error={errors.password}
+              />
+            </div>
 
-          <div className="flex items-center justify-between mb-8">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <div 
-                onClick={() => setRememberMe(!rememberMe)}
-                className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
-                  rememberMe ? "bg-primary border-primary" : "border-muted-foreground"
-                }`}
+            <div className="flex items-center justify-between mb-8">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <div 
+                  onClick={() => setRememberMe(!rememberMe)}
+                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
+                    rememberMe ? "bg-primary border-primary" : "border-muted-foreground"
+                  }`}
+                >
+                  {rememberMe && (
+                    <div className="w-2 h-2 bg-primary-foreground rounded-full" />
+                  )}
+                </div>
+                <span className="text-sm text-foreground">Remember Me</span>
+              </label>
+              <Link 
+                to="/forgot-password" 
+                className="text-sm text-foreground hover:underline"
               >
-                {rememberMe && (
-                  <div className="w-2 h-2 bg-primary-foreground rounded-full" />
-                )}
-              </div>
-              <span className="text-sm text-foreground">Remember Me</span>
-            </label>
-            <Link 
-              to="/forgot-password" 
-              className="text-sm text-foreground hover:underline"
-            >
-              Forgot Password ?
-            </Link>
-          </div>
+                Forgot Password ?
+              </Link>
+            </div>
 
-          <GradientButton onClick={handleLogin} disabled={isLoading}>
-            {isLoading ? "Logging in..." : "Log In"}
-          </GradientButton>
+            <GradientButton onClick={handleLogin} disabled={isLoading}>
+              {isLoading ? "Logging in..." : "Log In"}
+            </GradientButton>
 
-          <div className="flex items-center gap-4 my-6">
-            <div className="flex-1 h-px bg-border" />
-            <span className="text-muted-foreground text-sm">Or continue With</span>
-            <div className="flex-1 h-px bg-border" />
-          </div>
+            <div className="flex items-center gap-4 my-6">
+              <div className="flex-1 h-px bg-border" />
+              <span className="text-muted-foreground text-sm">Or continue With</span>
+              <div className="flex-1 h-px bg-border" />
+            </div>
 
-          <div className="flex gap-4 mb-8">
-            <button
-              onClick={() => handleSocialLogin("Google")}
-              className="flex-1 py-3 px-4 border-2 border-foreground/20 rounded-full text-foreground font-medium hover:bg-muted transition-colors flex items-center justify-center gap-2"
-            >
+            <div className="flex gap-4 mb-8">
+              <button
+                onClick={() => handleSocialLogin("Google")}
+                className="flex-1 py-3 px-4 border-2 border-foreground/20 rounded-full text-foreground font-medium hover:bg-muted transition-colors flex items-center justify-center gap-2"
+              >
               {/* Google G Logo SVG */}
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -208,6 +210,7 @@ const Login = () => {
           </Link>
         </p>
       </div>
+      </AuthCard>
     </MobileLayout>
   );
 };
