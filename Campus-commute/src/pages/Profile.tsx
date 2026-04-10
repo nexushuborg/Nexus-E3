@@ -8,6 +8,8 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
+import MobileLayout from "@/components/MobileLayout";
+import AuthCard from "@/components/AuthCard";
 
 // ─── Data Config ─────────────────────────────────────────────────────────────
 
@@ -398,9 +400,11 @@ const Profile = () => {
   const currentBranchOptions = course ? (courseConfig[course as CourseType]?.branches || []) : [];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <MobileLayout>
+      <AuthCard className="max-h-[95vh] overflow-y-auto flex flex-col p-0 sm:p-0 my-auto bg-gray-50 dark:bg-gray-950">
+        <div className="min-h-full bg-gray-50 dark:bg-gray-950">
       {/* ── Header ─────────────────────────────────────────────────── */}
-      <div className="sticky top-0 z-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
+      <div className="sticky top-0 z-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 rounded-t-[2rem]">
         <div className="max-w-[430px] mx-auto flex items-center justify-between px-5 h-14">
           <button
             onClick={() => isEditing ? setIsEditing(false) : window.history.back()}
@@ -685,7 +689,9 @@ const Profile = () => {
           onClose={() => setShowCropOverlay(false)}
         />
       )}
-    </div>
+        </div>
+      </AuthCard>
+    </MobileLayout>
   );
 };
 

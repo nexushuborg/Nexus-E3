@@ -9,12 +9,21 @@ const Success = () => {
   const navigate = useNavigate();
   const { pendingRole, completeSignup } = useAuth();
 
-  const handleContinue = () => {
-    completeSignup({});
-    if (pendingRole === "driver") {
-      navigate("/driver-home");
+  const handleContinue = async () => {
+    const success = await completeSignup({});
+    if (success) {
+      if (pendingRole === "driver") {
+        navigate("/driver-home");
+      } else {
+        navigate("/route-selection");
+      }
     } else {
-      navigate("/route-selection");
+      toast({
+         title: "Sync Error",
+         description: "Failed to finalize your account on the server. Redirecting to login...",
+         variant: "destructive"
+      });
+      navigate("/login");
     }
   };
 

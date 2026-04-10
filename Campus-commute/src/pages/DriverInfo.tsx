@@ -1,5 +1,6 @@
 import { Phone, User, Bus, Clock, MapPin } from "lucide-react";
 import MobileLayout from "@/components/MobileLayout";
+import AuthCard from "@/components/AuthCard";
 import BackButton from "@/components/BackButton";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -79,8 +80,9 @@ const DriverInfo = () => {
   // ==============================
   return (
     <MobileLayout>
-      <div className="flex flex-col min-h-screen px-8 py-6">
-        <BackButton to="/home" />
+      <AuthCard className="max-h-[95vh] overflow-y-auto flex flex-col p-6 sm:p-8 my-auto">
+        <div className="flex flex-col">
+          <BackButton to="/home" />
 
         <div className="flex-1 pt-8">
           <h1 className="text-2xl font-bold text-center mb-8">
@@ -164,7 +166,8 @@ const DriverInfo = () => {
             />
           </div>
         </div>
-      </div>
+        </div>
+      </AuthCard>
     </MobileLayout>
   );
 };

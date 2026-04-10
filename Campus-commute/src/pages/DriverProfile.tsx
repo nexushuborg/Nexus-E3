@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { User, Edit2 } from "lucide-react";
 import MobileLayout from "@/components/MobileLayout";
+import AuthCard from "@/components/AuthCard";
 import FormInput from "@/components/FormInput";
 import GradientButton from "@/components/GradientButton";
 import BackButton from "@/components/BackButton";
@@ -115,8 +116,9 @@ const DriverProfile = () => {
 
   return (
     <MobileLayout>
-      <div className="flex flex-col min-h-screen px-8 py-6">
-        <BackButton to="/driver-home" />
+      <AuthCard className="max-h-[95vh] overflow-y-auto flex flex-col p-6 sm:p-8 my-auto">
+        <div className="flex flex-col">
+          <BackButton to="/driver-home" />
 
         <div className="flex-1 pt-8">
           <h1 className="text-2xl font-bold text-foreground text-center mb-8">
@@ -286,7 +288,8 @@ const DriverProfile = () => {
             </div>
           )}
         </div>
-      </div>
+        </div>
+      </AuthCard>
 
       {/* Photo Viewer Modal */}
       <PhotoViewer imageUrl={profileImage} open={showPhotoViewer} onClose={() => setShowPhotoViewer(false)} />

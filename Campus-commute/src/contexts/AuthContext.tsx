@@ -29,11 +29,12 @@ interface AuthContextType {
   pendingEmail: string;
   pendingUserData: Partial<UserData>;
   login: (email: string, password: string, role: UserRole) => Promise<boolean>;
+  googleLogin: (accessToken: string, role: UserRole) => Promise<boolean>;
   logout: () => void;
   setPendingRole: (role: UserRole) => void;
   setPendingEmail: (email: string) => void;
   setPendingUserData: (data: Partial<UserData>) => void;
-  completeSignup: (data: Partial<UserData>) => void;
+  completeSignup: (data: Partial<UserData>) => Promise<boolean>;
   updateUser: (data: Partial<UserData>) => void;
   setSelectedRoute: (route: number) => void;
 }
@@ -63,47 +64,58 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [pendingUserData, setPendingUserData] = useState<Partial<UserData>>({});
 
   const login = async (email: string, password: string, role: UserRole): Promise<boolean> => {
-    // Get account from localStorage
-    const registeredAccounts = JSON.parse(
-      localStorage.getItem("campus-commute-accounts") || "[]"
-    );
-
-    // Try exact match first, then fallback to email+password only
-    let account = registeredAccounts.find(
-      (acc: any) => acc.email === email && acc.role === role && acc.password === password
-    );
-    if (!account) {
-      account = registeredAccounts.find(
-        (acc: any) => acc.email === email && acc.password === password
-      );
-    }
-
-    if (!account) {
+    try {
+      const response = await fetch("http://localhost:8000/user/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      if (!response.ok) return false;
+      
+      const { user: serverUser } = await response.json();
+      setIsAuthenticated(true);
+      setUser({
+        email: serverUser.email,
+        fullName: serverUser.fullname,
+        role: serverUser.role || role,
+        routeNo: serverUser.routeNo,
+        selectedRoute: 1
+      });
+      return true;
+    } catch {
       return false;
     }
-
-    setIsAuthenticated(true);
-    setUser({
-      email: account.email,
-      fullName: account.fullName,
-      role: account.role,
-      password: account.password,
-      yearBatch: account.yearBatch,
-      routeNo: account.routeNo,
-      timing: account.timing,
-      selectedRoute: account.selectedRoute || 1,
-      phoneNumber: account.phoneNumber,
-      branch: account.branch,
-      course: account.course,
-      semester: account.semester,
-      profileImage: account.profileImage,
-      busNumber: account.busNumber,
-      licenseId: account.licenseId,
-    });
-    return true;
   };
 
-  const logout = () => {
+  const googleLogin = async (accessToken: string, role: UserRole): Promise<boolean> => {
+    try {
+      const response = await fetch("http://localhost:8000/user/google-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accessToken, role })
+      });
+      if (!response.ok) return false;
+      
+      const { user: serverUser } = await response.json();
+      setIsAuthenticated(true);
+      setUser({
+        email: serverUser.email,
+        fullName: serverUser.fullname,
+        role: serverUser.role,
+        routeNo: serverUser.routeNo,
+        profileImage: serverUser.profileImage,
+        selectedRoute: 1
+      });
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await fetch("http://localhost:8000/user/logout", { method: "POST" });
+    } catch {}
     setIsAuthenticated(false);
     setUser(null);
     setPendingRole(null);
@@ -111,39 +123,48 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setPendingUserData({});
   };
 
-  const completeSignup = (data: Partial<UserData>) => {
-    setIsAuthenticated(true);
-    setUser({
-      email: pendingEmail,
-      fullName: pendingUserData.fullName || "",
-      role: pendingRole,
-      yearBatch: pendingUserData.yearBatch,
-      routeNo: pendingUserData.routeNo,
-      timing: pendingUserData.timing,
-      ...data,
-    });
-    setPendingEmail("");
-    setPendingUserData({});
+  const completeSignup = async (data: Partial<UserData>): Promise<boolean> => {
+    try {
+      const payload = {
+         fullname: pendingUserData.fullName || pendingEmail.split('@')[0],
+         email: pendingEmail,
+         password: pendingUserData.password || "OAuthDefaultPassword!12",
+         role: pendingRole,
+         regdNo: pendingUserData.registrationNo,
+         routeNo: pendingUserData.routeNo,
+         timing: pendingUserData.timing,
+         phone: pendingUserData.phoneNumber
+      };
+
+      const res = await fetch("http://localhost:8000/user/register", {
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error("Backend registration failed");
+
+      const { user: serverUser } = await res.json();
+      setIsAuthenticated(true);
+      setUser({
+        email: serverUser.email,
+        fullName: serverUser.fullname,
+        role: serverUser.role,
+        routeNo: serverUser.routeNo,
+        selectedRoute: 1
+      });
+      setPendingEmail("");
+      setPendingUserData({});
+      return true;
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
   };
 
   const updateUser = (data: Partial<UserData>) => {
     if (user) {
       const updated = { ...user, ...data };
       setUser(updated);
-
-      // Persist updates to registered accounts in localStorage if present
-      try {
-        const registeredAccounts = JSON.parse(
-          localStorage.getItem("campus-commute-accounts") || "[]"
-        );
-        const idx = registeredAccounts.findIndex((acc: any) => acc.email === user.email && acc.role === user.role);
-        if (idx !== -1) {
-          registeredAccounts[idx] = { ...registeredAccounts[idx], ...data };
-          localStorage.setItem("campus-commute-accounts", JSON.stringify(registeredAccounts));
-        }
-      } catch (err) {
-        // ignore
-      }
     }
   };
 
@@ -162,6 +183,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         pendingEmail,
         pendingUserData,
         login,
+        googleLogin,
         logout,
         setPendingRole,
         setPendingEmail,

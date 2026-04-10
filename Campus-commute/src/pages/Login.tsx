@@ -17,9 +17,9 @@ const emailSchema = z.string().email("Invalid email address").refine((email) => 
 
 const passwordSchema = z.string().min(8, "Password must be at least 8 characters");
 
-const Login = () => {
+  const Login = () => {
   const navigate = useNavigate();
-  const { login, pendingRole } = useAuth();
+  const { login, googleLogin, pendingRole } = useAuth();
   const { toast } = useToast();
   
   const [email, setEmail] = useState("");
@@ -33,64 +33,23 @@ const Login = () => {
     onSuccess: async (tokenResponse) => {
       setIsLoading(true);
       try {
-        toast({
-          title: "Google Auth Success",
-          description: "Fetching your profile details...",
-        });
-
-        // 1. Fetch user details securely from Google API using the access token
-        const userInfoRes = await fetch(
-          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenResponse.access_token}`,
-          { headers: { Authorization: `Bearer ${tokenResponse.access_token}`, Accept: 'application/json' } }
-        );
-        
-        if (!userInfoRes.ok) throw new Error("Failed to fetch Google profile");
-        
-        const googleUser = await userInfoRes.json();
-        const socialEmail = googleUser.email;
-        const socialName = googleUser.name || "Google User";
-        const role = pendingRole || "student"; 
-        
-        // Use a secure dummy password for social accounts since they are verified by Google
-        const socialPassword = "OAuthGeneratedPassword!123";
-
-        const registeredAccounts = JSON.parse(
-          localStorage.getItem("campus-commute-accounts") || "[]"
-        );
-        
-        let account = registeredAccounts.find((acc: any) => acc.email === socialEmail && acc.role === role);
-        
-        // 2. If the user doesn't exist, we construct a real account securely from Google's verified data
-        if (!account) {
-          const newAccount = {
-            email: socialEmail,
-            password: socialPassword,
-            role: role,
-            fullName: socialName,
-            routeNo: role === "driver" ? "CUTTACK-1-A" : undefined,
-            profileImage: googleUser.picture, // Save their real Google avatar
-          };
-          registeredAccounts.push(newAccount);
-          localStorage.setItem("campus-commute-accounts", JSON.stringify(registeredAccounts));
-        }
-        
-        // 3. Log into App context
-        const success = await login(socialEmail, socialPassword, role);
+        const role = pendingRole || "student";
+        const success = await googleLogin(tokenResponse.access_token, role);
         
         if (success) {
           toast({
-            title: `Welcome, ${socialName}!`,
+            title: "Success",
             description: "Successfully authenticated with Google",
           });
           navigate(role === "driver" ? "/driver-home" : "/home");
         } else {
-          throw new Error("Local login sync failed");
+          throw new Error("Google login failed on backend");
         }
       } catch (err) {
         console.error(err);
         toast({
-          title: "Setup Incomplete",
-          description: "Google Authentication failed. Did you add the VITE_GOOGLE_CLIENT_ID?",
+          title: "Authentication Failed",
+          description: "Could not sync with the backend server. Please try again.",
           variant: "destructive",
         });
       } finally {
@@ -100,10 +59,9 @@ const Login = () => {
     onError: () => {
       toast({
         title: "Login Failed",
-        description: "You cancelled the Google login popup or it failed.",
+        description: "Google OAuth process was interrupted",
         variant: "destructive",
       });
-      setIsLoading(false);
     }
   });
 

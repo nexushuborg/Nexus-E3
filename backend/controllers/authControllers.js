@@ -5,37 +5,46 @@ const otpModel = require("../models/otpModel");
 const nodemailer = require("nodemailer");
 module.exports.register = async (req, res) => {
   try {
-    // Check if req.body exists
     if (!req.body) {
       return res.status(400).json({ error: "Request body is missing" });
     }
     
-    let {fullname,regdNo, email, password } = req.body;
+    let { fullname, regdNo, email, password, role, routeNo, timing, phone, profileImage } = req.body;
     
-    // Check if required fields are present
-    if (!fullname|| !regdNo|| !email || !password) {
-      return res.status(400).json({ error: "Fullname, registration number, email, and password are required" });
+    // Check required base fields
+    if (!fullname || !email || !password) {
+      return res.status(400).json({ error: "Fullname, email, and password are required" });
+    }
+
+    // Role specific validation
+    const assignedRole = role || 'student';
+    if (assignedRole === 'student' && !regdNo) {
+      return res.status(400).json({ error: "Registration number is required for students" });
+    }
+    if (assignedRole === 'driver' && (!routeNo || !timing)) {
+      return res.status(400).json({ error: "Route number and timing are required for drivers" });
     }
     
-    // Check if user already exists
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "User already exists" });
     }
     
-    // Hash the password using bcrypt
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     
-    // Create new user
     let newUser = await userModel.create({
       fullname,
       email,
       password: hashedPassword,
-      regdNo
+      regdNo,
+      role: assignedRole,
+      routeNo,
+      timing,
+      phone,
+      profileImage
     });
 
-    // Generate JWT token
     let token = generateToken(newUser);
         
     res.cookie("token", token);
@@ -47,7 +56,8 @@ module.exports.register = async (req, res) => {
         id: newUser._id,
         fullname: newUser.fullname,
         email: newUser.email,
-        regdNo: newUser.regdNo
+        role: newUser.role,
+        routeNo: newUser.routeNo
       },
       token: token
     });
@@ -163,5 +173,58 @@ module.exports.verifyOTP = async (req, res) => {
   } catch (error) {
     console.error("verifyOTP error:", error);
     res.status(500).json({ error: "Failed to verify OTP" });
+  }
+};
+
+module.exports.googleLogin = async (req, res) => {
+  try {
+    const { accessToken, role } = req.body;
+    if (!accessToken) return res.status(400).json({ error: "Access token is required" });
+
+    // Fetch user details from Google
+    const response = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`, {
+      headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' }
+    });
+    
+    if (!response.ok) {
+        return res.status(401).json({ error: "Invalid Google token" });
+    }
+    
+    const googleUser = await response.json();
+    const assignedRole = role || 'student';
+    
+    let user = await userModel.findOne({ email: googleUser.email });
+    
+    if (!user) {
+      // Auto-register via Google
+      user = await userModel.create({
+        fullname: googleUser.name,
+        email: googleUser.email,
+        password: "OAuthGeneratedPassword!123", // Dummy password for OAuth users
+        profileImage: googleUser.picture,
+        role: assignedRole,
+        routeNo: assignedRole === 'driver' ? 'CUTTACK-1-A' : undefined
+      });
+    }
+
+    let token = generateToken(user);
+    res.cookie("token", token);
+    
+    res.status(200).json({
+      success: true,
+      message: "Google OAuth successful",
+      user: {
+        id: user._id,
+        fullname: user.fullname,
+        email: user.email,
+        role: user.role,
+        routeNo: user.routeNo,
+        profileImage: user.profileImage
+      },
+      token: token
+    });
+  } catch (error) {
+    console.error("Google Auth Error:", error);
+    res.status(500).json({ error: "Failed to authenticate with Google" });
   }
 };

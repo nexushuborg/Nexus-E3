@@ -1,6 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
-// @ts-ignore - Importing JSON outside src is fine if Vite allows it, or we bypass types.
-import routesDataRaw from "../../../backend/data/routes.json";
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 export interface Coordinate {
   lat: number;
@@ -28,8 +26,6 @@ export interface BusRoute {
   remarks: string | null;
 }
 
-const routesData: BusRoute[] = routesDataRaw as BusRoute[];
-
 interface RouteContextType {
   routes: BusRoute[];
   selectedRoute: BusRoute;
@@ -41,14 +37,30 @@ interface RouteContextType {
 const RouteContext = createContext<RouteContextType | undefined>(undefined);
 
 export const RouteProvider = ({ children }: { children: ReactNode }) => {
-  const [routes] = useState<BusRoute[]>(routesData);
-  const [selectedRoute, setSelectedRoute] = useState<BusRoute>(routes[0]);
-  
-  // Default the live marker to the start point of whatever route is selected
-  const [liveBusPosition, setLiveBusPosition] = useState<[number, number]>([
-    routes[0].startPoint.coordinates.lat,
-    routes[0].startPoint.coordinates.lng
-  ]);
+  const [routes, setRoutes] = useState<BusRoute[]>([]);
+  const [selectedRoute, setSelectedRoute] = useState<BusRoute | null>(null);
+  const [liveBusPosition, setLiveBusPosition] = useState<[number, number]>([20.2961, 85.8245]); // Default bbsr
+
+  useEffect(() => {
+    const fetchRoutes = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/routes");
+        if (response.ok) {
+          const data = await response.json();
+          setRoutes(data);
+          if (data.length > 0) {
+            setSelectedRoute(data[0]);
+            setLiveBusPosition([data[0].startPoint.coordinates.lat, data[0].startPoint.coordinates.lng]);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch routes", err);
+      }
+    };
+    fetchRoutes();
+  }, []);
+
+  if (!selectedRoute) return null; // Prevent rendering components that depend on routes before they load
 
   return (
     <RouteContext.Provider
