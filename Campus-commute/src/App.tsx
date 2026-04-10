@@ -40,6 +40,7 @@ import About from "./pages/About";
 import Support from "./pages/Support";
 import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
+import RunningStatus from "./pages/RunningStatus";
 
 const queryClient = new QueryClient();
 
@@ -89,6 +90,7 @@ const App = () => (
               <Route path="/faqs" element={<FAQs />} />
               <Route path="/about" element={<About />} />
               <Route path="/support" element={<Support />} />
+              <Route path="/running-status" element={<RunningStatus />} />
               
               {/* Main App - Driver */}
               <Route path="/driver-home" element={<DriverHome />} />

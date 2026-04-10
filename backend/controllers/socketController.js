@@ -73,15 +73,20 @@ function socketHandler(io) {
           users: new Set([socket.id]),
           lastPing: Date.now(),
           visitedStops: new Set(),
+          tripStartTime: Date.now(),
         };
       } else {
         busState[busId].users.add(socket.id);
         busState[busId].broadcaster = socket.id;
         busState[busId].lastPing = Date.now();
+        if (!busState[busId].tripStartTime) {
+          busState[busId].tripStartTime = Date.now();
+        }
       }
 
       // ── Trip-started notification (only on first location of new session)
       if (isNewSession) {
+        busState[busId].tripStartTime = Date.now();
         io.to(busId).emit("trip-started", {
           routeId: busId,
           routeName: route.routeName || route.busName,
@@ -95,6 +100,22 @@ function socketHandler(io) {
 
       // ── Proximity check — bus near a stop ──
       const bus = busState[busId];
+      // Find nearest stop and next stop
+      let nearestStopIdx = 0;
+      let minDist = Infinity;
+      for (let i = 0; i < route.stoppages.length; i++) {
+        const d = haversineM(lat, lng, route.stoppages[i].coordinates.lat, route.stoppages[i].coordinates.lng);
+        if (d < minDist) {
+          minDist = d;
+          nearestStopIdx = i;
+        }
+      }
+
+      const nextStopIdx = Math.min(nearestStopIdx + 1, route.stoppages.length - 1);
+      const lastStop = route.stoppages[route.stoppages.length - 1];
+      const distToEnd = haversineM(lat, lng, lastStop.coordinates.lat, lastStop.coordinates.lng);
+      const isReached = distToEnd < PROXIMITY_RADIUS_M && nearestStopIdx >= route.stoppages.length - 2;
+
       for (const stop of route.stoppages) {
         if (bus.visitedStops && bus.visitedStops.has(stop.name)) continue;
 
@@ -113,6 +134,23 @@ function socketHandler(io) {
         }
       }
 
+      // ── Emit rich trip-status-update for Running Status page ──
+      io.to(busId).emit("trip-status-update", {
+        routeId: busId,
+        status: isReached ? "reached" : "running",
+        lat,
+        lng,
+        tripStartTime: bus.tripStartTime,
+        nearestStopIndex: nearestStopIdx,
+        nearestStopName: route.stoppages[nearestStopIdx].name,
+        nextStopIndex: nextStopIdx,
+        nextStopName: route.stoppages[nextStopIdx].name,
+        distanceRemainingKm: (distToEnd / 1000).toFixed(2),
+        totalStops: route.stoppages.length,
+        visitedStops: bus.visitedStops ? [...bus.visitedStops] : [],
+        timestamp: Date.now(),
+      });
+
       // ── Calculate and broadcast ETAs ──
       try {
         const stopETAs = await calculateStopWiseETA({ lat, lng }, route.stoppages);
@@ -120,6 +158,28 @@ function socketHandler(io) {
       } catch (err) {
         console.error("[Socket] ETA calculation error:", err.message);
       }
+    });
+
+    // ── On-demand trip status request ──
+    socket.on("get-trip-status", ({ busId }) => {
+      const bus = busState[busId];
+      const route = ROUTES.find((r) => r.busNumber === busId);
+      if (!bus || !route) {
+        socket.emit("trip-status-update", {
+          routeId: busId,
+          status: "not-started",
+          timestamp: Date.now(),
+        });
+        return;
+      }
+      // If we have bus state but no recent ping, it's stale
+      socket.emit("trip-status-update", {
+        routeId: busId,
+        status: "running",
+        tripStartTime: bus.tripStartTime || null,
+        visitedStops: bus.visitedStops ? [...bus.visitedStops] : [],
+        timestamp: Date.now(),
+      });
     });
 
     // ── Driver goes offline ────────────────────────────────────

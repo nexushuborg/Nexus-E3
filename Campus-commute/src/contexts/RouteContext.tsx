@@ -42,6 +42,22 @@ export interface LiveNotification {
   timestamp: number;
 }
 
+export interface TripStatus {
+  routeId: string;
+  status: "running" | "not-started" | "reached";
+  lat?: number;
+  lng?: number;
+  tripStartTime?: number;
+  nearestStopIndex?: number;
+  nearestStopName?: string;
+  nextStopIndex?: number;
+  nextStopName?: string;
+  distanceRemainingKm?: string;
+  totalStops?: number;
+  visitedStops?: string[];
+  timestamp: number;
+}
+
 interface RouteContextType {
   routes: BusRoute[];
   selectedRoute: BusRoute | null;
@@ -52,6 +68,7 @@ interface RouteContextType {
   notifications: LiveNotification[];
   clearNotifications: () => void;
   socketConnected: boolean;
+  tripStatus: TripStatus | null;
 }
 
 const RouteContext = createContext<RouteContextType | undefined>(undefined);
@@ -63,6 +80,7 @@ export const RouteProvider = ({ children }: { children: ReactNode }) => {
   const [stopETAs, setStopETAs] = useState<StopETA[]>([]);
   const [notifications, setNotifications] = useState<LiveNotification[]>([]);
   const [socketConnected, setSocketConnected] = useState(false);
+  const [tripStatus, setTripStatus] = useState<TripStatus | null>(null);
   const socketRef = useRef<Socket | null>(null);
 
   const addNotification = useCallback((notif: Omit<LiveNotification, "id">) => {
@@ -132,8 +150,19 @@ export const RouteProvider = ({ children }: { children: ReactNode }) => {
       if (data.routeId === selectedRoute.busNumber) {
         setLiveBusPosition(null);
         setStopETAs([]);
+        setTripStatus({ routeId: data.routeId, status: "not-started", timestamp: Date.now() });
       }
     });
+
+    // ── Trip status update (for Running Status page) ──
+    socket.on("trip-status-update", (data: TripStatus) => {
+      if (data.routeId === selectedRoute.busNumber) {
+        setTripStatus(data);
+      }
+    });
+
+    // Request current trip status on connect
+    socket.emit("get-trip-status", { busId: selectedRoute.busNumber });
 
     // ── Trip started ──
     socket.on("trip-started", (data: { routeId: string; routeName: string; message: string; timestamp: number }) => {
@@ -164,6 +193,7 @@ export const RouteProvider = ({ children }: { children: ReactNode }) => {
       if (data.routeId === selectedRoute.busNumber) {
         setLiveBusPosition(null);
         setStopETAs([]);
+        setTripStatus({ routeId: data.routeId, status: "not-started", timestamp: Date.now() });
         addNotification({
           type: "trip-ended",
           title: "🏁 Trip Ended",
@@ -183,6 +213,7 @@ export const RouteProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setLiveBusPosition(null);
     setStopETAs([]);
+    setTripStatus(null);
   }, [selectedRoute?.busNumber]);
 
   return (
@@ -197,6 +228,7 @@ export const RouteProvider = ({ children }: { children: ReactNode }) => {
         notifications,
         clearNotifications,
         socketConnected,
+        tripStatus,
       }}
     >
       {children}

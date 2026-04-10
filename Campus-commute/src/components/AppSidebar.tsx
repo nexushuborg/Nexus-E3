@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MapPin, ChevronDown, User, Settings, LogOut, Bus, Info, Shield } from "lucide-react";
+import { MapPin, ChevronDown, User, Settings, LogOut, Bus, Info, Shield, Radio } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 interface AppSidebarProps {
@@ -15,6 +15,13 @@ const studentMenuItems = [
     icon: MapPin,
     preview: "View all bus stops and timings",
     route: "/stoppage-details"
+  },
+  { 
+    id: "running-status", 
+    label: "Running Status", 
+    icon: Radio,
+    preview: "Live bus tracking & ETA updates",
+    route: "/running-status"
   },
   { 
     id: "driver", 
