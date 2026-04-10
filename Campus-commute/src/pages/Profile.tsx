@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 import MobileLayout from "@/components/MobileLayout";
 import AuthCard from "@/components/AuthCard";
+import BackButton from "@/components/BackButton";
 
 // ─── Data Config ─────────────────────────────────────────────────────────────
 
@@ -57,7 +58,6 @@ const PhotoSheet = ({ open, onClose, onCamera, onGallery, onAvatar, onDelete, ha
     <>
       <div onClick={onClose} className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40" />
       <div className="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white dark:bg-gray-900 rounded-t-3xl z-50 shadow-2xl animate-in slide-in-from-bottom duration-300">
-        {/* Handle */}
         <div className="flex justify-center pt-3 pb-2">
           <div className="w-10 h-1 rounded-full bg-gray-300 dark:bg-gray-600" />
         </div>
@@ -107,7 +107,6 @@ const CropOverlay = ({ onSave, onClose }) => {
   const [scale, setScale] = useState(1);
   const [rotation, setRotation] = useState(0);
   const [image, setImage] = useState<string | null>(null);
-  const inputRef = useState<HTMLInputElement | null>(null);
 
   const triggerInput = () => {
     const input = document.createElement("input");
@@ -131,7 +130,6 @@ const CropOverlay = ({ onSave, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black/80 z-50 flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-sm bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-2xl">
-        {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
           <button onClick={onClose} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
             <X className="w-5 h-5 text-gray-600 dark:text-gray-400" />
@@ -140,16 +138,15 @@ const CropOverlay = ({ onSave, onClose }) => {
           <button
             onClick={handleSave}
             disabled={!image}
-            className="text-teal-600 dark:text-teal-400 font-bold text-sm disabled:opacity-40"
+            className="text-primary font-bold text-sm disabled:opacity-40"
           >
             Save
           </button>
         </div>
 
         <div className="p-6 space-y-5">
-          {/* Preview */}
           <div className="flex justify-center">
-            <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-teal-500 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+            <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-primary bg-gray-100 flex items-center justify-center">
               {image ? (
                 <img
                   src={image}
@@ -166,32 +163,30 @@ const CropOverlay = ({ onSave, onClose }) => {
           {!image ? (
             <button
               onClick={triggerInput}
-              className="w-full py-3.5 rounded-2xl border-2 border-dashed border-teal-400 text-teal-600 dark:text-teal-400 font-semibold hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
+              className="w-full py-3.5 rounded-2xl border-2 border-dashed border-primary text-primary font-semibold hover:bg-primary/10 transition-colors"
             >
               Choose Image
             </button>
           ) : (
             <>
-              {/* Zoom */}
               <div className="space-y-2">
-                <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                <div className="flex justify-between text-xs text-gray-500">
                   <span>Zoom</span>
                   <span>{(scale * 100).toFixed(0)}%</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <ZoomOut className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                  <ZoomOut className="w-4 h-4 text-gray-500" />
                   <input
                     type="range" min="0.5" max="3" step="0.05" value={scale}
                     onChange={e => setScale(Number(e.target.value))}
-                    className="flex-1 accent-teal-500"
+                    className="flex-1 accent-primary"
                   />
-                  <ZoomIn className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                  <ZoomIn className="w-4 h-4 text-gray-500" />
                 </div>
               </div>
 
-              {/* Rotation */}
               <div className="space-y-2">
-                <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                <div className="flex justify-between text-xs text-gray-500">
                   <span>Rotation</span>
                   <span>{rotation}°</span>
                 </div>
@@ -199,20 +194,19 @@ const CropOverlay = ({ onSave, onClose }) => {
                   <input
                     type="range" min="0" max="360" step="15" value={rotation}
                     onChange={e => setRotation(Number(e.target.value))}
-                    className="flex-1 accent-teal-500"
+                    className="flex-1 accent-primary"
                   />
                   <button
                     onClick={() => setRotation(r => (r + 90) % 360)}
-                    className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200"
+                    className="p-2 rounded-full bg-gray-100 hover:bg-gray-200"
                   >
-                    <RotateCw className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                    <RotateCw className="w-4 h-4 text-gray-600" />
                   </button>
                 </div>
               </div>
-
               <button
                 onClick={triggerInput}
-                className="w-full py-2.5 rounded-2xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 text-sm font-medium hover:bg-gray-50"
+                className="w-full py-2.5 rounded-2xl border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-50"
               >
                 Choose Different
               </button>
@@ -224,56 +218,29 @@ const CropOverlay = ({ onSave, onClose }) => {
   );
 };
 
-// ─── Field Row (View Mode) ────────────────────────────────────────────────────
+// ─── Info Card (matches DriverInfo) ──────────────────────────────────────────
 
-const InfoRow = ({ icon: Icon, label, value, accent = false }) => (
-  <div className="flex items-center gap-4 px-5 py-4 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
-    <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${accent ? "bg-teal-50 dark:bg-teal-900/30" : "bg-gray-50 dark:bg-gray-800"}`}>
-      <Icon className={`w-5 h-5 ${accent ? "text-teal-600 dark:text-teal-400" : "text-gray-500 dark:text-gray-400"}`} />
-    </div>
-    <div className="min-w-0 flex-1">
-      <p className="text-xs text-gray-400 dark:text-gray-500 font-medium uppercase tracking-wide mb-0.5">{label}</p>
-      <p className="text-gray-900 dark:text-white font-semibold truncate">{value || <span className="text-gray-400 font-normal italic">Not set</span>}</p>
-    </div>
-  </div>
-);
-
-// ─── Styled Select ────────────────────────────────────────────────────────────
-
-const StyledSelect = ({ label, value, onChange, options, placeholder = "Select…", disabled = false, icon: Icon }) => (
-  <div className="space-y-1.5">
-    {label && <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide px-1">{label}</label>}
-    <div className="relative">
-      {Icon && (
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
-          <Icon className="w-4 h-4 text-gray-400" />
-        </div>
-      )}
-      <select
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        disabled={disabled}
-        className={`w-full appearance-none bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl py-3.5 pr-10 text-gray-900 dark:text-white focus:border-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-400/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed ${Icon ? "pl-11" : "pl-4"}`}
-      >
-        <option value="">{placeholder}</option>
-        {options.map(o => (
-          <option key={o} value={o}>{o}</option>
-        ))}
-      </select>
-      <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 w-4 h-4 text-gray-400 pointer-events-none" />
+const InfoCard = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string | null | undefined; }) => (
+  <div className="bg-muted rounded-2xl p-4">
+    <div className="flex items-center gap-3">
+      {icon}
+      <div>
+        <p className="text-sm text-muted-foreground">{label}</p>
+        <p className="font-medium text-foreground">{value || <span className="italic font-normal opacity-50">Not set</span>}</p>
+      </div>
     </div>
   </div>
 );
 
-// ─── Styled Input ─────────────────────────────────────────────────────────────
+// ─── Styled Inputs for Edit Mode ──────────────────────────────────────────
 
-const StyledInput = ({ label, value, onChange, placeholder, error, disabled = false, readOnly = false, icon: Icon, type = "text" }) => (
+const StyledInput = ({ label, value, onChange, placeholder, error, disabled = false, icon: Icon, type = "text" }: any) => (
   <div className="space-y-1.5">
-    {label && <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide px-1">{label}</label>}
-    <div className="relative">
+    {label && <label className="block text-sm text-muted-foreground ml-1">{label}</label>}
+    <div className="relative border border-border/50 bg-muted/30 focus-within:border-primary/50 focus-within:bg-muted/50 rounded-xl transition-all">
       {Icon && (
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
-          <Icon className="w-4 h-4 text-gray-400" />
+        <div className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">
+          <Icon className="w-4 h-4 text-primary" />
         </div>
       )}
       <input
@@ -282,31 +249,37 @@ const StyledInput = ({ label, value, onChange, placeholder, error, disabled = fa
         onChange={onChange}
         placeholder={placeholder}
         disabled={disabled}
-        readOnly={readOnly}
-        className={`w-full bg-gray-50 dark:bg-gray-800 border rounded-2xl py-3.5 pr-4 text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 transition-all
-          ${Icon ? "pl-11" : "pl-4"}
-          ${error ? "border-red-400 focus:border-red-400 focus:ring-red-400/20" : "border-gray-200 dark:border-gray-700 focus:border-teal-400 focus:ring-teal-400/20"}
-          ${(disabled || readOnly) ? "opacity-60 cursor-not-allowed bg-gray-100 dark:bg-gray-900" : ""}`}
+        className={`w-full bg-transparent py-3 text-foreground placeholder:text-muted-foreground focus:outline-none disabled:opacity-50
+          ${Icon ? "pl-10 pr-4" : "px-4"}`}
       />
-      {(disabled || readOnly) && (
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-          <Lock className="w-4 h-4 text-gray-400" />
-        </div>
-      )}
     </div>
-    {error && <p className="text-xs text-red-500 dark:text-red-400 px-1 font-medium">{error}</p>}
+    {error && <p className="text-xs text-red-500 px-1">{error}</p>}
   </div>
 );
 
-// CalcChip removed — semester and year are now selectable dropdowns
-
-// ─── Section Header ───────────────────────────────────────────────────────────
-
-const SectionHeader = ({ title }) => (
-  <div className="flex items-center gap-3 mb-4">
-    <div className="flex-1 h-px bg-gray-100 dark:bg-gray-800" />
-    <span className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest whitespace-nowrap">{title}</span>
-    <div className="flex-1 h-px bg-gray-100 dark:bg-gray-800" />
+const StyledSelect = ({ label, value, onChange, options, placeholder = "Select…", disabled = false, icon: Icon }: any) => (
+  <div className="space-y-1.5">
+    {label && <label className="block text-sm text-muted-foreground ml-1">{label}</label>}
+    <div className="relative border border-border/50 bg-muted/30 focus-within:border-primary/50 focus-within:bg-muted/50 rounded-xl transition-all">
+      {Icon && (
+        <div className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">
+          <Icon className="w-4 h-4 text-primary" />
+        </div>
+      )}
+      <select
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        disabled={disabled}
+        className={`w-full appearance-none bg-transparent py-3 pr-10 text-foreground focus:outline-none disabled:opacity-50
+          ${Icon ? "pl-10" : "px-4"}`}
+      >
+        <option value="" disabled>{placeholder}</option>
+        {options.map((o: string) => (
+          <option key={o} value={o}>{o}</option>
+        ))}
+      </select>
+      <ChevronRight className="absolute right-3.5 top-1/2 -translate-y-1/2 rotate-90 w-4 h-4 text-muted-foreground pointer-events-none" />
+    </div>
   </div>
 );
 
@@ -370,13 +343,13 @@ const Profile = () => {
     });
     setIsEditing(false);
     setErrors({});
-    toast({ title: "✅ Profile Updated", description: "Your changes have been saved." });
+    toast({ title: "Profile Updated", description: "Your changes have been saved." });
   };
 
   const handleImageSaved = (img: string) => {
     setProfileImage(img);
     setShowCropOverlay(false);
-    toast({ title: "📸 Photo Updated" });
+    toast({ title: "Photo Updated" });
   };
 
   const handleDeletePhoto = () => {
@@ -401,278 +374,148 @@ const Profile = () => {
 
   return (
     <MobileLayout>
-      <AuthCard className="max-h-[95vh] overflow-y-auto flex flex-col p-0 sm:p-0 my-auto bg-gray-50 dark:bg-gray-950">
-        <div className="min-h-full bg-gray-50 dark:bg-gray-950">
-      {/* ── Header ─────────────────────────────────────────────────── */}
-      <div className="sticky top-0 z-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 rounded-t-[2rem]">
-        <div className="max-w-[430px] mx-auto flex items-center justify-between px-5 h-14">
-          <button
-            onClick={() => isEditing ? setIsEditing(false) : window.history.back()}
-            className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center"
-          >
-            {isEditing ? <X className="w-4 h-4 text-gray-600 dark:text-gray-400" /> : <ArrowLeft className="w-4 h-4 text-gray-600 dark:text-gray-400" />}
-          </button>
-          <h1 className="text-base font-bold text-gray-900 dark:text-white">
-            {isEditing ? "Edit Profile" : "My Profile"}
-          </h1>
-          <button
-            onClick={isEditing ? validateAndSave : startEditing}
-            className={`text-sm font-bold px-4 py-2 rounded-full transition-all ${
-              isEditing
-                ? "bg-[#0E2A2F] text-white hover:bg-[#0E2A2F]/90 shadow-lg shadow-[#0E2A2F]/30"
-                : "text-[#0E2A2F] dark:text-teal-400 hover:bg-[#0E2A2F]/10 dark:hover:bg-teal-900/20"
-            }`}
-          >
-            {isEditing ? "Save" : "Edit"}
-          </button>
-        </div>
-      </div>
-
-      <div className="max-w-[430px] mx-auto pb-24">
-
-        {/* ── Hero Avatar Section ────────────────────────────────────── */}
-        <div className="relative pt-10 pb-20 px-6 text-center overflow-hidden" style={{ background: 'linear-gradient(135deg, #0E2A2F 0%, #133338 50%, #0E2A2F 100%)' }}>
-          {/* Decorative blobs */}
-          <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/5 blur-2xl" />
-          <div className="absolute -bottom-5 -left-5 w-32 h-32 rounded-full bg-white/5 blur-xl" />
-
-          <div className="relative inline-block">
-            {/* Ring animation */}
-            <div className={`absolute inset-0 rounded-full border-4 border-white/40 scale-110 ${isEditing ? "animate-pulse" : ""}`} />
-            <div className="w-28 h-28 rounded-full border-4 border-white shadow-2xl overflow-hidden bg-gray-200 flex items-center justify-center">
-              {profileImage
-                ? <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
-                : <User className="w-14 h-14 text-gray-400" />
-              }
-            </div>
+      <AuthCard className="max-h-[95vh] overflow-y-auto flex flex-col p-6 sm:p-8 my-auto">
+        <div className="flex flex-col">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-8">
             {isEditing ? (
-              <button
-                onClick={() => setShowPhotoOptions(true)}
-                className="absolute -bottom-1 -right-1 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-[#0E2A2F]/30 hover:scale-110 transition-transform"
-              >
-                <Camera className="w-4 h-4 text-[#0E2A2F]" />
+              <button onClick={() => setIsEditing(false)} className="w-10 h-10 flex items-center justify-center bg-muted rounded-full">
+                <X className="w-5 h-5 text-foreground" />
               </button>
             ) : (
-              profileImage && (
-                <button
-                  onClick={() => setShowPhotoOptions(true)}
-                  className="absolute -bottom-1 -right-1 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-gray-200 hover:scale-110 transition-transform"
-                >
-                  <Edit2 className="w-4 h-4 text-gray-600" />
-                </button>
-              )
+              <BackButton to="/home" />
+            )}
+            <h1 className="text-xl font-bold text-foreground">
+              {isEditing ? "Edit Profile" : "My Profile"}
+            </h1>
+            {!isEditing ? (
+              <button onClick={startEditing} className="text-primary font-semibold text-sm">
+                Edit
+              </button>
+            ) : (
+              <button onClick={validateAndSave} className="text-primary font-bold text-sm">
+                Save
+              </button>
             )}
           </div>
 
-          <div className="mt-4">
-            <h2 className="text-xl font-bold text-white">{user?.fullName || "Your Name"}</h2>
-            <p className="text-white/60 text-sm mt-0.5">{user?.email}</p>
-            {user?.course && (
-              <div className="mt-3 inline-flex items-center gap-1.5 bg-white/20 backdrop-blur px-3 py-1 rounded-full">
-                <BookOpen className="w-3.5 h-3.5 text-white" />
-                <span className="text-white text-xs font-semibold">{user.course} • {user?.branch || "No branch"}</span>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* ── Card Body (overlaps hero) ──────────────────────────────── */}
-        <div className="-mt-10 mx-4 bg-white dark:bg-gray-900 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden">
-
-          {/* ────── VIEW MODE ──────────────────────────────────────────── */}
-          {!isEditing && (
-            <div className="p-5 space-y-3">
-              <SectionHeader title="Personal Info" />
-              <InfoRow icon={User}    label="Full Name"       value={user?.fullName} accent />
-              <InfoRow icon={Lock}    label="Email"           value={user?.email} />
-              <InfoRow icon={Hash}    label="Registration No" value={user?.registrationNo} />
-              <InfoRow icon={Phone}   label="Phone"           value={user?.phoneNumber ? `+91 ${user.phoneNumber}` : null} />
-
-              <SectionHeader title="Academic Details" />
-              <div className="grid grid-cols-2 gap-3">
-                <InfoRow icon={BookOpen}  label="Course"    value={user?.course} accent />
-                <InfoRow icon={Layers}    label="Branch"    value={user?.branch} />
-                <InfoRow icon={Calendar}  label="Semesters" value={user?.semester ? `${user.semester} Semesters` : null} accent />
-                <InfoRow icon={Calendar}  label="Batch"     value={user?.yearBatch} />
-              </div>
-
-              <SectionHeader title="Commute" />
-              <InfoRow icon={MapPin} label="Bus Stop" value={user?.busStop} accent />
-            </div>
-          )}
-
-          {/* ────── EDIT MODE ──────────────────────────────────────────── */}
-          {isEditing && (
-            <div className="p-5 space-y-5">
-
-              {/* Personal */}
-              <SectionHeader title="Personal Info" />
-
-              <StyledInput
-                label="Full Name"
-                value={fullName}
-                onChange={e => setFullName(e.target.value)}
-                placeholder="Your full name"
-                error={errors.fullName}
-                icon={User}
-              />
-
-              <StyledInput
-                label="Email Address"
-                value={email}
-                onChange={() => {}}
-                placeholder="Email"
-                icon={Lock}
-                disabled
-                readOnly
-              />
-
-              <StyledInput
-                label="Registration Number"
-                value={registrationNo}
-                onChange={e => setRegNo(e.target.value)}
-                placeholder="e.g. 2201001234"
-                icon={Hash}
-              />
-
-              {/* Phone */}
-              <div className="space-y-1.5">
-                <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide px-1">Phone Number</label>
-                <div className="flex gap-2">
-                  <select
-                    value={countryCode}
-                    onChange={e => setCountryCode(e.target.value)}
-                    className="w-24 appearance-none bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl py-3.5 px-3 text-gray-900 dark:text-white text-sm focus:border-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-400/20 transition-all"
-                  >
-                    {countryCodes.map(c => <option key={c} value={c}>{c}</option>)}
-                  </select>
-                  <div className="flex-1 relative">
-                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                    <input
-                      type="tel"
-                      inputMode="numeric"
-                      maxLength={10}
-                      value={phone}
-                      onChange={e => {
-                        const v = e.target.value.replace(/\D/g, "").slice(0, 10);
-                        setPhone(v);
-                        if (errors.phone) setErrors(prev => ({ ...prev, phone: undefined }));
-                      }}
-                      placeholder="10-digit number"
-                      className={`w-full bg-gray-50 dark:bg-gray-800 border rounded-2xl py-3.5 pl-11 pr-4 text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 transition-all
-                        ${errors.phone
-                          ? "border-red-400 focus:border-red-400 focus:ring-red-400/20"
-                          : "border-gray-200 dark:border-gray-700 focus:border-teal-400 focus:ring-teal-400/20"
-                        }`}
-                    />
-                    {phone.length === 10 && (
-                      <CheckCircle2 className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-500" />
-                    )}
-                  </div>
+          <div className="flex-1">
+            {/* Avatar Section */}
+            <div className="flex flex-col items-center mb-8">
+              <div className="relative">
+                <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center overflow-hidden border border-border">
+                  {profileImage ? (
+                    <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
+                  ) : (
+                    <User className="w-12 h-12 text-muted-foreground" />
+                  )}
                 </div>
-                {errors.phone && <p className="text-xs text-red-500 dark:text-red-400 px-1 font-medium">{errors.phone}</p>}
-                <p className="text-xs text-gray-400 px-1">{phone.length}/10 digits</p>
+                {isEditing ? (
+                  <button
+                    onClick={() => setShowPhotoOptions(true)}
+                    className="absolute -bottom-1 -right-1 w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow-lg border-2 border-background hover:scale-110 transition-transform"
+                  >
+                    <Camera className="w-4 h-4 text-primary-foreground" />
+                  </button>
+                ) : (
+                  profileImage && (
+                    <button
+                      onClick={() => setShowPhotoOptions(true)}
+                      className="absolute -bottom-1 -right-1 w-8 h-8 bg-muted rounded-full flex items-center justify-center shadow-lg border-2 border-background hover:scale-110 transition-transform"
+                    >
+                      <Edit2 className="w-4 h-4 text-foreground" />
+                    </button>
+                  )
+                )}
               </div>
+            </div>
 
-              {/* Academic section */}
-              <SectionHeader title="Academic Details" />
-
-              <StyledSelect
-                label="Course"
-                value={course}
-                onChange={handleCourseChange}
-                options={[...courses]}
-                placeholder="Select your course"
-                icon={BookOpen}
-              />
-
-              <StyledSelect
-                label="Branch"
-                value={branchSelect}
-                onChange={setBranchSelect}
-                options={currentBranchOptions}
-                placeholder={course ? "Select branch" : "Select a course first"}
-                disabled={!course}
-                icon={Layers}
-              />
-
-              {branchSelect === "Other" && (
-                <StyledInput
-                  label="Specify Branch"
-                  value={branchText}
-                  onChange={e => setBranchText(e.target.value)}
-                  placeholder="Type your branch name"
-                  icon={Layers}
-                />
-              )}
-
-              {/* Semester & Year Dropdowns */}
-              <div className="grid grid-cols-2 gap-3">
-                <StyledSelect
-                  label="Semester"
-                  value={semester}
-                  onChange={setSemester}
-                  options={getSemesterOptions(course)}
-                  placeholder={course ? "Select" : "Pick course"}
-                  disabled={!course}
-                  icon={Calendar}
-                />
-                <StyledSelect
-                  label="Year"
-                  value={yearBatch}
-                  onChange={setYearBatch}
-                  options={yearOptions}
-                  placeholder="Select year"
-                  icon={Calendar}
-                />
+            {/* View Mode Fields */}
+            {!isEditing && (
+              <div className="space-y-4">
+                <InfoCard icon={<User className="w-5 h-5 text-primary" />} label="Full Name" value={user?.fullName} />
+                <InfoCard icon={<Lock className="w-5 h-5 text-primary" />} label="Email Address" value={user?.email} />
+                
+                {/* Expand Registration No, Phone, Academic Data in the same styling format */}
+                {user?.role === "student" && (
+                  <>
+                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mt-6 mb-2 ml-1">Academic</h3>
+                    <InfoCard icon={<Hash className="w-5 h-5 text-primary" />} label="Registration No." value={user?.registrationNo} />
+                    <InfoCard icon={<Phone className="w-5 h-5 text-primary" />} label="Phone" value={user?.phoneNumber ? `+91 ${user.phoneNumber}` : null} />
+                    <InfoCard icon={<BookOpen className="w-5 h-5 text-primary" />} label="Course & Branch" value={user?.course ? `${user.course} - ${user.branch || 'General'}` : null} />
+                    <InfoCard icon={<Calendar className="w-5 h-5 text-primary" />} label="Semester & Batch" value={user?.yearBatch ? `${user.semester || '-'} • Batch ${user.yearBatch}` : null} />
+                    
+                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mt-6 mb-2 ml-1">Commute Details</h3>
+                    <InfoCard icon={<MapPin className="w-5 h-5 text-primary" />} label="Boarding Stop" value={user?.busStop} />
+                  </>
+                )}
               </div>
+            )}
 
-              {/* Commute */}
-              <SectionHeader title="Commute" />
+            {/* Edit Mode Fields */}
+            {isEditing && (
+              <div className="space-y-5">
+                <StyledInput label="Full Name" value={fullName} onChange={(e: any) => setFullName(e.target.value)} icon={User} error={errors.fullName} />
+                <StyledInput label="Email Address" value={email} disabled icon={Lock} />
+                <StyledInput label="Registration Number" value={registrationNo} onChange={(e: any) => setRegNo(e.target.value)} icon={Hash} />
+                
+                <div className="space-y-1.5">
+                  <label className="block text-sm text-muted-foreground ml-1">Phone Number</label>
+                  <div className="flex gap-2">
+                    <select
+                      value={countryCode}
+                      onChange={e => setCountryCode(e.target.value)}
+                      className="w-24 appearance-none bg-muted/30 border border-border/50 rounded-xl py-3 px-3 text-foreground"
+                    >
+                      {countryCodes.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                    <div className="flex-1 relative border border-border/50 bg-muted/30 focus-within:border-primary/50 focus-within:bg-muted/50 rounded-xl transition-all">
+                      <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary pointer-events-none" />
+                      <input
+                        type="tel"
+                        maxLength={10}
+                        value={phone}
+                        onChange={e => {
+                          const v = e.target.value.replace(/\D/g, "").slice(0, 10);
+                          setPhone(v);
+                          if (errors.phone) setErrors(prev => ({ ...prev, phone: undefined }));
+                        }}
+                        className="w-full bg-transparent py-3 pl-10 pr-4 focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                  {errors.phone && <p className="text-xs text-red-500 px-1">{errors.phone}</p>}
+                </div>
 
-              <StyledSelect
-                label="Boarding Bus Stop"
-                value={busStop}
-                onChange={setBusStop}
-                options={busStops}
-                placeholder="Select nearest stop"
-                icon={MapPin}
-              />
+                <div className="grid grid-cols-2 gap-4">
+                  <StyledSelect label="Course" value={course} onChange={handleCourseChange} options={[...courses]} placeholder="Select" icon={BookOpen} />
+                  <StyledSelect label="Branch" value={branchSelect} onChange={setBranchSelect} options={currentBranchOptions} placeholder="Select" disabled={!course} icon={Layers} />
+                </div>
+                
+                {branchSelect === "Other" && (
+                   <StyledInput label="Specify Branch" value={branchText} onChange={(e: any) => setBranchText(e.target.value)} icon={Layers} />
+                )}
 
-              {/* Save / Cancel Buttons */}
-              <div className="pt-2 grid grid-cols-2 gap-3">
-                <button
-                  onClick={() => { setIsEditing(false); setErrors({}); }}
-                  className="py-3.5 rounded-2xl border-2 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 font-semibold hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </button>
+                <div className="grid grid-cols-2 gap-4">
+                  <StyledSelect label="Semester" value={semester} onChange={setSemester} options={getSemesterOptions(course)} placeholder="Select" disabled={!course} icon={Calendar} />
+                  <StyledSelect label="Year Batch" value={yearBatch} onChange={setYearBatch} options={yearOptions} placeholder="Select" icon={Calendar} />
+                </div>
+
+                <StyledSelect label="Boarding Bus Stop" value={busStop} onChange={setBusStop} options={busStops} placeholder="Select stop" icon={MapPin} />
+
                 <button
                   onClick={validateAndSave}
-                  className="py-3.5 rounded-2xl text-white font-bold shadow-lg shadow-[#0E2A2F]/30 hover:brightness-110 transition-all" style={{ background: '#0E2A2F' }}
+                  className="w-full bg-primary text-primary-foreground py-4 rounded-xl font-bold uppercase tracking-wider mt-4 hover:opacity-90 transition-opacity"
                 >
-                  Save Changes
+                  Save Profile
                 </button>
               </div>
-            </div>
-          )}
-        </div>
-
-        {/* ── Bottom CTA (view mode) ─────────────────────────────────── */}
-        {!isEditing && (
-          <div className="mx-4 mt-4">
-            <button
-              onClick={startEditing}
-              className="w-full py-4 rounded-2xl text-white font-bold text-base shadow-lg shadow-[#0E2A2F]/30 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2" style={{ background: '#0E2A2F' }}
-            >
-              <Edit2 className="w-4 h-4" />
-              Edit Profile
-            </button>
+            )}
           </div>
-        )}
-      </div>
+        </div>
+      </AuthCard>
 
-      {/* ── Sheets & Modals ─────────────────────────────────────────── */}
+      {/* Sheets & Modals */}
       <PhotoSheet
         open={showPhotoOptions}
         onClose={() => setShowPhotoOptions(false)}
@@ -682,17 +525,10 @@ const Profile = () => {
         onDelete={handleDeletePhoto}
         hasPhoto={!!profileImage}
       />
-
-      {showCropOverlay && (
-        <CropOverlay
-          onSave={handleImageSaved}
-          onClose={() => setShowCropOverlay(false)}
-        />
-      )}
-        </div>
-      </AuthCard>
+      {showCropOverlay && <CropOverlay onSave={handleImageSaved} onClose={() => setShowCropOverlay(false)} />}
     </MobileLayout>
   );
 };
 
 export default Profile;
+

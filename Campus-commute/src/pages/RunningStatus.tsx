@@ -5,6 +5,8 @@ import {
   Circle, CheckCircle2, Radio, Timer, Route as RouteIcon, Wifi, WifiOff
 } from "lucide-react";
 import MobileLayout from "@/components/MobileLayout";
+import AuthCard from "@/components/AuthCard";
+import BackButton from "@/components/BackButton";
 import { useRouteContext } from "@/contexts/RouteContext";
 import { useToast } from "@/hooks/use-toast";
 
@@ -143,28 +145,24 @@ const RunningStatus = () => {
 
   return (
     <MobileLayout>
-      <div className="min-h-screen bg-background flex flex-col">
+      <AuthCard className="max-h-[95vh] overflow-y-auto flex flex-col p-6 sm:p-8 my-auto">
+        <div className="flex flex-col">
 
         {/* Header */}
-        <div className="px-5 pt-12 pb-4 flex items-center gap-3">
-          <button
-            onClick={() => navigate("/home")}
-            className="p-2 hover:bg-muted rounded-xl transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 text-foreground" />
-          </button>
-          <h1 className="text-lg font-bold text-foreground flex-1">Running Status</h1>
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+        <div className="flex items-center justify-between mb-8">
+          <BackButton to="/home" />
+          <h1 className="text-xl font-bold text-foreground">Running Status</h1>
+          <div className="w-10 flex justify-end">
             {socketConnected ? (
-              <><Wifi className="w-3.5 h-3.5 text-emerald-500" /><span className="text-emerald-600">Live</span></>
+              <Wifi className="w-5 h-5 text-emerald-500" />
             ) : (
-              <><WifiOff className="w-3.5 h-3.5 text-red-400" /><span className="text-red-500">Offline</span></>
+              <WifiOff className="w-5 h-5 text-red-500" />
             )}
           </div>
         </div>
 
         {/* Route Title Card */}
-        <div className="mx-5 p-4 bg-muted/50 rounded-2xl border border-border/50 mb-4">
+        <div className="p-4 bg-muted/50 rounded-2xl border border-border/50 mb-4">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-bold text-foreground">{selectedRoute.busName}</h2>
@@ -180,7 +178,7 @@ const RunningStatus = () => {
         </div>
 
         {/* Status Badge */}
-        <div className="mx-5 mb-4">
+        <div className="mb-4">
           <div className={`flex items-center gap-3 p-4 rounded-2xl border ${
             status === "running" ? "bg-emerald-500/5 border-emerald-500/20" :
             status === "reached" ? "bg-blue-500/5 border-blue-500/20" :
@@ -215,7 +213,7 @@ const RunningStatus = () => {
 
         {/* Stats Grid */}
         {status === "running" && (
-          <div className="mx-5 grid grid-cols-2 gap-3 mb-4">
+          <div className="grid grid-cols-2 gap-3 mb-4">
             <div className="bg-muted/50 rounded-2xl p-4 border border-border/30">
               <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-1">Next Stop</p>
               <p className="text-sm font-bold text-foreground truncate flex items-center gap-1">
@@ -248,7 +246,7 @@ const RunningStatus = () => {
         )}
 
         {/* Alarm Button */}
-        <div className="mx-5 mb-4">
+        <div className="mb-4">
           <button
             onClick={() => {
               if (alarmEnabled) {
@@ -335,8 +333,8 @@ const RunningStatus = () => {
                 ))}
               </div>
               <button
-                onClick={enableAlarm}
-                className="w-full bg-primary text-primary-foreground py-3 rounded-xl font-medium hover:bg-primary/90 transition-colors"
+                 onClick={enableAlarm}
+                 className="w-full bg-primary text-primary-foreground py-3 rounded-xl font-medium hover:bg-primary/90 transition-colors"
               >
                 Enable Alarm
               </button>
@@ -345,7 +343,7 @@ const RunningStatus = () => {
         )}
 
         {/* Live Stoppage Timeline */}
-        <div className="mx-5 flex-1 pb-8">
+        <div className="flex-1 pb-4">
           <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
             <Gauge className="w-3.5 h-3.5" />
             Live Stoppage Timeline
@@ -389,9 +387,7 @@ const RunningStatus = () => {
                   </div>
 
                   {/* Stop Info */}
-                  <div className={`flex-1 pb-2 -mt-0.5 flex justify-between items-center ${
-                    isCurrent ? "" : ""
-                  }`}>
+                  <div className="flex-1 pb-2 -mt-0.5 flex justify-between items-center">
                     <div className="flex-1">
                       <span className={`text-[13px] font-medium ${
                         isCurrent ? "text-emerald-600 dark:text-emerald-400 font-bold" :
@@ -432,9 +428,6 @@ const RunningStatus = () => {
           </div>
         </div>
 
-      </div>
+        </div>
+      </AuthCard>
     </MobileLayout>
-  );
-};
-
-export default RunningStatus;
