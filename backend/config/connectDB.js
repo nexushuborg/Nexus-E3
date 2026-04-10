@@ -1,31 +1,23 @@
 const mongoose = require("mongoose");
-const { MongoMemoryServer } = require("mongodb-memory-server");
 
-const MAX_RETRIES = 1;
-
-let mongoServer;
+const MAX_RETRIES = 3;
+const RETRY_DELAY_MS = 5000;
 
 const connectDB = async (retryCount = 0) => {
   try {
-    // Attempt to connect to the provided Atlas cluster but fail very fast (3s)
-    await mongoose.connect(process.env.MONGODB_URI, {
-      serverSelectionTimeoutMS: 3000, 
+    await mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/mydatabase", {
+      serverSelectionTimeoutMS: 5000, // Fail fast after 5s instead of 30s
     });
-    console.log("✅ MongoDB connected successfully to remote cluster.");
+    console.log("✅ MongoDB connected successfully");
   } catch (error) {
-    console.error(`❌ Remote MongoDB connection failed:`, error.message);
-    
-    // Automatically fallback to local memory server
-    console.log("⚠️ Starting fallback Local Memory Database to prevent app crashes...");
-    try {
-      mongoServer = await MongoMemoryServer.create();
-      const mongoUri = mongoServer.getUri();
-      await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 3000 });
-      console.log(`✅ Connected to fallback Local Memory DB at ${mongoUri}`);
-      console.log("   Note: Data will NOT be saved when you restart the server.");
-    } catch (memError) {
-      console.error("❌ Fallback Memory DB also failed:", memError.message);
+    console.error(`❌ MongoDB connection failed (attempt ${retryCount + 1}/${MAX_RETRIES}):`, error.message);
+    if (retryCount < MAX_RETRIES - 1) {
+      console.log(`   Retrying in ${RETRY_DELAY_MS / 1000}s...`);
+      await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS));
+      return connectDB(retryCount + 1);
     }
+    console.error("⚠️  All DB connection attempts failed. Server will continue without DB.");
+    console.error("   API routes requiring DB operations will return errors.");
   }
 };
 
