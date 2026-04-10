@@ -431,3 +431,7 @@ const RunningStatus = () => {
         </div>
       </AuthCard>
     </MobileLayout>
+  );
+};
+
+export default RunningStatus;
