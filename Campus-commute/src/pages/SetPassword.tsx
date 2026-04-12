@@ -95,14 +95,14 @@ const SetPassword = () => {
         description: "We've sent a verification code to your email.",
       });
       navigate("/otp-verification");
-    } catch (err) {
-      // If OTP send fails (backend down, email not deliverable), skip OTP and go directly to success
-      console.warn("OTP send failed, proceeding without verification:", err);
+    } catch (err: any) {
+      console.error("OTP send failed:", err);
       toast({
-        title: "Account Created",
-        description: "Welcome to Campus Commute!",
+        title: "Error",
+        description: "Failed to send verification code. Please check your backend connection or try again later.",
+        variant: "destructive",
       });
-      navigate("/success");
+      // DO NOT SKIP OTP! Wait for the user to try again or fix the backend.
     } finally {
       setIsLoading(false);
     }

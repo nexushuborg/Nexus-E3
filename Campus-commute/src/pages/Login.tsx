@@ -92,11 +92,17 @@ const passwordSchema = z.string().min(8, "Password must be at least 8 characters
       } else {
         toast({ title: "Login Failed", description: "Invalid email or password", variant: "destructive" });
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err instanceof z.ZodError) {
         const newErrors: any = {};
         err.errors.forEach((e) => { if (e.path[0]) newErrors[e.path[0]] = e.message; });
         setErrors(newErrors);
+      } else {
+        toast({
+          title: "Authentication Failed",
+          description: err.message || "Could not sync with the backend server.",
+          variant: "destructive",
+        });
       }
     } finally {
       setIsLoading(false);

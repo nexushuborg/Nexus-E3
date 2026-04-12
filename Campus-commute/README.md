@@ -1,51 +1,31 @@
-# Campus Commute - Real-Time Bus Tracking PWA
+# Campus Commute Frontend
 
-## Project Info
+This directory contains the user interface for the Campus Commute application. It is constructed using **React**, **TypeScript**, and **Vite**, focusing heavily on providing a premium, mobile-native experience directly within the web browser.
 
-This is a modern, responsive web application for real-time campus bus tracking.
+## 🛠️ Technology Stack
+* **Framework**: React 18 with Vite
+* **Language**: TypeScript
+* **Styling**: TailwindCSS
+* **Mapping**: Leaflet (`react-leaflet`) for rendering open-source maps.
+* **State Management**: React Context APIs (`AuthContext`, `RouteContext`)
+* **Icons**: `lucide-react`
+* **Form Validation**: `zod`
 
-## How to Get Started
+## 🏗️ Folder Architecture
+* `/src/assets`: Static imagery, mock JSON data, and global CSS.
+* `/src/components`: Highly reusable UI widgets (`AuthCard`, `GradientButton`, `MobileLayout`).
+* `/src/contexts`: Application state providers orchestrating global data.
+* `/src/pages`: Distinct route views tailored for Student and Driver flows (e.g., `RunningStatus`, `DriverInfo`).
+* `/src/utils`: Helper functions and distance calculation algorithms.
 
-To work locally with this project, follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+## 🔑 Environment Variables
+Create a `.env` file in this directory with the following variables:
+```env
+VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
+VITE_BACKEND_URL=http://localhost:8000
 ```
 
-You can also edit files directly in GitHub or use GitHub Codespaces:
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How to Deploy This Project
-
-This project can be deployed to various hosting platforms such as Vercel, Netlify, GitHub Pages, or any other service that supports static site hosting.
+## 🚀 Running Locally
+1. `npm install`
+2. `npm run dev`
+3. Access the web app at `http://localhost:8080` (or the port specified by Vite).
