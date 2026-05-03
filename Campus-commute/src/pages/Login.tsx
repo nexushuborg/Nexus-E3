@@ -80,8 +80,11 @@ const passwordSchema = z.string().min(8, "Password must be at least 8 characters
     setErrors({});
     setIsLoading(true);
     try {
-      emailSchema.parse(email);
-      passwordSchema.parse(password);
+      z.object({
+        email: emailSchema,
+        password: passwordSchema
+      }).parse({ email, password });
+      
       const role = pendingRole || "student";
       const success = await login(email, password, role);
       if (success) {
@@ -95,7 +98,9 @@ const passwordSchema = z.string().min(8, "Password must be at least 8 characters
     } catch (err: any) {
       if (err instanceof z.ZodError) {
         const newErrors: any = {};
-        err.errors.forEach((e) => { if (e.path[0]) newErrors[e.path[0]] = e.message; });
+        err.errors.forEach((e) => { 
+          if (e.path[0]) newErrors[e.path[0]] = e.message; 
+        });
         setErrors(newErrors);
       } else {
         toast({

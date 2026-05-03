@@ -82,6 +82,7 @@ const DriverHome = () => {
   const [dutyStatus, setDutyStatus] = useState(true);
   // FIX #1: Start with location sharing OFF — driver must click "Start"
   const [locationSharing, setLocationSharing] = useState(false);
+  const [isSimulating, setIsSimulating] = useState(false);
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [socketReady, setSocketReady] = useState(false);
@@ -114,13 +115,60 @@ const DriverHome = () => {
     };
   }, [user?.routeNo]);
 
-  // GPS watching — only when locationSharing is ON and socket is ready
+  // Simulation Loop
   useEffect(() => {
-    if (!navigator.geolocation || !locationSharing || !dutyStatus || !socketReady || !socket) {
+    if (!isSimulating || !locationSharing || !dutyStatus || !socketReady || !socket || !user?.routeNo) return;
+    
+    const assignedRoute = routes.find(r => r.busNumber === user?.routeNo);
+    if (!assignedRoute || assignedRoute.stoppages.length < 2) return;
+
+    let currentStopIdx = 0;
+    let progress = 0; // 0 to 1 between current and next stop
+    
+    console.log("[Driver] Starting GPS Simulation...");
+
+    const simInterval = setInterval(() => {
+      if (currentStopIdx >= assignedRoute.stoppages.length - 1) {
+        // Reached the end, loop back or stop
+        currentStopIdx = 0;
+        progress = 0;
+      }
+
+      const p1 = assignedRoute.stoppages[currentStopIdx].coordinates;
+      const p2 = assignedRoute.stoppages[currentStopIdx + 1].coordinates;
+      
+      progress += 0.05; // 5% per second (20 seconds between stops)
+      if (progress >= 1) {
+        progress = 0;
+        currentStopIdx++;
+      }
+
+      if (currentStopIdx < assignedRoute.stoppages.length - 1) {
+        const lat = p1.lat + (p2.lat - p1.lat) * progress;
+        const lng = p1.lng + (p2.lng - p1.lng) * progress;
+        
+        setCoords({ lat, lng });
+        socket.emit("driver-send-location", {
+          busId: String(user.routeNo),
+          lat, lng
+        });
+        setBroadcastCount(c => c + 1);
+      }
+    }, 1000);
+
+    return () => {
+      console.log("[Driver] Stopping GPS Simulation");
+      clearInterval(simInterval);
+    };
+  }, [isSimulating, locationSharing, dutyStatus, socketReady, socket, user?.routeNo, routes]);
+
+  // GPS watching — only when locationSharing is ON and socket is ready (and NOT simulating)
+  useEffect(() => {
+    if (isSimulating || !navigator.geolocation || !locationSharing || !dutyStatus || !socketReady || !socket) {
       return;
     }
 
-    console.log("[Driver] Starting GPS watch...");
+    console.log("[Driver] Starting Real GPS watch...");
 
     const id = navigator.geolocation.watchPosition(
       (pos) => {
@@ -250,21 +298,43 @@ const DriverHome = () => {
           )}
         </div>
 
-        <button
-          onClick={() => {
-            const willShare = !locationSharing;
-            setLocationSharing(willShare);
-            if (!willShare && socket && user?.routeNo) {
-              socket.emit("driver-offline", { busId: String(user.routeNo) });
-              setBroadcastCount(0);
-            }
-          }}
-          className={`${
-            locationSharing ? "bg-red-500 hover:bg-red-600" : "bg-green-500 hover:bg-green-600"
-          } text-white py-3 px-8 rounded-lg font-medium shadow-lg min-w-[200px] transition-colors`}
-        >
-          {locationSharing ? "Stop Sharing" : "Start Sharing"}
-        </button>
+        <div className="flex gap-2 w-full max-w-[400px]">
+          <button
+            onClick={() => {
+              const willShare = !locationSharing;
+              setLocationSharing(willShare);
+              if (!willShare && socket && user?.routeNo) {
+                socket.emit("driver-offline", { busId: String(user.routeNo) });
+                setBroadcastCount(0);
+              }
+            }}
+            className={`flex-1 ${
+              locationSharing ? "bg-red-500 hover:bg-red-600" : "bg-green-500 hover:bg-green-600"
+            } text-white py-3 px-4 rounded-lg font-medium shadow-lg transition-colors text-sm`}
+          >
+            {locationSharing ? "Stop GPS" : "Start Real GPS"}
+          </button>
+          
+          <button
+            onClick={() => {
+              const newSim = !isSimulating;
+              setIsSimulating(newSim);
+              if (!locationSharing && newSim) {
+                setLocationSharing(true);
+              }
+              if (!newSim && socket && user?.routeNo) {
+                socket.emit("driver-offline", { busId: String(user.routeNo) });
+                setBroadcastCount(0);
+                setLocationSharing(false);
+              }
+            }}
+            className={`flex-1 ${
+              isSimulating ? "bg-amber-500 hover:bg-amber-600" : "bg-blue-500 hover:bg-blue-600"
+            } text-white py-3 px-4 rounded-lg font-medium shadow-lg transition-colors text-sm`}
+          >
+            {isSimulating ? "Stop Simulation" : "Simulate Route"}
+          </button>
+        </div>
       </div>
     </div>
 
