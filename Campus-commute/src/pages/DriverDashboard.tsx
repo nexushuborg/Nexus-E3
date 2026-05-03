@@ -41,7 +41,7 @@ const DriverDashboard = () => {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-xl font-semibold text-foreground">{user?.fullName || "Driver"}</h2>
-                <p className="text-muted-foreground text-sm">Route no.{user?.routeNo || "1"}</p>
+                <p className="text-muted-foreground text-sm">Route no. {user?.routeNo || "1"}</p>
               </div>
             </div>
 
