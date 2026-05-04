@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { io, Socket } from "socket.io-client";
-import { Menu, MapPin, User, Bus, Clock, Phone } from "lucide-react";
+import { Menu, MapPin, User, Bus, Clock, Phone, AlertTriangle, WifiOff } from "lucide-react";
 import MobileLayout from "@/components/MobileLayout";
 import { Switch } from "@/components/ui/switch";
 import { useAuth } from "@/contexts/AuthContext";
@@ -57,6 +58,7 @@ const FitBounds = ({ stops }: { stops: any[] }) => {
 };
 
 const DriverHome = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const { routes } = useRouteContext();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -90,6 +92,35 @@ const DriverHome = () => {
     newSocket.on("disconnect", () => {
       console.log("[Driver] Socket disconnected");
       setSocketReady(false);
+    });
+
+    // FIXED: Duplicate Driver Broadcasting Lock (BUG 2)
+    newSocket.on("route-already-active", (data) => {
+      import("@/hooks/use-toast").then(({ toast }) => {
+        toast({
+          title: "Access Denied",
+          description: data.message || "Route is already active by another driver.",
+          variant: "destructive"
+        });
+      });
+      setLocationSharing(false);
+      setIsSimulating(false);
+      setBroadcastCount(0);
+    });
+
+    // FIXED: Deleted Route Crashes Driver Map (BUG 4)
+    newSocket.on("route-deleted", () => {
+      import("@/hooks/use-toast").then(({ toast }) => {
+        toast({
+          title: "Route Removed",
+          description: "Your assigned route has been removed by the administrator.",
+          variant: "destructive"
+        });
+      });
+      setLocationSharing(false);
+      setIsSimulating(false);
+      newSocket.disconnect();
+      navigate("/driver-dashboard");
     });
 
     setSocket(newSocket);
@@ -202,8 +233,15 @@ const DriverHome = () => {
   <div className="flex flex-col min-h-screen bg-background">
 
     {/* Top Bar */}
-    <div className="px-6  pb-4 z-50 bg-background">
-      <div className="flex items-center justify-between">
+    <div className="px-6 pb-4 z-50 bg-background transition-all">
+      {/* FIXED: You are Offline Banner (BONUS 1) */}
+      {!socketReady && (
+        <div className="absolute top-0 left-0 right-0 z-[1001] bg-destructive text-destructive-foreground px-4 py-2 flex items-center justify-center gap-2 text-sm font-semibold shadow-md animate-in slide-in-from-top">
+          <WifiOff className="w-4 h-4" /> Connection lost — trying to reconnect...
+        </div>
+      )}
+
+      <div className={`flex items-center justify-between ${!socketReady ? 'pt-12' : 'pt-4'}`}>
         <button
           type="button"
           aria-label="Open menu"
@@ -229,12 +267,21 @@ const DriverHome = () => {
       `}</style>
       {(() => {
         const assignedRoute = routes.find(r => r.busNumber === user?.routeNo);
-        const startPos: [number, number] = assignedRoute
-          ? [assignedRoute.startPoint.coordinates.lat, assignedRoute.startPoint.coordinates.lng]
-          : [20.4625, 85.8828];
-        const fallbackLine: [number, number][] = assignedRoute
-          ? assignedRoute.stoppages.map((s: any) => [s.coordinates.lat, s.coordinates.lng])
-          : [];
+        // FIXED: Deleted Route Crashes Driver Map (BUG 4) - Fallback check
+        if (!assignedRoute) {
+           return (
+             <div className="absolute inset-0 flex items-center justify-center bg-muted/30">
+               <div className="text-center p-6 bg-background rounded-2xl shadow-sm border">
+                 <AlertTriangle className="w-12 h-12 text-amber-500 mx-auto mb-3" />
+                 <h3 className="font-semibold text-lg">No Route Assigned</h3>
+                 <p className="text-sm text-muted-foreground mt-1">You are not currently assigned to any active route.</p>
+               </div>
+             </div>
+           );
+        }
+
+        const startPos: [number, number] = [assignedRoute.startPoint.coordinates.lat, assignedRoute.startPoint.coordinates.lng];
+        
         return (
           <MapContainer center={startPos} zoom={12} zoomControl={true} className="absolute inset-0 w-full h-full z-0">
             {assignedRoute && <FitBounds stops={assignedRoute.stoppages} />}

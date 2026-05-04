@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowLeft, Bus, MapPin, Clock, Navigation, Bell, BellRing, Gauge,
-  Circle, CheckCircle2, Radio, Timer, Route as RouteIcon, Wifi, WifiOff
+  Circle, CheckCircle2, Radio, Timer, Route as RouteIcon, Wifi, WifiOff, AlertTriangle
 } from "lucide-react";
 import MobileLayout from "@/components/MobileLayout";
 import AuthCard from "@/components/AuthCard";
@@ -28,6 +28,7 @@ const RunningStatus = () => {
   const [showAlarmModal, setShowAlarmModal] = useState(false);
   const [alarmStopName, setAlarmStopName] = useState<string>("");
   const [isAlarmRinging, setIsAlarmRinging] = useState(false);
+  const [audioUnlocked, setAudioUnlocked] = useState(false); // FIXED: BUG 5
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const vibrateIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -93,12 +94,16 @@ const RunningStatus = () => {
       setAlarmFired(true);
       setIsAlarmRinging(true);
       
-      // Start audio
-      if (!audioRef.current) {
+      // FIXED: Mobile Audio/Vibration Alarm (BUG 5)
+      // Start audio only if unlocked
+      if (audioUnlocked && audioRef.current) {
+        audioRef.current.play().catch(e => console.log("Audio play failed:", e));
+      } else if (!audioRef.current) {
+        // Fallback try
         audioRef.current = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
         audioRef.current.loop = true;
+        audioRef.current.play().catch(e => console.log("Audio play failed:", e));
       }
-      audioRef.current.play().catch(e => console.log("Audio play failed:", e));
 
       // Start vibration
       if ("vibrate" in navigator) {
@@ -133,6 +138,12 @@ const RunningStatus = () => {
     }
   }, []);
 
+  // FIXED: Alarm Persist Fix on Logout (BONUS 3)
+  useEffect(() => {
+    window.addEventListener("clear-alarm", stopAlarm);
+    return () => window.removeEventListener("clear-alarm", stopAlarm);
+  }, [stopAlarm]);
+
   // Request notification permission on alarm enable
   const enableAlarm = useCallback(() => {
     if (!alarmStopName) {
@@ -142,6 +153,21 @@ const RunningStatus = () => {
     if ("Notification" in window && Notification.permission === "default") {
       Notification.requestPermission();
     }
+    
+    // FIXED: Mobile Audio/Vibration Alarm (BUG 5)
+    // Unlock Audio Context on user gesture
+    if (!audioUnlocked) {
+       if (!audioRef.current) {
+          audioRef.current = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
+          audioRef.current.loop = true;
+       }
+       audioRef.current.play().then(() => {
+           audioRef.current?.pause();
+           audioRef.current!.currentTime = 0;
+           setAudioUnlocked(true);
+       }).catch(e => console.log("Audio unlock failed (Safari strict mode?):", e));
+    }
+
     setAlarmEnabled(true);
     setAlarmFired(false);
     setShowAlarmModal(false);
@@ -307,13 +333,31 @@ const RunningStatus = () => {
                 {alarmEnabled ? `Alert ${alarmMinutes}m before arrival` : "Get notified before the bus reaches your stop"}
               </p>
             </div>
-            {alarmEnabled && (
+              {alarmEnabled && (
               <span className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded-lg font-bold">
                 ON
               </span>
             )}
           </button>
         </div>
+
+        {/* FIXED: Mobile Audio/Vibration Alarm (BUG 5) - Warning message */}
+        {alarmEnabled && !audioUnlocked && (
+          <div className="mb-4 bg-amber-500/10 border border-amber-500/30 p-3 rounded-xl flex items-start gap-2 cursor-pointer hover:bg-amber-500/20" 
+            onClick={() => {
+              if (audioRef.current) {
+                audioRef.current.play().then(() => {
+                  audioRef.current?.pause();
+                  setAudioUnlocked(true);
+                }).catch(() => {});
+              }
+            }}>
+            <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+            <p className="text-xs text-amber-600 dark:text-amber-400">
+              Audio alarm may be blocked. Tap here to ensure sound is enabled for the alarm.
+            </p>
+          </div>
+        )}
 
         {/* Alarm Modal */}
         {showAlarmModal && (

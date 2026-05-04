@@ -68,6 +68,12 @@ exports.getAllUsers = async (req, res) => {
 exports.blockUser = async (req, res) => {
     try {
         const { userId, block } = req.body;
+        
+        // FIXED: Admin Can Block Themselves (BUG 3)
+        if (userId === req.user._id.toString()) {
+            return res.status(400).json({ success: false, message: "You cannot block yourself." });
+        }
+
         const user = await User.findByIdAndUpdate(userId, { isBlocked: block }, { new: true }).select('-password');
         if (!user) return res.status(404).json({ success: false, message: "User not found" });
         res.status(200).json({ success: true, user, message: `User ${block ? 'blocked' : 'unblocked'} successfully` });
@@ -96,5 +102,20 @@ exports.verifyDriverKey = async (req, res) => {
         res.status(200).json({ valid: isValid });
     } catch (error) {
         res.status(500).json({ valid: false, message: "Server error" });
+    }
+};
+
+// FIXED: Deleted Route Crashes Driver Map (BUG 4)
+exports.kickRoute = async (req, res) => {
+    try {
+        const { routeNo } = req.params;
+        // Access global io instance from app
+        const io = req.app.get('io');
+        if (io) {
+            io.to(routeNo).emit("route-deleted");
+        }
+        res.status(200).json({ success: true, message: "Route kick event sent." });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server error" });
     }
 };

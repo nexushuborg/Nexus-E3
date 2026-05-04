@@ -29,4 +29,7 @@ router.get('/users', isLoggedIn, isAdmin, adminController.getAllUsers);
 router.put('/users/block', isLoggedIn, isAdmin, adminController.blockUser);
 router.delete('/users/:userId', isLoggedIn, isAdmin, adminController.deleteUser);
 
+// FIXED: Deleted Route Crashes Driver Map (BUG 4)
+router.delete('/routes/:routeNo/kick', isLoggedIn, isAdmin, adminController.kickRoute);
+
 module.exports = router;

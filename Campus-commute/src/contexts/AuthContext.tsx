@@ -138,6 +138,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       await fetch("http://localhost:8000/user/logout", { method: "POST", credentials: "include" });
     } catch {}
+    
+    // FIXED: Alarm Persist Fix on Logout (BONUS 3)
+    window.dispatchEvent(new Event("clear-alarm"));
+    
     setIsAuthenticated(false);
     setUser(null);
     setPendingRole(null);

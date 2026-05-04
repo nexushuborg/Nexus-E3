@@ -55,7 +55,12 @@ module.exports.register = async (req, res) => {
 
     let token = generateToken(newUser);
         
-    res.cookie("token", token);
+    // FIXED: JWT in localStorage Security Update (BUG 6)
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
     
     res.status(201).json({
       success: true,
@@ -96,7 +101,12 @@ module.exports.login = async (req, res) => {
     }
 
     let token = generateToken(user);
-    res.cookie("token", token);
+    // FIXED: JWT in localStorage Security Update (BUG 6)
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
     res.status(200).json({ 
       message: "Login successful", 
       user: {
@@ -281,7 +291,12 @@ module.exports.googleLogin = async (req, res) => {
     }
 
     let token = generateToken(user);
-    res.cookie("token", token);
+    // FIXED: JWT in localStorage Security Update (BUG 6)
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
     
     res.status(200).json({
       success: true,

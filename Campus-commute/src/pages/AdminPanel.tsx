@@ -5,6 +5,7 @@ import FormInput from "@/components/FormInput";
 import GradientButton from "@/components/GradientButton";
 import BackButton from "@/components/BackButton";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 const BACKEND = "http://localhost:8000";
 
@@ -45,6 +46,7 @@ type Tab = "settings" | "routes" | "drivers" | "users";
 
 const AdminPanel = () => {
   const { toast } = useToast();
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<Tab>("settings");
 
   // Settings
@@ -333,7 +335,21 @@ const AdminPanel = () => {
                         <button onClick={() => handleEditRoute(route)} className="flex-1 py-2 rounded-xl bg-primary/20 text-primary flex items-center justify-center gap-1 hover:bg-primary/30 text-sm">
                           <Edit2 className="w-4 h-4" /> Edit
                         </button>
-                        <button onClick={() => saveRoutes(routes.filter(r => r.id !== route.id))} className="flex-1 py-2 rounded-xl bg-destructive/20 text-destructive flex items-center justify-center gap-1 hover:bg-destructive/30 text-sm">
+                        <button 
+                          onClick={async () => {
+                            // FIXED: Deleted Route Crashes Driver Map (BUG 4)
+                            try {
+                              await fetch(`${BACKEND}/api/admin/routes/${route.number}/kick`, {
+                                method: 'DELETE',
+                                credentials: 'include'
+                              });
+                            } catch (e) {
+                              console.error("Failed to emit kick event", e);
+                            }
+                            saveRoutes(routes.filter(r => r.id !== route.id));
+                          }} 
+                          className="flex-1 py-2 rounded-xl bg-destructive/20 text-destructive flex items-center justify-center gap-1 hover:bg-destructive/30 text-sm"
+                        >
                           <Trash2 className="w-4 h-4" /> Delete
                         </button>
                       </div>
@@ -385,10 +401,13 @@ const AdminPanel = () => {
                       </div>
                     </div>
                     <div className="flex flex-col gap-2 flex-shrink-0">
-                      <button onClick={() => handleBlockUser(u._id, !u.isBlocked)}
-                        className={`p-2 rounded-xl ${u.isBlocked ? "bg-green-500/20 text-green-500 hover:bg-green-500/30" : "bg-amber-500/20 text-amber-500 hover:bg-amber-500/30"}`}>
-                        {u.isBlocked ? <CheckCircle className="w-4 h-4" /> : <Ban className="w-4 h-4" />}
-                      </button>
+                      {/* FIXED: Admin Can Block Themselves (BUG 3) */}
+                      {u._id !== user?._id && (
+                        <button onClick={() => handleBlockUser(u._id, !u.isBlocked)}
+                          className={`p-2 rounded-xl ${u.isBlocked ? "bg-green-500/20 text-green-500 hover:bg-green-500/30" : "bg-amber-500/20 text-amber-500 hover:bg-amber-500/30"}`}>
+                          {u.isBlocked ? <CheckCircle className="w-4 h-4" /> : <Ban className="w-4 h-4" />}
+                        </button>
+                      )}
                       <button onClick={() => handleDeleteUser(u._id)} className="p-2 rounded-xl bg-destructive/20 text-destructive hover:bg-destructive/30">
                         <Trash2 className="w-4 h-4" />
                       </button>

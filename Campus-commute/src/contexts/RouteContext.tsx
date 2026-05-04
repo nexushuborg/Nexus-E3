@@ -64,6 +64,7 @@ interface RouteContextType {
   setSelectedRoute: (route: BusRoute) => void;
   liveBusPosition: [number, number] | null;
   setLiveBusPosition: React.Dispatch<React.SetStateAction<[number, number] | null>>;
+  busRotation: number;
   stopETAs: StopETA[];
   notifications: LiveNotification[];
   clearNotifications: () => void;
@@ -77,6 +78,7 @@ export const RouteProvider = ({ children }: { children: ReactNode }) => {
   const [routes, setRoutes] = useState<BusRoute[]>([]);
   const [selectedRoute, setSelectedRoute] = useState<BusRoute | null>(null);
   const [liveBusPosition, setLiveBusPosition] = useState<[number, number] | null>(null);
+  const [busRotation, setBusRotation] = useState<number>(0);
   const [stopETAs, setStopETAs] = useState<StopETA[]>([]);
   const [notifications, setNotifications] = useState<LiveNotification[]>([]);
   const [socketConnected, setSocketConnected] = useState(false);
@@ -134,7 +136,21 @@ export const RouteProvider = ({ children }: { children: ReactNode }) => {
     // ── Live bus position updates ──
     socket.on("driver-location-update", (data: { routeId: string; lat: number; lng: number }) => {
       if (data.routeId === selectedRoute.busNumber) {
-        setLiveBusPosition([data.lat, data.lng]);
+        setLiveBusPosition((prev) => {
+          if (prev) {
+            // FIXED: Bus Marker Rotation (BONUS 2)
+            const [prevLat, prevLng] = prev;
+            if (prevLat !== data.lat || prevLng !== data.lng) {
+              // CSS rotate: 0 is Right (East), 90 is Down (South), -90 is Up (North)
+              // latDiff: >0 is North. lngDiff: >0 is East.
+              const latDiff = prevLat - data.lat; // Invert to make North negative (Up in CSS)
+              const lngDiff = data.lng - prevLng;
+              const bearing = Math.atan2(latDiff, lngDiff) * 180 / Math.PI;
+              setBusRotation(bearing);
+            }
+          }
+          return [data.lat, data.lng];
+        });
       }
     });
 
@@ -224,6 +240,7 @@ export const RouteProvider = ({ children }: { children: ReactNode }) => {
         setSelectedRoute,
         liveBusPosition,
         setLiveBusPosition,
+        busRotation,
         stopETAs,
         notifications,
         clearNotifications,

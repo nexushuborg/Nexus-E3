@@ -53,6 +53,23 @@ const AdminRoute = ({ element }: { element: React.ReactElement }) => {
   return element;
 };
 
+// FIXED: Missing Role Route Guards (BUG 1)
+const StudentRoute = ({ element }: { element: React.ReactElement }) => {
+  const { user } = useAuth();
+  if (user?.role !== "student") {
+    return <Navigate to="/" replace />;
+  }
+  return element;
+};
+
+const DriverRoute = ({ element }: { element: React.ReactElement }) => {
+  const { user } = useAuth();
+  if (user?.role !== "driver") {
+    return <Navigate to="/" replace />;
+  }
+  return element;
+};
+
 const App = () => (
   <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
     <QueryClientProvider client={queryClient}>
@@ -80,25 +97,25 @@ const App = () => (
               <Route path="/reset-password" element={<ResetPassword />} />
               
               {/* Main App - Student */}
-              <Route path="/route-selection" element={<RouteSelection />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/change-password" element={<ChangePassword />} />
-              <Route path="/stoppage-details" element={<StoppageDetails />} />
-              <Route path="/driver-info" element={<DriverInfo />} />
-              <Route path="/faqs" element={<FAQs />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/support" element={<Support />} />
-              <Route path="/running-status" element={<RunningStatus />} />
+              <Route path="/route-selection" element={<StudentRoute element={<RouteSelection />} />} />
+              <Route path="/home" element={<StudentRoute element={<Home />} />} />
+              <Route path="/profile" element={<StudentRoute element={<Profile />} />} />
+              <Route path="/settings" element={<StudentRoute element={<Settings />} />} />
+              <Route path="/change-password" element={<StudentRoute element={<ChangePassword />} />} />
+              <Route path="/stoppage-details" element={<StudentRoute element={<StoppageDetails />} />} />
+              <Route path="/driver-info" element={<StudentRoute element={<DriverInfo />} />} />
+              <Route path="/faqs" element={<StudentRoute element={<FAQs />} />} />
+              <Route path="/about" element={<StudentRoute element={<About />} />} />
+              <Route path="/support" element={<StudentRoute element={<Support />} />} />
+              <Route path="/running-status" element={<StudentRoute element={<RunningStatus />} />} />
               
               {/* Main App - Driver */}
-              <Route path="/driver-home" element={<DriverHome />} />
-              <Route path="/driver-dashboard" element={<DriverDashboard />} />
-              <Route path="/driver-profile" element={<DriverProfile />} />
-              <Route path="/driver-bus-management" element={<DriverBusManagement />} />
-              <Route path="/driver-stop-details" element={<DriverStopDetails />} />
-              <Route path="/driver-settings" element={<DriverSettings />} />
+              <Route path="/driver-home" element={<DriverRoute element={<DriverHome />} />} />
+              <Route path="/driver-dashboard" element={<DriverRoute element={<DriverDashboard />} />} />
+              <Route path="/driver-profile" element={<DriverRoute element={<DriverProfile />} />} />
+              <Route path="/driver-bus-management" element={<DriverRoute element={<DriverBusManagement />} />} />
+              <Route path="/driver-stop-details" element={<DriverRoute element={<DriverStopDetails />} />} />
+              <Route path="/driver-settings" element={<DriverRoute element={<DriverSettings />} />} />
               
               {/* Admin */}
               <Route path="/admin" element={<AdminRoute element={<AdminPanel />} />} />

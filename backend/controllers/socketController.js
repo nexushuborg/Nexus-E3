@@ -63,6 +63,16 @@ function socketHandler(io) {
       const route = ROUTES.find((r) => r.busNumber === busId);
       if (!route) return;
 
+      // FIXED: Duplicate Driver Broadcasting Lock (BUG 2)
+      if (busState[busId] && busState[busId].broadcaster && busState[busId].broadcaster !== socket.id) {
+        // Check if the current broadcaster is actually still connected
+        const currentBroadcaster = io.sockets.sockets.get(busState[busId].broadcaster);
+        if (currentBroadcaster) {
+            socket.emit("route-already-active", { message: "Another driver is already active on this route." });
+            return;
+        }
+      }
+
       const isNewSession =
         !busState[busId] || busState[busId].broadcaster !== socket.id;
 
