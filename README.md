@@ -18,6 +18,7 @@
 * **👥 Multi-Role Dashboards**: Dedicated onboarding flows and distinct dashboards tailored specifically for **Students**, **Drivers**, and **Administrators** (for managing routes, fleets, and users).
 * **💎 Premium UI/UX**: Clean, engaging, and card-based mobile-first layout leveraging TailwindCSS, Shadcn UI, and Lucide Icons.
 * **🔐 Robust Auth**: Supports custom JWT-based email/password authentication (with a robust OTP verification fallback system) alongside seamless **Google OAuth** integration.
+* **🗄️ Resilient Architecture**: Includes a local fallback MongoDB Memory Server and automatic JSON data-seeding to ensure the application stays fully functional even during remote database outages or network restrictions.
 
 ---
 

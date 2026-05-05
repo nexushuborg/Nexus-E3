@@ -1,12 +1,25 @@
 // FIXED: routes.json -> MongoDB Migration (BUG 3)
 const Route = require("../models/RouteModel");
+const fs = require("fs");
+const path = require("path");
 
 exports.getAllRoutes = async (req, res) => {
   try {
     const routes = await Route.find();
-    res.json(routes);
+    if (routes && routes.length > 0) {
+      return res.json(routes);
+    }
+    // Fallback if empty
+    const fallbackData = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/routes.json'), 'utf8'));
+    return res.json(fallbackData);
   } catch (error) {
-    res.status(500).json({ success: false, message: "Failed to fetch routes", error: error.message });
+    console.error("DB failed, using fallback routes.json");
+    try {
+      const fallbackData = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/routes.json'), 'utf8'));
+      return res.json(fallbackData);
+    } catch(err) {
+      res.status(500).json({ success: false, message: "Failed to fetch routes", error: error.message });
+    }
   }
 };
 

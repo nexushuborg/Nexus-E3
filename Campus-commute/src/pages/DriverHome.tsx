@@ -18,20 +18,21 @@ const BusIcon = L.divIcon({
   iconAnchor: [20, 20]
 });
 
-// Direct polyline through all stop coordinates — always shows full route, no OSRM limits
-const RoutePolyline = ({ stops }: { stops: any[] }) => {
+// Direct polyline through all stop coordinates or road geometry
+const RoutePolyline = ({ stops, roadPoints }: { stops: any[], roadPoints: [number, number][] }) => {
   const map = useMap();
-  const positions: [number, number][] = stops.map((s: any) => [s.coordinates.lat, s.coordinates.lng]);
+  const stopPositions: [number, number][] = stops.map((s: any) => [s.coordinates.lat, s.coordinates.lng]);
+  const positionsToDraw = roadPoints && roadPoints.length > 0 ? roadPoints : stopPositions;
 
   useEffect(() => {
-    if (!map || positions.length < 2) return;
-    const bounds = L.latLngBounds(positions);
+    if (!map || stopPositions.length < 2) return;
+    const bounds = L.latLngBounds(stopPositions);
     map.fitBounds(bounds, { padding: [50, 50] });
   }, []);
 
   return (
     <Polyline
-      positions={positions}
+      positions={positionsToDraw}
       pathOptions={{ color: '#1e3a8a', weight: 5, opacity: 0.85 }}
     />
   );
@@ -310,7 +311,7 @@ const DriverHome = () => {
             <MapController coords={coords} />
             <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             {/* Full route line through all stops — always visible */}
-            {assignedRoute && <RoutePolyline stops={assignedRoute.stoppages} />}
+            {assignedRoute && <RoutePolyline stops={assignedRoute.stoppages} roadPoints={roadPoints} />}
             {assignedRoute && assignedRoute.stoppages.map((stop: any, idx: number) => {
               const isFirst = idx === 0;
               const isLast  = idx === assignedRoute.stoppages.length - 1;

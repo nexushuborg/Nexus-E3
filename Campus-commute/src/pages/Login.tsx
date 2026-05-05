@@ -10,10 +10,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { useGoogleLogin } from "@react-oauth/google";
 
-const emailSchema = z.string().email("Invalid email address").refine((email) => {
-  const domain = email.split("@")[1];
-  return domain?.endsWith("gmail.com") || domain?.endsWith(".ac.in") || domain?.endsWith(".edu");
-}, "Only gmail.com, .ac.in, or .edu emails allowed");
+const emailSchema = z.string().email("Invalid email address");
 
 const passwordSchema = z.string().min(8, "Password must be at least 8 characters");
 
