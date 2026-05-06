@@ -52,6 +52,7 @@ Want to jump right in and test the app? Use the pre-configured test accounts bel
 ### 🚌 Driver Account
 * **Email:** `driver@test.edu`
 * **Password:** `Password123!`
+* **Driver Secret Key (For New Driver Registration):** `DRIVER2024`
 * **Capabilities:** Can start trips, broadcast real GPS locations, and use the **GPS Simulation Mode**.
 
 ### 🎒 Student Account

@@ -180,7 +180,8 @@ const passwordSchema = z.string().min(8, "Password must be at least 8 characters
             <div className="flex gap-4 mb-8">
               <button
                 onClick={() => handleSocialLogin("Google")}
-                className="flex-1 py-3 px-4 border-2 border-foreground/20 rounded-full text-foreground font-medium hover:bg-muted transition-colors flex items-center justify-center gap-2"
+                disabled={isLoading}
+                className={`flex-1 py-3 px-4 border-2 border-foreground/20 rounded-full text-foreground font-medium transition-colors flex items-center justify-center gap-2 ${isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-muted'}`}
               >
               {/* Google G Logo SVG */}
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -193,7 +194,8 @@ const passwordSchema = z.string().min(8, "Password must be at least 8 characters
             </button>
             <button
               onClick={() => handleSocialLogin("Apple")}
-              className="flex-1 py-3 px-4 border-2 border-foreground/20 rounded-full text-foreground font-medium hover:bg-muted transition-colors flex items-center justify-center gap-2"
+              disabled={isLoading}
+              className={`flex-1 py-3 px-4 border-2 border-foreground/20 rounded-full text-foreground font-medium transition-colors flex items-center justify-center gap-2 ${isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-muted'}`}
             >
               <Apple size={20} />
               Apple
