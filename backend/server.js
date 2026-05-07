@@ -11,14 +11,26 @@ const { initSocket } = require('./config/socket');
 const connectDB = require('./config/connectDB');
 
 // ====== CONFIG ======
-const port = process.env.BACKEND_PORT || 8000;
+// Render injects PORT automatically; BACKEND_PORT used as local fallback
+const port = process.env.PORT || process.env.BACKEND_PORT || 8000;
+
+const allowedOrigins = process.env.FRONTEND_URL
+  ? [process.env.FRONTEND_URL]
+  : ['http://localhost:8080', 'http://localhost:5173'];
 
 // ====== CREATE HTTP SERVER ======
 const server = http.createServer(app);
 
 // ====== MIDDLEWARE ======
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',
+  origin: (origin, callback) => {
+    // Allow requests with no origin (e.g. mobile apps, Postman, server-to-server)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    callback(new Error(`CORS policy: origin ${origin} not allowed`));
+  },
   credentials: true,
 }));
 app.use(express.json());
@@ -26,14 +38,19 @@ app.use(cookieParser());
 
 // ====== DATABASE ======
 connectDB()
-  .then(() => console.log('DB connected'))
+  .then(() => console.log('✅ MongoDB connected'))
   .catch(err => {
-    console.error('DB connection failed:', err.message);
+    console.error('❌ DB connection failed:', err.message);
   });
+
+// ====== HEALTH CHECK (used by Render) ======
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 
 // ====== ROUTES ======
 app.get('/', (req, res) => {
-  res.send('Server is running...');
+  res.json({ message: 'Campus Commute API is running 🚀' });
 });
 
 const userRouter = require('./routes/userRouter');
@@ -46,9 +63,10 @@ app.use('/api/routes', routeRouter);
 app.use('/routes', routeRouter); // Keep legacy /routes for backward compatibility with frontend if needed
 
 // ====== SOCKET.IO INIT ======
-initSocket(server);
+initSocket(server, allowedOrigins);
 
 // ====== START SERVER ======
 server.listen(port, () => {
-  console.log(`🚀 Server running at http://localhost:${port}`);
+  console.log(`🚀 Server running on port ${port}`);
+  console.log(`   Allowed origins: ${allowedOrigins.join(', ')}`);
 });
